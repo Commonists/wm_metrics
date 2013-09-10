@@ -37,28 +37,52 @@ def new_editors(old_period, new_period):
     % (count_new, count_one_epm, count_ten_epm, max_edit_new)
 
 
+def getopt_fallback():
+    """Fallback on getopt if your system don't have ArgumentParser."""
+    import getopt, sys
+    try:                                
+        opts, args = getopt.getopt(sys.argv[1:], "o:n:", ["--old=", "--new="])
+    except getopt.GetoptError:                               
+        sys.exit(2)
+    new = ""
+    old = ""
+    for opt, arg in opts:
+        if opt in ("-o", "--old"):
+            old = arg
+        if opt in ("-n", "--new"):
+            new = arg
+    if(new != "" and old != ""):
+        old_period = open(old)
+        new_period = open(new)
+        new_editors(old_period, new_period)
+        old_period.close()
+        new_period.close()
+
 def main():
     """Main method, entry point of the script."""
-    from argparse import ArgumentParser
-    description = "Computes new editor numbers based on WikiMetrics data"
-    parser = ArgumentParser(description=description)
+    try:
+        from argparse import ArgumentParser
+        description = "Computes new editor numbers based on WikiMetrics data"
+        parser = ArgumentParser(description=description)
 
-    parser.add_argument("-o", "--old",
-                        type=file,
-                        dest="old_period",
-                        metavar="old_period.json",
-                        required=True,
-                        help="The old period data, as a JSON file")
+        parser.add_argument("-o", "--old",
+                            type=file,
+                            dest="old_period",
+                            metavar="old_period.json",
+                            required=True,
+                            help="The old period data, as a JSON file")
 
-    parser.add_argument("-n", "--new",
-                        type=file,
-                        dest="new_period",
-                        metavar="new_period.json",
-                        required=True,
-                        help="The new period data, as a JSON file")
-    args = parser.parse_args()
+        parser.add_argument("-n", "--new",
+                            type=file,
+                            dest="new_period",
+                            metavar="new_period.json",
+                            required=True,
+                            help="The new period data, as a JSON file")
+        args = parser.parse_args()
 
-    new_editors(args.old_period, args.new_period)
+        new_editors(args.old_period, args.new_period)
+    except:
+        getopt_fallback()
 
 if __name__ == "__main__":
     main()
