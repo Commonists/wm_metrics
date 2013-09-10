@@ -30,8 +30,9 @@ def new_editors(old_period, new_period):
             count_one_epm = count_one_epm + 1
         if(edits>=60):
             count_ten_epm = count_ten_epm + 1
-    print "New editors that kept editing after WLM2011(Fr): " + str(count_new)
-    print "\t" + str(count_one_epm) + " with more than one edit per month (6 months period)"
-    print "\t" + str(count_ten_epm) + " with more than ten edits per month (6 months period)"
-    print "\t" + str(max_edit_new) + " max edits for a new contributors (6 months period)"
+    print """New editors that kept editing after WLM2011(Fr): %s
+\t%s with more than one edit per month (6 months period)"
+\t%s with more than ten edits per month (6 months period)"
+\t%s max edits for a new contributors (6 months period)"""\
+    % (count_new, count_one_epm, count_ten_epm, max_edit_new)
 
