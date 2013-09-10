@@ -36,3 +36,29 @@ def new_editors(old_period, new_period):
 \t%s max edits for a new contributors (6 months period)"""\
     % (count_new, count_one_epm, count_ten_epm, max_edit_new)
 
+
+def main():
+    """Main method, entry point of the script."""
+    from argparse import ArgumentParser
+    description = "Computes new editor numbers based on WikiMetrics data"
+    parser = ArgumentParser(description=description)
+
+    parser.add_argument("-o", "--old",
+                        type=file,
+                        dest="old_period",
+                        metavar="old_period.json",
+                        required=True,
+                        help="The old period data, as a JSON file")
+
+    parser.add_argument("-n", "--new",
+                        type=file,
+                        dest="new_period",
+                        metavar="new_period.json",
+                        required=True,
+                        help="The new period data, as a JSON file")
+    args = parser.parse_args()
+
+    new_editors(args.old_period, args.new_period)
+
+if __name__ == "__main__":
+    main()
