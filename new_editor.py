@@ -81,7 +81,7 @@ def main():
         args = parser.parse_args()
 
         new_editors(args.old_period, args.new_period)
-    except:
+    except ImportError:
         getopt_fallback()
 
 if __name__ == "__main__":
