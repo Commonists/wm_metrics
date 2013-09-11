@@ -2,7 +2,7 @@
 
 import json
 
-DEFAULT_LEVELS="1, 6, 60"
+DEFAULT_LEVELS=[1, 6, 60]
 
 def new_editors(old_period, new_period, levels=DEFAULT_LEVELS):
     # new editors list
@@ -18,17 +18,17 @@ def new_editors(old_period, new_period, levels=DEFAULT_LEVELS):
 
     json_new= json.load(new_period)
     data_new= json_new["result"]["Individual Results"][0]
-    level = levels.split(",")
+
     # count of surviving editors by level
     new_counts = dict()
     for k in new_editors:
         edits = int(data_new[k]["edits"])
-        for l in level:
-            if edits>=int(l):
-                if int(l) in new_counts.keys():
-                    new_counts[int(l)] = new_counts[int(l)]+1
+        for level in levels:
+            if edits>=level:
+                if level in new_counts.keys():
+                    new_counts[level] = new_counts[level]+1
                 else:
-                    new_counts[int(l)] = 1
+                    new_counts[level] = 1
     print "%s - %s" % (json_new["parameters"]["start_date"], json_new["parameters"]["end_date"])
     for k in sorted(new_counts.keys()):
         print "\tnew editors with more than %d edits:\t %d" % (k, new_counts[k])
@@ -57,7 +57,7 @@ def getopt_fallback():
         if(levels==""):
             new_editors(old_period, new_period)
         else:
-            new_editors(old_period, new_period, levels)
+            new_editors(old_period, new_period, levels.split(","))
         old_period.close()
         new_period.close()
 
