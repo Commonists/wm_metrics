@@ -81,9 +81,17 @@ def main():
                             metavar="new_period.json",
                             required=True,
                             help="The new period data, as a JSON file")
-        args = parser.parse_args()
 
-        new_editors(args.old_period, args.new_period)
+        parser.add_argument("-l", "--levels",
+                            nargs='+',
+                            dest="levels",
+                            metavar="level",
+                            required=False,
+                            default=DEFAULT_LEVELS,
+                            help="The levels to use (default: %s)" % DEFAULT_LEVELS)
+
+        args = parser.parse_args()
+        new_editors(args.old_period, args.new_period, map(int, args.levels))
     except ImportError:
         getopt_fallback()
 
