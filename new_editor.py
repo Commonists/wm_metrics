@@ -38,20 +38,26 @@ def getopt_fallback():
     """Fallback on getopt if your system don't have ArgumentParser."""
     import getopt, sys
     try:                                
-        opts, args = getopt.getopt(sys.argv[1:], "o:n:", ["--old=", "--new="])
+        opts, args = getopt.getopt(sys.argv[1:], "o:n:l:", ["--old=", "--new=", "--levels="])
     except getopt.GetoptError:                               
         sys.exit(2)
     new = ""
     old = ""
+    levels= ""
     for opt, arg in opts:
         if opt in ("-o", "--old"):
             old = arg
         if opt in ("-n", "--new"):
             new = arg
+        if opt in ("-l", "--levels"):
+            levels=arg
     if(new != "" and old != ""):
         old_period = open(old)
         new_period = open(new)
-        new_editors(old_period, new_period)
+        if(levels==""):
+            new_editors(old_period, new_period)
+        else:
+            new_editors(old_period, new_period, levels)
         old_period.close()
         new_period.close()
 
