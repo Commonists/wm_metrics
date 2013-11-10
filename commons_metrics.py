@@ -79,11 +79,11 @@ class CommonsMetrics:
 
 	def displays(self):
 		print """Valued images: %5d
-			Quality images: 	%5d"
-			Featured pictures:	%5d"  
-			Uploaders: 			%5d"
-			HD images: 			%5d"
-			HD4k images: 		%5d"""\
+Quality images: %5d
+Featured pictures: %5d  
+Uploaders: %5d
+HD images: %5d
+HD4k images: %5d"""\
 			% (self.vi, self.qi, self.fp, len(self.uploaders), len(self.hd_images), len(self.hd_4k))
 
 	def computes(self):
@@ -102,7 +102,7 @@ class CommonsMetrics:
 			if size > 2000000:
 				self.hd_images.append(file_list_info[i])
 			if size > 4000000:
-				self.hd_images.append(file_list_info[i])
+				self.hd_4k.append(file_list_info[i])
 			for l in labels:
 				if l['title'] == 'Category:Quality images':
 					self.qi += 1
