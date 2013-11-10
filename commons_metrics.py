@@ -13,6 +13,7 @@ class CommonsMetrics:
 		self.uploaders	= []
 		self.hd_images	= []
 		self.hd_4k		= []
+		self.ignored	= 0
 
 
 	def list_category(self):
@@ -83,39 +84,43 @@ Quality images: %5d
 Featured pictures: %5d  
 Uploaders: %5d
 HD images: %5d
-HD4k images: %5d"""\
-			% (self.vi, self.qi, self.fp, len(self.uploaders), len(self.hd_images), len(self.hd_4k))
+HD4k images: %5d
+ignored files: %d"""\
+			% (self.vi, self.qi, self.fp, len(self.uploaders), len(self.hd_images), len(self.hd_4k), self.ignored)
 
 	def computes(self):
 		file_list_info = self.list_category()
 		print "%s files in %s" % (len(file_list_info), self.category)
 		for i in file_list_info.keys():
-			labels 	= self.labels_for_image(file_list_info[i])
-			ii 		= self.image_info(file_list_info[i])
-			ii.reverse()
-			#for k in ii[0]:
-			#	file_list_info[i][k] = ii[0][k]
-			size = int(ii[0]['width']) * int(ii[0]['height'])
+			try:
+				labels 	= self.labels_for_image(file_list_info[i])
+				ii 		= self.image_info(file_list_info[i])
+				ii.reverse()
+				#for k in ii[0]:
+				#	file_list_info[i][k] = ii[0][k]
+				size = int(ii[0]['width']) * int(ii[0]['height'])
 
-			if not (ii[0]['user'] in self.uploaders):
-				self.uploaders.append(ii[0]['user'])
-			if size > 2000000:
-				self.hd_images.append(file_list_info[i])
-			if size > 4000000:
-				self.hd_4k.append(file_list_info[i])
-			for l in labels:
-				if l['title'] == 'Category:Quality images':
-					self.qi += 1
-				if l['title'] == 'Category:Featured pictures on Wikimedia Commons':
-					self.fp += 1
-				if l['title'] == 'Category:Valued images sorted by promotion date':
-					self.vi += 1
+				if not (ii[0]['user'] in self.uploaders):
+					self.uploaders.append(ii[0]['user'])
+				if size > 2000000:
+					self.hd_images.append(file_list_info[i])
+				if size > 4000000:
+					self.hd_4k.append(file_list_info[i])
+				for l in labels:
+					if l['title'] == 'Category:Quality images':
+						self.qi += 1
+					if l['title'] == 'Category:Featured pictures on Wikimedia Commons':
+						self.fp += 1
+					if l['title'] == 'Category:Valued images sorted by promotion date':
+						self.vi += 1
+			except:
+				self.ignored += 1
 		self.displays()
 
 # print commons.process_query(list_cat)
 
 category = "Category:Media supported by Wikimedia France"
-category = "Category:Wikimedia France - Saint-Sernin"
+#category = "Category:Wikimedia France - Saint-Sernin"
 metrics = CommonsMetrics(category)
 
 metrics.computes()
