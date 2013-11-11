@@ -4,6 +4,8 @@
 import re, urllib, codecs, json
 
 DEFAULT_API="https://commons.wikimedia.org/w/api.php"
+MAX_URL_SIZE=1024
+
 
 def urlEncodeNonAscii(b):
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
@@ -21,7 +23,7 @@ class MwWiki:
 	def __init__(self, url_api=DEFAULT_API):
 		self.url = url_api
 
-	def send_to_api(self, request):
+	def send_to_api(self, request, debug=False):
 		# add action to url
 		url_req = "%s?action=%s" % (self.url, request.action)
 		# add each property
@@ -30,7 +32,35 @@ class MwWiki:
 		# add the format
 		url_req += "&format=%s" % (request.format)
 		#print url_req
-		return urllib.urlopen(url_req).read()
+		if not debug:
+			return urllib.urlopen(url_req).read()
+		else:
+			return url_req
+
+	def process_prop_query(self, request, titles):
+		"""
+		Quick and dirty prop query support
+		"""
+		if request.action != 'query' or not ('prop' in request.prop.keys()):
+			raise MwQueryError('Not a prop query')
+		if 'titles' in request.prop.keys():
+			raise MwQueryError('process_prop_query should not have titles in the request object')
+		url_req = self.send_to_api(request, debug=True)
+		results = []
+		for title in titles:
+			# testing length
+			if len(url_req) + len(title) + 8 >= MAX_URL_SIZE:
+				results.append(urllib.urlopen(url_req).read())
+				# init a new query
+				url_req = self.send_to_api(request, debug=True)
+			
+			if '&titles' not in url_req:
+				url_req += "&titles=%s" % (urlEncodeNonAscii(title))
+			else:
+				url_req += "|%s" % (urlEncodeNonAscii(title))
+		return results
+
+
 	
 	def process_query(self, request, result=[]):
 		"""
