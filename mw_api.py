@@ -46,11 +46,16 @@ class MwWiki:
 		if 'titles' in request.prop.keys():
 			raise MwQueryError('process_prop_query should not have titles in the request object')
 		url_req = self.send_to_api(request, debug=True)
-		results = []
+		results = dict()
 		for title in titles:
 			# testing length
 			if len(url_req) + len(title) + 8 >= MAX_URL_SIZE:
-				results.append(urllib.urlopen(url_req).read())
+				try:
+					r = json.loads(urllib.urlopen(url_req).read())['query']['pages']
+					for p in r:
+						results[p] = r[p]
+				except KeyError:
+					print "Empty result for --> %s" % (url_req)
 				# init a new query
 				url_req = self.send_to_api(request, debug=True)
 			
