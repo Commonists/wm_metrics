@@ -51,7 +51,10 @@ class MwWiki:
 			# testing length
 			if len(url_req) + len(title) + 8 >= MAX_URL_SIZE:
 				try:
-					r = json.loads(urllib.urlopen(url_req).read())['query']['pages']
+					req_result = json.loads(urllib.urlopen(url_req).read())
+					if 'query-continue' in req_result.keys():
+						raise MwQueryError("continue not supported for prop query") 
+					r = req_result['query']['pages']
 					for p in r:
 						results[p] = r[p]
 				except KeyError:
