@@ -117,10 +117,31 @@ ignored files: %d"""\
 				self.ignored += 1
 		self.displays()
 
+	def  computes_opt(self):
+		files = self.list_category()
+		titles = []
+		for k in files.keys():
+			titles.append(files[k])
+		labels = self.commons.process_prop_query(mw_api.MwApiQuery(
+			properties={
+				"prop"		: "categories",
+				"clshow"	: "hidden",
+				"clcategories": "Category:Quality images|Category:Featured pictures on Wikimedia Commons|Category:Valued images sorted by promotion date"
+		}), titles)
+		infos = self.commons.process_prop_query(mw_api.MwApiQuery(
+			properties={
+				"prop"		: "imageinfo",
+				"iiprop"	: "timestamp|user|size",
+				"iilimit"	: "max"
+			}), titles)
+		print labels
+		print infos		
+
 # print commons.process_query(list_cat)
 
-category = "Category:Media supported by Wikimedia France"
-#category = "Category:Wikimedia France - Saint-Sernin"
+#category = "Category:Media supported by Wikimedia France"
+category = "Category:Wikimedia France - Saint-Sernin"
 metrics = CommonsMetrics(category)
 
 metrics.computes()
+#metrics.computes_opt()
