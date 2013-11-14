@@ -45,29 +45,34 @@ class MwWiki:
 			raise MwQueryError('Not a prop query')
 		if 'titles' in request.prop.keys():
 			raise MwQueryError('process_prop_query should not have titles in the request object')
-		url_req = self.send_to_api(request, debug=True)
+		url_base = self.send_to_api(request, debug=True)
+		url_req = url_base
 		results = dict()
 		for title in titles:
 			# testing length
 			if len(url_req) + len(title) + 8 >= MAX_URL_SIZE:
-				try:
-					req_result = json.loads(urllib.urlopen(url_req).read())
-					if 'query-continue' in req_result.keys():
-						raise MwQueryError("continue not supported for prop query") 
-					r = req_result['query']['pages']
-					for p in r:
-						results[p] = r[p]
-				except KeyError:
-					print "Empty result for --> %s" % (url_req)
+				self.process_prop_query_results(url_req, results)
 				# init a new query
-				url_req = self.send_to_api(request, debug=True)
+				url_req = url_base
 			
 			if '&titles' not in url_req:
 				url_req += "&titles=%s" % (urlEncodeNonAscii(title))
 			else:
 				url_req += "|%s" % (urlEncodeNonAscii(title))
+		if len(url_req) > len(url_base):
+			self.process_prop_query_results(url_req, results)
 		return results
 
+	def process_prop_query_results(self, url_req, results):
+		try:
+			req_result = json.loads(urllib.urlopen(url_req).read())
+			if 'query-continue' in req_result.keys():
+				raise MwQueryError("continue not supported for prop query") 
+			r = req_result['query']['pages']
+			for p in r:
+				results[p] = r[p]
+		except KeyError:
+			print "Empty result for --> %s" % (url_req)			
 
 	
 	def process_query(self, request, result=[]):
