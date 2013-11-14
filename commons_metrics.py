@@ -3,6 +3,12 @@
 
 import mw_api, json, codecs
 
+#
+# HD definition in pixels
+HD_SIZE 	= 2000000
+HD4K_SIZE 	= 4000000
+
+
 class CommonsMetrics:
 	def __init__(self, category):
 		self.commons 	= mw_api.MwWiki(url_api='https://commons.wikimedia.org/w/api.php')
@@ -102,9 +108,9 @@ ignored files: %d"""\
 
 				if not (ii[0]['user'] in self.uploaders):
 					self.uploaders.append(ii[0]['user'])
-				if size > 2000000:
+				if size > HD_SIZE:
 					self.hd_images.append(file_list_info[i])
-				if size > 4000000:
+				if size > HD4K_SIZE:
 					self.hd_4k.append(file_list_info[i])
 				for l in labels:
 					if l['title'] == 'Category:Quality images':
@@ -134,8 +140,16 @@ ignored files: %d"""\
 				"iiprop"	: "timestamp|user|size",
 				"iilimit"	: "max"
 			}), titles)
-		print labels
-		print infos		
+		for pageid in labels.keys():
+			if 'categories' in labels[pageid].keys():
+				for l in labels[pageid]["categories"]:
+					if l['title'] == 'Category:Quality images':
+						self.qi += 1
+					if l['title'] == 'Category:Featured pictures on Wikimedia Commons':
+						self.fp += 1
+					if l['title'] == 'Category:Valued images sorted by promotion date':
+						self.vi += 1
+		self.displays()		
 
 # print commons.process_query(list_cat)
 
@@ -143,5 +157,5 @@ ignored files: %d"""\
 category = "Category:Wikimedia France - Saint-Sernin"
 metrics = CommonsMetrics(category)
 
-metrics.computes()
-#metrics.computes_opt()
+#metrics.computes()
+metrics.computes_opt()
