@@ -4,7 +4,7 @@ Metrics tools for Wikimedia projects
 
 Authors 
 -------
-Pierre-Selim
+Pierre-Selim,
 Jean-Fred
 
 Licence
