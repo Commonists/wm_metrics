@@ -15,10 +15,12 @@ def handle_node(node, tag_name):
 
 
 def timestamp_to_date(date):
+    """Return a date object representing the given MediaWiki timestamp."""
     return datetime.date(int(date[0:4]), int(date[5:7]), int(date[8:10]))
 
 
 def title_to_identifier(title):
+    """Return the Trutat identifier in a given filename."""
     id_search = re.search(r" - (?P<id>51Fi.+?) - ", title)
     if id_search:
         identifier = id_search.group('id')
@@ -26,6 +28,7 @@ def title_to_identifier(title):
 
 
 def parse_xml_dump(xml_dump):
+    """Return a list of the edits in a Wikimedia Commons dump."""
     edits = []
     revision_categories = {}
     doc = xml.dom.minidom.parse(xml_dump)
@@ -46,6 +49,7 @@ def parse_xml_dump(xml_dump):
 
 
 def get_categories_from_text(edit):
+    """Return the categories contained in a given wikitext."""
     cat_pattern = r"\[\[Category:(?P<cat>.+?)(\|.*?)?\]\]"
     return map(lambda x: x[0], re.findall(cat_pattern, edit))
 
