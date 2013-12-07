@@ -1,23 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import xml.dom.minidom
-import codecs
 import re
 import datetime
-import sys
-
-sys.path.append("pywikipedia")
-#import query
-
-#from urllib import FancyURLopener
-#class MyOpener(FancyURLopener):
-#version="Firefox"
 
 
 def handle_node(node, tag_name):
-    """
-    Returns the contents of a tag based on his given name inside of a given node.
-    """
+    """Return the contents of a tag based on his given name inside of a given node."""
     element = node.getElementsByTagName(tag_name)
     if element.length > 0:
         if element.item(0).hasChildNodes():
@@ -40,25 +29,21 @@ def parse_xml_dump(xml_dump):
     edits = []
     revision_categories = {}
     doc = xml.dom.minidom.parse(xml_dump)
-    for mediawiki in doc.childNodes:
-        if mediawiki.localName == u'mediawiki':
-            for page in mediawiki.childNodes:
-                for revision in page.childNodes:
-                    if revision.localName == u'revision':
-                        title = handle_node(page, u'title')
-                        username = handle_node(revision, u'username')
-                        timestamp = handle_node(revision, u'timestamp')
-                        text = handle_node(revision, u'text')
-                        #if not username in usernameBlackList:
+    for mediawiki_node in doc.childNodes:
+        if mediawiki_node.localName == u'mediawiki':
+            for page_node in mediawiki_node.childNodes:
+                for revision_node in page_node.childNodes:
+                    title = handle_node(page_node, u'title')
+                    revision_categories[title] = []
+                    if revision_node.localName == u'revision':
+                        username = handle_node(revision_node, u'username')
+                        timestamp = handle_node(revision_node, u'timestamp')
+                        text = handle_node(revision_node, u'text')
                         edits.append((username, timestamp_to_date(timestamp), title))
-                        identifier = title_to_identifier(title)
-                        get_categories_from_text(text)
-                        #revision_categories[identifier].append(getCategoriesFromText(text))
-                        #print edits
+                        #cats = get_categories_from_text(text)
+                        #revision_categories[title].append(cats)
     return edits
 
-#def dummy(x)
-#return x<
 
 def get_categories_from_text(edit):
     cat_pattern = r"\[\[Category:(?P<cat>.+?)(\|.*?)?\]\]"
@@ -93,25 +78,24 @@ def analyse_edits(edits, bottomDate, topDate):
 def list_global_usage(all_pages):
     r = range(0, len(all_pages), 50)
     r2 = r[1:] + [None]
-    return reduce(lambda x, y: x + y, map(lambda x: queryGlobalUsage(all_pages[x[0]:x[1]]), zip(r, r2)))
+    return reduce(lambda x, y: x + y, map(lambda x: query_global_usage(all_pages[x[0]:x[1]]), zip(r, r2)))
 
 
-def buildUsageReport(globalUsage):
-    print "IN"
+def build_usage_report(global_usage):
 
-    def buildUsageLine(fileUsage):
-        title = fileUsage[0][5:]
+    def build_usage_line(file_usage):
+        title = file_usage[0][5:]
         print title
         print title_to_identifier(title)
 
-        def buildUsageSubLine(usage):
+        def build_usage_subLine(usage):
             return "\item \lienProjet{%s}{%s}" % usage
 
 
         return "\item \commonsFileLink{%s}{%s}, sur \lienProjet{%s}{%s}" % (title, title_to_identifier(title), usage[1])
 
-    for item in globalUsage:
-        print buildUsageLine(item)
+    for item in global_usage:
+        print build_usage_line(item)
 
 
         #report=u"""Sur la période observée, %s images étaient utilisées sur les projets Wikimedia :
@@ -124,12 +108,12 @@ def buildUsageReport(globalUsage):
         #"""
 
 
-def buildReportFromUserList(userContribs):
-    nbUsers = len(userContribs.keys())
-    theList = pythonListToLaTeXDescription(userContribs.keys(), map(buildUserItem, userContribs.values()))
+def build_report_from_user_list(user_edits):
+    nb_users = len(user_edits.keys())
+    the_list = python_list_to_latex_description(user_edits.keys(), map(build_user_item, user_edits.values()))
     report = u"""Sur la période observée, %s utilisateurs ont contribué au corpus :
   %s
-  """ % (nbUsers, theList)
+  """ % (nb_users, the_list)
     return report
 
 
@@ -140,48 +124,46 @@ def accordEnNombre(number, singular, plural):
         return u"%s %s" % (number, singular)
 
 
-def buildUserItem(edits):
+def build_user_item(edits):
     return accordEnNombre(len(edits), u"modification", u"modifications")
 
 
-def pythonListToLaTeXDescription(myList1, myList2):
+def python_list_to_latex_description(list1, list2):
     return u"""\\begin{description}  %s\n\\end{description}
-  """ % (u"".join(map(lambda x, y: u"\n	\item[%s] \hfill \\\\ %s " % (x, y), myList1, myList2)))
+  """ % (u"".join(map(lambda x, y: u"\n	\item[%s] \hfill \\\\ %s " % (x, y), list1, list2)))
 
 
-def pythonListToLaTeXItemize(myList):
+def python_list_to_latex_itemize(my_list):
     return u"""\
   \\begin{itemize}
   \t\item %s
-  \\end{itemize}""" % (u"\n\t\item ".join(myList))
+  \\end{itemize}""" % (u"\n\t\item ".join(my_list))
 
 
-def queryGlobalUsage(fileList):
-    if len(fileList) is 0:
+def query_global_usage(filelist):
+    if len(filelist) is 0:
         return []
     params = {
         'action': 'query',
         'prop': 'globalusage',
-        'titles': "|".join(fileList),
+        'titles': "|".join(filelist),
         'gulimit': '500',
     }
 
-    queryResult = query.GetData(params, encodeTitle=False)
+    query_result = query.GetData(params, encodeTitle=False)
 
-    def retrieveFromGlobaUsage(globalUsage):
-        if len(globalUsage) is 0:
+    def retrieve_from_globa_usage(global_usage):
+        if len(global_usage) is 0:
             return []
         else:
-            return map(lambda x: (x["wiki"], x["title"]), globalUsage)
+            return map(lambda x: (x["wiki"], x["title"]), global_usage)
 
-    return filter(lambda x: len(x[1]) > 0, map(lambda x: (x["title"], retrieveFromGlobaUsage(x["globalusage"])),
-                                               queryResult["query"]["pages"].values()))
+    return filter(lambda x: len(x[1]) > 0, map(lambda x: (x["title"], retrieve_from_globa_usage(x["globalusage"])),
+                                               query_result["query"]["pages"].values()))
 
 
 if __name__ == "__main__":
     xmlFile = "Wikimedia+Commons-20130207231014.xml"
-    #dump = XmlDump(xmlFile3,allrevisions=True)
-    #edits = list(dump.parse())
     edits = parse_xml_dump(xmlFile)
 
     userContribs = analyse_edits(edits, datetime.date(2011, 01, 01), datetime.date(2011, 11, 30))
@@ -194,5 +176,4 @@ if __name__ == "__main__":
         #print
         #for date in userContribs[user]:
             #print date
-    print buildReportFromUserList(userContribs)
-
+    print build_report_from_user_list(userContribs)
