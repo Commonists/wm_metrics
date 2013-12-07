@@ -1,7 +1,9 @@
 """Unit tests for Dump analysing stuff."""
 
 import unittest
-from analyse_commons_dump import get_categories_from_text
+from datetime import date
+from analyse_commons_dump import get_categories_from_text,\
+    timestamp_to_date
 
 
 class TestAnalyseCommonsDump(unittest.TestCase):
@@ -15,6 +17,14 @@ class TestAnalyseCommonsDump(unittest.TestCase):
         ]
         for value, expected in values:
             self.assertEqual(get_categories_from_text(value), expected)
+
+    def test_timestamp_to_date(self):
+        """Test timestamp_to_date."""
+        values = [
+            ('2005-07-23T01:36:22Z', date(2005, 7, 23)),
+        ]
+        for value, expected in values:
+            self.assertEqual(timestamp_to_date(value), expected)
 
 
 if __name__ == '__main__':
