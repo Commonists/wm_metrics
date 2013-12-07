@@ -1,0 +1,256 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.8/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.8/ http://www.mediawiki.org/xml/export-0.8.xsd" version="0.8" xml:lang="en">
+  <siteinfo>
+    <sitename>Wikimedia Commons</sitename>
+    <base>http://commons.wikimedia.org/wiki/Accueil</base>
+    <generator>MediaWiki 1.23wmf5</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2" case="first-letter">Media</namespace>
+      <namespace key="-1" case="first-letter">Special</namespace>
+      <namespace key="0" case="first-letter" />
+      <namespace key="1" case="first-letter">Talk</namespace>
+      <namespace key="2" case="first-letter">User</namespace>
+      <namespace key="3" case="first-letter">User talk</namespace>
+      <namespace key="4" case="first-letter">Commons</namespace>
+      <namespace key="5" case="first-letter">Commons talk</namespace>
+      <namespace key="6" case="first-letter">File</namespace>
+      <namespace key="7" case="first-letter">File talk</namespace>
+      <namespace key="8" case="first-letter">MediaWiki</namespace>
+      <namespace key="9" case="first-letter">MediaWiki talk</namespace>
+      <namespace key="10" case="first-letter">Template</namespace>
+      <namespace key="11" case="first-letter">Template talk</namespace>
+      <namespace key="12" case="first-letter">Help</namespace>
+      <namespace key="13" case="first-letter">Help talk</namespace>
+      <namespace key="14" case="first-letter">Category</namespace>
+      <namespace key="15" case="first-letter">Category talk</namespace>
+      <namespace key="100" case="first-letter">Creator</namespace>
+      <namespace key="101" case="first-letter">Creator talk</namespace>
+      <namespace key="102" case="first-letter">TimedText</namespace>
+      <namespace key="103" case="first-letter">TimedText talk</namespace>
+      <namespace key="104" case="first-letter">Sequence</namespace>
+      <namespace key="105" case="first-letter">Sequence talk</namespace>
+      <namespace key="106" case="first-letter">Institution</namespace>
+      <namespace key="107" case="first-letter">Institution talk</namespace>
+      <namespace key="460" case="case-sensitive">Campaign</namespace>
+      <namespace key="461" case="case-sensitive">Campaign talk</namespace>
+      <namespace key="828" case="first-letter">Module</namespace>
+      <namespace key="829" case="first-letter">Module talk</namespace>
+      <namespace key="1198" case="first-letter">Translations</namespace>
+      <namespace key="1199" case="first-letter">Translations talk</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>File:Example.jpg</title>
+    <ns>6</ns>
+    <id>6428847</id>
+    <revision>
+      <id>550815</id>
+      <timestamp>2005-07-23T01:36:22Z</timestamp>
+      <contributor>
+        <username>Kale</username>
+        <id>10268</id>
+      </contributor>
+      <text xml:space="preserve" bytes="0" />
+      <sha1>phoiac9h4m842xq45sp7s6u21eteeq1</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>95447605</id>
+      <parentid>69546123</parentid>
+      <timestamp>2013-05-01T12:42:13Z</timestamp>
+      <contributor>
+        <username>Steinsplitter</username>
+        <id>2055977</id>
+      </contributor>
+      <comment>Fulfilling [[Template:Edit request|edit request]] by Perhelion. Thanks for helping!</comment>
+      <text xml:space="preserve" bytes="486">{{protected}}
+{{vva|File:Example en.svg}}
+
+{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{own}}
+|Date=2005-07
+|Author=[[User:Bdk|bdk]]
+|Permission={{PD-ineligible}}
+|other_versions={{Other versions/Example}}
+}}
+
+== See also ==
+*[[:Template:Edit]]
+
+[[Category:Example images]]</text>
+      <sha1>iecn6fl0pou12z112ydf5uyu6uwtcrf</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>95447904</id>
+      <parentid>95447605</parentid>
+      <timestamp>2013-05-01T12:45:02Z</timestamp>
+      <contributor>
+        <username>Steinsplitter</username>
+        <id>2055977</id>
+      </contributor>
+      <comment>cleanup using [[User:Magog the Ogre/cleanup.js|cleanup v2]]</comment>
+      <text xml:space="preserve" bytes="511">{{protected}}
+
+{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{own}}
+|Date=2005-07
+|Author=[[User:Bdk|bdk]]
+|Permission={{PD-ineligible}}
+|other_versions={{Vector version available|File:Example en.svg}}&lt;br/&gt;{{Other versions/Example}}
+}}
+
+== See also ==
+*[[:Template:Edit]]
+
+[[Category:Example images]]</text>
+      <sha1>9f7pfucuc5wio0j6tkpqbwxf0tlad6q</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>97358690</id>
+      <parentid>95447904</parentid>
+      <timestamp>2013-05-31T13:00:45Z</timestamp>
+      <contributor>
+        <username>Trijnstel</username>
+        <id>709543</id>
+      </contributor>
+      <comment>+prohibited name</comment>
+      <text xml:space="preserve" bytes="530">{{protected}}{{Prohibited name}}
+
+{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{own}}
+|Date=2005-07
+|Author=[[User:Bdk|bdk]]
+|Permission={{PD-ineligible}}
+|other_versions={{Vector version available|File:Example en.svg}}&lt;br/&gt;{{Other versions/Example}}
+}}
+
+== See also ==
+*[[:Template:Edit]]
+
+[[Category:Example images]]</text>
+      <sha1>ci37ck0uhejcykarsm6slof7knt7y2x</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+  </page>
+  <page>
+    <title>File:Example en.svg</title>
+    <ns>6</ns>
+    <id>25723933</id>
+    <revision>
+      <id>95004556</id>
+      <timestamp>2013-04-23T10:41:49Z</timestamp>
+      <contributor>
+        <username>Perhelion</username>
+        <id>1060208</id>
+      </contributor>
+      <comment>{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Sou...</comment>
+      <text xml:space="preserve" bytes="613">{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{Derived from|Example.jpg|display=50}}
+|Date=2013-04-23 10:39 (UTC)
+|Author=*[[:File:Example.jpg|Example.jpg]]: [[User:Bdk|bdk]]
+*derivative work: [[User:Perhelion|Perhelion]]
+|Permission={{self|PD-ineligible}}
+|other_versions={{Other versions/Example}}
+}}
+
+{{RetouchedPicture|SVG conversion|editor=Perhelion|orig=Example.jpg}}
+
+[[Category:Example images]]</text>
+      <sha1>563wj8xhzczxq2vrp89u88j560anbf3</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>104678623</id>
+      <parentid>95004556</parentid>
+      <timestamp>2013-09-19T12:23:13Z</timestamp>
+      <contributor>
+        <ip>37.114.157.228</ip>
+      </contributor>
+      <text xml:space="preserve" bytes="676">File:Example.jpg|Caption1
+File:Example.jpg|Caption2
+&lt;/gallery&gt;
+{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{Derived from|Example.jpg|display=50}}
+|Date=2013-04-23 10:39 (UTC)
+|Author=*[[:File:Example.jpg|Example.jpg]]: [[User:Bdk|bdk]]
+*derivative work: [[User:Perhelion|Perhelion]]
+|Permission={{self|PD-ineligible}}
+|other_versions={{Other versions/Example}}
+}}
+
+{{RetouchedPicture|SVG conversion|editor=Perhelion|orig=Example.jpg}}
+
+[[Category:Example images]]</text>
+      <sha1>jgbdjq1ebf2tvp94aawvmdrwl77z32v</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>105400208</id>
+      <parentid>104678623</parentid>
+      <timestamp>2013-09-26T09:54:42Z</timestamp>
+      <contributor>
+        <ip>76.164.220.82</ip>
+      </contributor>
+      <text xml:space="preserve" bytes="673">File:IMG_0432|Caption1
+File:Example.jpg|Caption2
+&lt;/gallery&gt;
+{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{Derived from|Example.jpg|display=50}}
+|Date=2013-04-23 10:39 (UTC)
+|Author=*[[:File:Example.jpg|Example.jpg]]: [[User:Bdk|bdk]]
+*derivative work: [[User:Perhelion|Perhelion]]
+|Permission={{self|PD-ineligible}}
+|other_versions={{Other versions/Example}}
+}}
+
+{{RetouchedPicture|SVG conversion|editor=Perhelion|orig=Example.jpg}}
+
+[[Category:Example images]]</text>
+      <sha1>mbjdpnrpjdl7rs0azokvres1cctydb8</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+    <revision>
+      <id>105400519</id>
+      <parentid>105400208</parentid>
+      <timestamp>2013-09-26T09:57:25Z</timestamp>
+      <contributor>
+        <username>Jafeluv</username>
+        <id>690731</id>
+      </contributor>
+      <comment>rv</comment>
+      <text xml:space="preserve" bytes="613">{{Information
+|Description={{en|Example image, used for tracking test edits. – This file name (Example.jpg) is used by English language and other language MediaWiki installations when you click the respective toolbar button. (English language)}}
+|Source={{Derived from|Example.jpg|display=50}}
+|Date=2013-04-23 10:39 (UTC)
+|Author=*[[:File:Example.jpg|Example.jpg]]: [[User:Bdk|bdk]]
+*derivative work: [[User:Perhelion|Perhelion]]
+|Permission={{self|PD-ineligible}}
+|other_versions={{Other versions/Example}}
+}}
+
+{{RetouchedPicture|SVG conversion|editor=Perhelion|orig=Example.jpg}}
+
+[[Category:Example images]]</text>
+      <sha1>563wj8xhzczxq2vrp89u88j560anbf3</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+  </page>
+</mediawiki>
