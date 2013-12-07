@@ -149,6 +149,16 @@ ignored files: %d"""\
 						self.fp += 1
 					if l['title'] == 'Category:Valued images sorted by promotion date':
 						self.vi += 1
+		for pageid in infos.keys():
+			ii = infos[pageid]['imageinfo'] #list of revision
+			ii.reverse()
+			size = int(ii[0]['width']) * int(ii[0]['height'])
+			if not (ii[0]['user'] in self.uploaders):
+				self.uploaders.append(ii[0]['user'])
+			if size > HD_SIZE:
+				self.hd_images.append(infos[pageid]['title'])
+			if size > HD4K_SIZE:
+				self.hd_4k.append(infos[pageid]['title'])
 		self.displays()		
 
 # print commons.process_query(list_cat)
