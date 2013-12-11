@@ -1,6 +1,7 @@
 """Unit tests for Dump analysing stuff."""
 
 import unittest
+from os.path import dirname, join
 from datetime import date
 from analyse_commons_dump import get_categories_from_text,\
     parse_xml_dump,\
@@ -29,7 +30,7 @@ class TestAnalyseCommonsDump(unittest.TestCase):
 
     def test_parse_xml_dump(self):
         """Test parse_xml_dump."""
-        example_dump = 'data/example_dump.xml'
+        example_dump = join(dirname(__file__), 'data', 'example_dump.xml')
         results = parse_xml_dump(example_dump)
         expected = [
             (u'Kale', date(2005, 7, 23), u'File:Example.jpg'),
