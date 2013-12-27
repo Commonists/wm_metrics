@@ -28,6 +28,9 @@ def str2cat(category):
 		return category
 
 def list_users(mw, category, lang):
+	"""
+	List users from a wiki category and print lines of the cohort CSV.
+	"""
 	list_query = mw_api.MwApiQuery(properties={
 				"list"   : "categorymembers",
 				"cmtitle": category,
