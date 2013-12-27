@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
+"""
+commons_metrics.py
+	the goal of this script is to computes metrics for program leaders based on
+	a media category.
 
-import mw_api, json, codecs
+	Test:
+		python commons_metrics -c "Supported by Projet Phoebus"
+		python commons_metrics -c "Category:Media supported by Wikimedia France"
+
+#category = "Category:Wikimedia France - Saint-Sernin"	
+"""
+
+
+import mw_api, mw_util, json, codecs
 
 #
 # HD definition in pixels
@@ -161,11 +173,32 @@ ignored files: %d"""\
 				self.hd_4k.append(infos[pageid]['title'])
 		self.displays()		
 
+def main():
+	"""
+	Main function of the script commons_metrics.py.
+	"""
+	from argparse import ArgumentParser
+	description = "Computes metrics about a commons category"
+	parser = ArgumentParser(description=description)
+
+	parser.add_argument("-c", "--category",
+    					type=str,
+                        dest="category",
+						metavar="CAT",
+						required=True,
+                        help="The category on which we compute metrics")
+	args = parser.parse_args()
+
+	metrics = CommonsMetrics(mw_util.str2cat(args.category))
+	metrics.computes_opt()
+
 # print commons.process_query(list_cat)
 
 #category = "Category:Media supported by Wikimedia France"
-category = "Category:Wikimedia France - Saint-Sernin"
-metrics = CommonsMetrics(category)
+#category = "Category:Wikimedia France - Saint-Sernin"
+#metrics = CommonsMetrics(category)
 
 #metrics.computes()
-metrics.computes_opt()
+
+if __name__ == "__main__":
+	main()
