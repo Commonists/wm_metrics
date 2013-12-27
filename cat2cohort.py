@@ -9,7 +9,7 @@ cat2cohort.py
 	Test:
 		python cat2cohort.py -l fr -c "Utilisateur participant au projet Afripédia"
 """
-import mw_api
+import mw_api, mw_util
 
 def api_url(lang):
 	"""
@@ -17,15 +17,7 @@ def api_url(lang):
 	"""
 	return "https://%s.wikipedia.org/w/api.php" % (lang)
 
-def str2cat(category):
-	"""
-	Returns a category name starting with Category:
-	"""
-	prefix = "Category:"
-	if not category.startswith(prefix):
-		return "%s%s" % (prefix, category)
-	else:
-		return category
+
 
 def list_users(mw, category, lang):
 	"""
@@ -69,7 +61,7 @@ def main():
 
 	args = parser.parse_args()
 	mw = mw_api.MwWiki(url_api=api_url(args.lang))
-	user_list = list_users(mw, str2cat(args.category), args.lang)
+	user_list = list_users(mw, mw_util.str2cat(args.category), args.lang)
 
 if __name__ == "__main__":
 	main()
