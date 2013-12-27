@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-import re, urllib, codecs, json
+import re, urllib, codecs, json, httplib2
 
 DEFAULT_API="https://commons.wikimedia.org/w/api.php"
 MAX_URL_SIZE=1024
@@ -23,17 +23,25 @@ class MwWiki:
 	def __init__(self, url_api=DEFAULT_API):
 		self.url = url_api
 
+	def __encode_param(self, param):
+		if not isinstance(param, unicode):
+			return unicode(param)
+		else:
+			return param
+
 	def send_to_api(self, request, debug=False):
 		# add action to url
 		url_req = "%s?action=%s" % (self.url, request.action)
 		# add each property
 		for k in request.prop.keys():
-			url_req += "&%s=%s" % (k, urlEncodeNonAscii(request.prop[k]))
+			#url_req += "&%s=%s" % (k, urlEncodeNonAscii(request.prop[k]))
+			url_req += "&%s=%s" % (k, self.__encode_param(request.prop[k]))
 		# add the format
 		url_req += "&format=%s" % (request.format)
 		#print url_req
 		if not debug:
-			return urllib.urlopen(url_req).read()
+			uri = httplib2.iri2uri(unicode(url_req))
+			return urllib.urlopen(uri).read()
 		else:
 			return url_req
 
@@ -56,16 +64,18 @@ class MwWiki:
 				url_req = url_base
 			
 			if '&titles' not in url_req:
-				url_req += "&titles=%s" % (urlEncodeNonAscii(title))
+				url_req += "&titles=%s" % (self.__encode_param(title))
 			else:
-				url_req += "|%s" % (urlEncodeNonAscii(title))
+				url_req += "|%s" % (self.__encode_param(title))
 		if len(url_req) > len(url_base):
 			self.process_prop_query_results(url_req, results)
 		return results
 
 	def process_prop_query_results(self, url_req, results):
 		try:
-			req_result = json.loads(urllib.urlopen(url_req).read())
+			uri = httplib2.iri2uri(unicode(url_req))
+			req_result  = json.loads(urllib.urlopen(uri).read())
+			# req_result = json.loads(self.__get_url(url_req).read())
 			if 'query-continue' in req_result.keys():
 				raise MwQueryError("continue not supported for prop query") 
 			r = req_result['query']['pages']
