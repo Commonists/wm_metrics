@@ -3,7 +3,7 @@
 import unittest
 from os.path import dirname, join
 from datetime import date
-from analyse_commons_dump import get_categories_from_text,\
+from wm_metrics.analyse_commons_dump import get_categories_from_text,\
     parse_xml_dump,\
     timestamp_to_date
 

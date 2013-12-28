@@ -4,7 +4,7 @@
 """Unit tests for traffic statistics stuff."""
 
 import unittest
-from traffic_statistics import Traffic
+from wm_metrics.traffic_statistics import Traffic
 
 
 class TestTraffic(unittest.TestCase):
