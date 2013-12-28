@@ -6,9 +6,9 @@ try:
 except ImportError:
     from distutils.core import setup
 
-packages = []
+packages = ['wm_metrics']
 requires = ['argparse', 'httplib2']
-scripts  = ['new_editor.py']
+scripts  = []
 
 setup(
       name         = 'wm_metrics',
