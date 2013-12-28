@@ -7,7 +7,7 @@ except ImportError:
     from distutils.core import setup
 
 packages = []
-requires = ['argparse']
+requires = ['argparse', 'httplib2']
 scripts  = ['new_editor.py']
 
 setup(
