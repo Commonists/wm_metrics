@@ -85,3 +85,14 @@ FROM
       AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
    GROUP BY page.page_title
    ORDER BY img_timestamp ASC) labels;
+
+-- Count uploaders of files in @cat between @t1 and @t2
+SELECT /* SLOW_OK */ COUNT(DISTINCT img_user_text) AS USER 
+   FROM image
+   CROSS JOIN page ON image.img_name = page.page_title 
+   CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
+   LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
+   WHERE  
+       categorylinks.cl_to = @cat
+      AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN @t1 AND @t2
+   ORDER BY img_timestamp ASC;
