@@ -6,13 +6,15 @@ Metrics tools for Wikimedia projects
 
 Overview
 --------
-
+wm_metrics (python):
 - `new_editor.py` − Computes new editor numbers based on [WikiMetrics] data
 - `commons_metrics.py` − Computes quality metrics of files in a given
   Wikimedia Commons category, using the [MediaWiki API].
 - `mw_api.py` − A simple wrapper around the [MediaWiki API].
 - `analyse_commons_dump.py` − Computing metrics out of a Wikimedia Commons dump
 - `traffic_statistics.py` − An API for [stats.grok.se]
+sql (sql queries for wmflabs):
+- `media_category_metrics` − Metrics for a specific category of File uploaded during a time period
 
 
 Authors 
