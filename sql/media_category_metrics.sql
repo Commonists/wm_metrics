@@ -69,3 +69,16 @@ SELECT /* SLOW_OK */ COUNT(page.page_title)
       AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN @t1 AND @t2
       AND c2.cl_to = "Valued_images_sorted_by_promotion_date"
    ORDER BY img_timestamp ASC;
+   
+-- Count files which are Quality Image or Valued Image or Featured picture on Wikimedia Commons
+SELECT /* SLOW_OK */ COUNT(page.page_title)
+   FROM image
+   CROSS JOIN page ON image.img_name = page.page_title 
+   CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
+   CROSS JOIN categorylinks c2 ON page.page_id = c2.cl_from
+   LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
+   WHERE  
+       categorylinks.cl_to = @cat
+      AND IF(oldimage.oi_timestamp is NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN @t1 AND @t2
+      AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
+   ORDER BY img_timestamp ASC;
