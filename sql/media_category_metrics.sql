@@ -73,7 +73,7 @@ SELECT /* SLOW_OK */ COUNT(page.page_title)
 -- Count files which are Quality Image or Valued Image or Featured picture on Wikimedia Commons
 SELECT /* SLOW_OK */ COUNT(*)
 FROM 
-	(SELECT /* SLOW_OK */ COUNT(page.page_title)
+	(SELECT /* SLOW_OK */ page.page_title
    FROM image
    CROSS JOIN page ON image.img_name = page.page_title 
    CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
