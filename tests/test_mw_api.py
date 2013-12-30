@@ -1,5 +1,4 @@
 """Unit tests for mw_api."""
-from libxml2mod import properties
 
 import unittest
 from wm_metrics.mw_api import MwApi, MwApiQuery
