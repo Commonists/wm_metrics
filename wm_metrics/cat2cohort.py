@@ -37,6 +37,13 @@ def list_users(mw, category, lang):
 			username = page['title'].split(":")[1]
 			print "%s, %swiki" % (username, lang)
 
+
+def cat_to_cohort(language, category):
+    """Get the user list from the given category and language."""
+    mw = mw_api.MwWiki(url_api=api_url(language))
+    user_list = list_users(mw, mw_util.str2cat(category), language)
+
+
 def main():
 	"""
 	Main function of the script cat2cohort.py
@@ -60,8 +67,7 @@ def main():
                         help="Wiki language")
 
 	args = parser.parse_args()
-	mw = mw_api.MwWiki(url_api=api_url(args.lang))
-	user_list = list_users(mw, mw_util.str2cat(args.category), args.lang)
+	cat_to_cohort(args.lang, args.category)
 
 if __name__ == "__main__":
 	main()
