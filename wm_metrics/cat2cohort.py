@@ -43,7 +43,12 @@ def cat_to_cohort(language, category):
     mw = mw_api.MwWiki(url_api=api_url(language))
     user_list = list_users(mw, mw_util.str2cat(category), language)
     for (username, language) in user_list:
-        print "%s, %swiki" % (username, language)
+        print _make_CSV_line(username, language)
+
+
+def _make_CSV_line(username, language):
+    """Return a WikiMetrics compatible CSV line."""
+    return "%s, %swiki" % (username, language)
 
 
 def main():
