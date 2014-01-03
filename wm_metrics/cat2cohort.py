@@ -35,13 +35,15 @@ def list_users(mw, category, lang):
 	for page in mw.process_query(list_query):
 		if ":" in page['title']:
 			username = page['title'].split(":")[1]
-			print "%s, %swiki" % (username, lang)
+			yield (username, lang)
 
 
 def cat_to_cohort(language, category):
     """Get the user list from the given category and language."""
     mw = mw_api.MwWiki(url_api=api_url(language))
     user_list = list_users(mw, mw_util.str2cat(category), language)
+    for (username, language) in user_list:
+        print "%s, %swiki" % (username, language)
 
 
 def main():
