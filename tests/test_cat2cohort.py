@@ -8,6 +8,11 @@ class TestCat2Cohort(unittest.TestCase):
 
     """Test methods from Cat2Cohort."""
 
+    def setUp(self):
+        """Set up the tests."""
+        self.userlist = [('Toto', 'fr'), ('Titi', 'en')]
+        self.csvlines = ['Toto, frwiki', 'Titi, enwiki']
+
     def test_api_url(self):
         """Test api_url."""
         values = [
@@ -19,11 +24,7 @@ class TestCat2Cohort(unittest.TestCase):
 
     def test_make_CSV_line(self):
         """Test _make_CSV_line."""
-        values = [
-            (('Toto', 'fr'), 'Toto, frwiki'),
-            (('Titi', 'en'), 'Titi, enwiki'),
-        ]
-        for value, expected in values:
+        for value, expected in zip(self.userlist, self.csvlines):
             self.assertEqual(_make_CSV_line(*value), expected)
 
     def test_userlist_to_CSV_cohort(self):
