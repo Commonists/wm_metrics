@@ -42,8 +42,14 @@ def cat_to_cohort(language, category):
     """Get the user list from the given category and language."""
     mw = mw_api.MwWiki(url_api=api_url(language))
     user_list = list_users(mw, mw_util.str2cat(category), language)
-    for (username, language) in user_list:
-        print _make_CSV_line(username, language)
+    csv_text = _userlist_to_CSV_cohort(user_list)
+    print csv_text
+
+
+def _userlist_to_CSV_cohort(user_list):
+    """Return the given user list as a CSV cohort."""
+    return '\n'.join([_make_CSV_line(username, language)
+                      for (username, language) in user_list])
 
 
 def _make_CSV_line(username, language):

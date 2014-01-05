@@ -1,7 +1,7 @@
 """Unit tests for cat2cohort."""
 
 import unittest
-from wm_metrics.cat2cohort import api_url, _make_CSV_line
+from wm_metrics.cat2cohort import api_url, _make_CSV_line, _userlist_to_CSV_cohort
 
 
 class TestCat2Cohort(unittest.TestCase):
@@ -25,3 +25,9 @@ class TestCat2Cohort(unittest.TestCase):
         ]
         for value, expected in values:
             self.assertEqual(_make_CSV_line(*value), expected)
+
+    def test_userlist_to_CSV_cohort(self):
+        """Test _userlist_to_CSV_cohort."""
+        expected = '\n'.join(self.csvlines)
+        self.assertEqual(_userlist_to_CSV_cohort(self.userlist),
+                         expected)
