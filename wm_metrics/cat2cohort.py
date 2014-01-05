@@ -43,7 +43,7 @@ def cat_to_cohort(language, category):
     mw = mw_api.MwWiki(url_api=api_url(language))
     user_list = list_users(mw, mw_util.str2cat(category), language)
     csv_text = _userlist_to_CSV_cohort(user_list)
-    print csv_text
+    return csv_text
 
 
 def _userlist_to_CSV_cohort(user_list):
@@ -80,7 +80,8 @@ def main():
                         help="Wiki language")
 
 	args = parser.parse_args()
-	cat_to_cohort(args.lang, args.category)
+	print cat_to_cohort(args.lang, args.category)
+
 
 if __name__ == "__main__":
 	main()
