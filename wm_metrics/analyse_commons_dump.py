@@ -64,18 +64,20 @@ def analyse_edits(edits, bottomDate, topDate):
     return user_contribs
 
 
+def make_edits_analysis(xml_file):
+    edits = parse_xml_dump(xml_file)
+    start_date = datetime.datetime(2009, 1, 1)
+    end_date = datetime.datetime(2013, 10, 31)
+    username_blacklist = u'TrutatBot'
+    user_contribs = analyse_edits(edits, start_date, end_date, username_blacklist)
+    #print user_contribs
+    for user in user_contribs.keys():
+        print "%s : %s" % (user, len(user_contribs[user]))
+
+def main():
+    ##dummy_xml_file = "/home/jfk/Tuile/wm_metrics/tests/data/example_dump.xml"
+    xml_file = "data/Wikimedia+Commons-20131208151654.xml"
+    make_edits_analysis(xml_file)
+
 if __name__ == "__main__":
-    xmlFile = "Wikimedia+Commons-20130207231014.xml"
-    edits = parse_xml_dump(xmlFile)
-
-    userContribs = analyse_edits(edits, datetime.date(2011, 01, 01), datetime.date(2011, 11, 30))
-    x = datetime.date(2011, 01, 15)
-    #print x > datetime.date(2011, 01, 01) and x < datetime.date(2013, 11, 30)
-
-    #print userContribs
-    for user in userContribs.keys():
-        print "%s : %s" % (user, len(userContribs[user]))
-        #print
-        #for date in userContribs[user]:
-            #print date
-    print build_report_from_user_list(userContribs)
+    main()
