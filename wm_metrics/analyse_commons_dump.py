@@ -15,8 +15,14 @@ def handle_node(node, tag_name):
 
 
 def timestamp_to_date(date):
-    """Return a date object representing the given MediaWiki timestamp."""
-    return datetime.date(int(date[0:4]), int(date[5:7]), int(date[8:10]))
+    """Return a datetime object representing the given MediaWiki timestamp."""
+    return datetime.datetime(int(date[0:4]),
+                             int(date[5:7]),
+                             int(date[8:10]),
+                             int(date[11:13]),
+                             int(date[14:16]),
+                             int(date[17:19]),
+                             )
 
 
 def parse_xml_dump(xml_dump):

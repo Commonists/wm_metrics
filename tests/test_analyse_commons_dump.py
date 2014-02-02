@@ -2,7 +2,7 @@
 
 import unittest
 from os.path import dirname, join
-from datetime import date
+from datetime import datetime
 from wm_metrics.analyse_commons_dump import get_categories_from_text,\
     parse_xml_dump,\
     timestamp_to_date
@@ -23,7 +23,7 @@ class TestAnalyseCommonsDump(unittest.TestCase):
     def test_timestamp_to_date(self):
         """Test timestamp_to_date."""
         values = [
-            ('2005-07-23T01:36:22Z', date(2005, 7, 23)),
+            ('2005-07-23T01:36:22Z', datetime(2005, 7, 23, 1, 36, 22)),
         ]
         for value, expected in values:
             self.assertEqual(timestamp_to_date(value), expected)
