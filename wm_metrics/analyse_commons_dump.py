@@ -22,21 +22,16 @@ def timestamp_to_date(date):
 def parse_xml_dump(xml_dump):
     """Return a list of the edits in a Wikimedia Commons dump."""
     edits = []
-    revision_categories = {}
     doc = xml.dom.minidom.parse(xml_dump)
     for mediawiki_node in doc.childNodes:
         if mediawiki_node.localName == u'mediawiki':
             for page_node in mediawiki_node.childNodes:
                 for revision_node in page_node.childNodes:
                     title = handle_node(page_node, u'title')
-                    revision_categories[title] = []
                     if revision_node.localName == u'revision':
                         username = handle_node(revision_node, u'username')
                         timestamp = handle_node(revision_node, u'timestamp')
-                        text = handle_node(revision_node, u'text')
                         edits.append((username, timestamp_to_date(timestamp), title))
-                        #cats = get_categories_from_text(text)
-                        #revision_categories[title].append(cats)
     return edits
 
 
@@ -46,16 +41,13 @@ def get_categories_from_text(edit):
     return map(lambda x: x[0], re.findall(cat_pattern, edit))
 
 
-def analyse_edits(edits, bottomDate, topDate):
-    all_pages = list(set(map(lambda x: x[2], edits)))
-
-    #print allPages
-    edits_filtered = filter(lambda x: bottomDate < x[1] < topDate, edits)
-    edits_filtered = edits
+def analyse_edits(edits, bottom_date, top_date, username_blacklist):
+    """Analyse and filter the edits."""
+    edits_filtered = filter(lambda x: bottom_date < x[1] < top_date, edits)
+    edits_filtered = filter(lambda x: x[0] not in username_blacklist, edits_filtered)
     usernames = set(map(lambda x: x[0], edits_filtered))
     page_edited = list(set(map(lambda x: x[2], edits_filtered)))
-
-    text = "Sur la période considérée, %s modifications ont été effectuées" \
+    text = "Sur la période considérée, %s modifications ont été effectuées " \
            "par %s utilisateurs sur %s documents distincts "
     print text % (len(edits_filtered), len(usernames), len(page_edited))
     user_contribs = {}
