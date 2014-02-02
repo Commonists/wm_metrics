@@ -19,14 +19,6 @@ def timestamp_to_date(date):
     return datetime.date(int(date[0:4]), int(date[5:7]), int(date[8:10]))
 
 
-def title_to_identifier(title):
-    """Return the Trutat identifier in a given filename."""
-    id_search = re.search(r" - (?P<id>51Fi.+?) - ", title)
-    if id_search:
-        identifier = id_search.group('id')
-        return identifier
-
-
 def parse_xml_dump(xml_dump):
     """Return a list of the edits in a Wikimedia Commons dump."""
     edits = []
@@ -66,104 +58,10 @@ def analyse_edits(edits, bottomDate, topDate):
     text = "Sur la période considérée, %s modifications ont été effectuées" \
            "par %s utilisateurs sur %s documents distincts "
     print text % (len(edits_filtered), len(usernames), len(page_edited))
-
-    #globalUsage = listGlobalUsage(allPages)
-
-    #print globalUsage
-
-    #buildUsageReport(globalUsage)
-
     user_contribs = {}
     for username in usernames:
         user_contribs[username] = map(lambda x: x[1], filter(lambda x: x[0] == username, edits_filtered))
     return user_contribs
-
-
-def list_global_usage(all_pages):
-    r = range(0, len(all_pages), 50)
-    r2 = r[1:] + [None]
-    return reduce(lambda x, y: x + y, map(lambda x: query_global_usage(all_pages[x[0]:x[1]]), zip(r, r2)))
-
-
-def build_usage_report(global_usage):
-
-    def build_usage_line(file_usage):
-        title = file_usage[0][5:]
-        print title
-        print title_to_identifier(title)
-
-        def build_usage_subLine(usage):
-            return "\item \lienProjet{%s}{%s}" % usage
-
-
-        return "\item \commonsFileLink{%s}{%s}, sur \lienProjet{%s}{%s}" % (title, title_to_identifier(title), usage[1])
-
-    for item in global_usage:
-        print build_usage_line(item)
-
-
-        #report=u"""Sur la période observée, %s images étaient utilisées sur les projets Wikimedia :
-        #\\begin{itemize}
-
-        #\item \commonsFileLink{Toulouse._Foire_à_l’ail._24_août_1899_(1899)_-_51Fi49_-_Fonds_Trutat.jpg}{51Fi49}, sur \articleWP{Ail cultivé}, consulté 7571 fois ce mois
-        #\item \commonsFileLink{Toulouse._Racleurs_de_rails._Place_du_Pont._25_juin_1899_(1899)_-_51Fi60_-_Fonds_Trutat.jpg}{51Fi60}, sur \articleWP{Tramway de Toulouse}
-        #\\end{itemize}
-
-        #"""
-
-
-def build_report_from_user_list(user_edits):
-    nb_users = len(user_edits.keys())
-    the_list = python_list_to_latex_description(user_edits.keys(), map(build_user_item, user_edits.values()))
-    report = u"""Sur la période observée, %s utilisateurs ont contribué au corpus :
-  %s
-  """ % (nb_users, the_list)
-    return report
-
-
-def accordEnNombre(number, singular, plural):
-    if number > 1:
-        return u"%s %s" % (number, plural)
-    else:
-        return u"%s %s" % (number, singular)
-
-
-def build_user_item(edits):
-    return accordEnNombre(len(edits), u"modification", u"modifications")
-
-
-def python_list_to_latex_description(list1, list2):
-    return u"""\\begin{description}  %s\n\\end{description}
-  """ % (u"".join(map(lambda x, y: u"\n	\item[%s] \hfill \\\\ %s " % (x, y), list1, list2)))
-
-
-def python_list_to_latex_itemize(my_list):
-    return u"""\
-  \\begin{itemize}
-  \t\item %s
-  \\end{itemize}""" % (u"\n\t\item ".join(my_list))
-
-
-def query_global_usage(filelist):
-    if len(filelist) is 0:
-        return []
-    params = {
-        'action': 'query',
-        'prop': 'globalusage',
-        'titles': "|".join(filelist),
-        'gulimit': '500',
-    }
-
-    query_result = query.GetData(params, encodeTitle=False)
-
-    def retrieve_from_globa_usage(global_usage):
-        if len(global_usage) is 0:
-            return []
-        else:
-            return map(lambda x: (x["wiki"], x["title"]), global_usage)
-
-    return filter(lambda x: len(x[1]) > 0, map(lambda x: (x["title"], retrieve_from_globa_usage(x["globalusage"])),
-                                               query_result["query"]["pages"].values()))
 
 
 if __name__ == "__main__":
