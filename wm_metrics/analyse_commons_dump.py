@@ -110,8 +110,7 @@ def parse_xml_dump(xml_dump):
 def get_categories_from_text(edit):
     """Return the categories contained in a given wikitext."""
     cat_pattern = r"\[\[Category:(?P<cat>.+?)(\|.*?)?\]\]"
-    return map(lambda x: x[0], re.findall(cat_pattern, edit))
-
+    return [x[0] for x in re.findall(cat_pattern, edit)]
 
 
 def main():
