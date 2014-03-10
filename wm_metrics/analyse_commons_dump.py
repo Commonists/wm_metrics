@@ -5,6 +5,18 @@ import re
 import datetime
 
 
+class DumpMediaCollection(dict):
+
+    """Representation of a MediaCollection, dump style."""
+
+    def __init__(self):
+        super(DumpMediaCollection, self).__init__()
+
+    def init_from_xml_dump(self, xml_dump):
+        """Initialise the object using an XML dump."""
+        self.update(parse_xml_dump(xml_dump))
+
+
 def handle_node(node, tag_name):
     """Return the contents of a tag based on his given name inside of a given node."""
     element = node.getElementsByTagName(tag_name)
