@@ -47,35 +47,9 @@ def get_categories_from_text(edit):
     return map(lambda x: x[0], re.findall(cat_pattern, edit))
 
 
-def analyse_edits(edits, bottom_date, top_date, username_blacklist):
-    """Analyse and filter the edits."""
-    edits_filtered = filter(lambda x: bottom_date < x[1] < top_date, edits)
-    edits_filtered = filter(lambda x: x[0] not in username_blacklist, edits_filtered)
-    usernames = set(map(lambda x: x[0], edits_filtered))
-    page_edited = list(set(map(lambda x: x[2], edits_filtered)))
-    text = "Sur la période considérée, %s modifications ont été effectuées " \
-           "par %s utilisateurs sur %s documents distincts "
-    print text % (len(edits_filtered), len(usernames), len(page_edited))
-    user_contribs = {}
-    for username in usernames:
-        user_contribs[username] = map(lambda x: x[1], filter(lambda x: x[0] == username, edits_filtered))
-    return user_contribs
-
-
-def make_edits_analysis(xml_file):
-    edits = parse_xml_dump(xml_file)
-    start_date = datetime.datetime(2009, 1, 1)
-    end_date = datetime.datetime(2013, 10, 31)
-    username_blacklist = u'TrutatBot'
-    user_contribs = analyse_edits(edits, start_date, end_date, username_blacklist)
-    #print user_contribs
-    for user in user_contribs.keys():
-        print "%s : %s" % (user, len(user_contribs[user]))
 
 def main():
-    ##dummy_xml_file = "/home/jfk/Tuile/wm_metrics/tests/data/example_dump.xml"
-    xml_file = "data/Wikimedia+Commons-20131208151654.xml"
-    make_edits_analysis(xml_file)
+    pass
 
 if __name__ == "__main__":
     main()
