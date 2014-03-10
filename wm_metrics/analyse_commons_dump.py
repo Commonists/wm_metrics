@@ -26,19 +26,27 @@ def timestamp_to_date(date):
 
 
 def parse_xml_dump(xml_dump):
-    """Return a list of the edits in a Wikimedia Commons dump."""
-    edits = []
+    """Return a dictionary from the given dump."""
+    collection = {}
     doc = xml.dom.minidom.parse(xml_dump)
     for mediawiki_node in doc.childNodes:
         if mediawiki_node.localName == u'mediawiki':
             for page_node in mediawiki_node.childNodes:
-                for revision_node in page_node.childNodes:
-                    title = handle_node(page_node, u'title')
-                    if revision_node.localName == u'revision':
-                        username = handle_node(revision_node, u'username')
+                if page_node.localName == u'page':
+                    page_id = handle_node(page_node, u'id')
+                    page_title = handle_node(page_node, u'title')
+                    revisions = []
+                    revision_nodes = [node for node in page_node.childNodes
+                                      if node.localName == u'revision']
+                    for revision_node in revision_nodes:
                         timestamp = handle_node(revision_node, u'timestamp')
-                        edits.append((username, timestamp_to_date(timestamp), title))
-    return edits
+                        username = handle_node(revision_node, u'username')
+                        if not username:
+                            username = handle_node(revision_node, u'ip')
+                        revision = (timestamp_to_date(timestamp), handle_node(revision_node, u'text'), username)
+                        revisions.append(revision)
+                    collection[page_id] = (page_title, revisions)
+    return collection
 
 
 def get_categories_from_text(edit):
