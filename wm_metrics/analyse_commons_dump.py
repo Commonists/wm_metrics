@@ -17,6 +17,35 @@ class DumpMediaCollection(dict):
         self.update(parse_xml_dump(xml_dump))
 
 
+class CommonsPage():
+
+    """Represent a page."""
+
+    def __init__(self, title=None, revisions=None):
+        #super(CommonsPage, self).__init__()
+        self.title = title
+        if not revisions:
+            revisions = []
+        self.revisions = revisions
+
+    def __repr__(self):
+        return "%s (%s)" % (self.title, len(self.revisions))
+
+
+class CommonsRevision():
+
+    """Representation of a Revision (timestamp + username + wikitext)."""
+
+    def __init__(self, timestamp=None, username=None, wikitext=None):
+        #super(CommonsRevision, self).__init__()
+        self.timestamp = timestamp
+        self.username = username
+        self.wikitext = wikitext
+
+    def __repr__(self):
+        return "%s - %s" % (self.timestamp, self.username.encode('utf-8'))
+
+
 def handle_node(node, tag_name):
     """Return the contents of a tag based on his given name inside of a given node."""
     element = node.getElementsByTagName(tag_name)
@@ -38,7 +67,13 @@ def timestamp_to_date(date):
 
 
 def parse_xml_dump(xml_dump):
-    """Return a dictionary from the given dump."""
+    """Return a dictionary from the given dump.
+
+    A dictionary structured as follow:
+    {page_id => { CommonsPage(title => "Some title"git
+                              revisions => [CommonsRevision, ...] } }
+
+    """
     collection = {}
     doc = xml.dom.minidom.parse(xml_dump)
     for mediawiki_node in doc.childNodes:
@@ -55,9 +90,11 @@ def parse_xml_dump(xml_dump):
                         username = handle_node(revision_node, u'username')
                         if not username:
                             username = handle_node(revision_node, u'ip')
-                        revision = (timestamp_to_date(timestamp), handle_node(revision_node, u'text'), username)
+                        revision = CommonsRevision(timestamp=timestamp_to_date(timestamp),
+                                                   wikitext=handle_node(revision_node, u'text'),
+                                                   username=username)
                         revisions.append(revision)
-                    collection[page_id] = (page_title, revisions)
+                    collection[page_id] = CommonsPage(page_title, revisions)
     return collection
 
 
