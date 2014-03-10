@@ -16,6 +16,11 @@ class DumpMediaCollection(dict):
         """Initialise the object using an XML dump."""
         self.update(parse_xml_dump(xml_dump))
 
+    def get_valued_images(self):
+        """Return a list of valued images in the collection."""
+        return [page_id for (page_id, page) in self.items()
+                if page.get_top_revision().is_valued_image()]
+
 
 class CommonsPage():
 
@@ -50,6 +55,14 @@ class CommonsRevision():
         self.timestamp = timestamp
         self.username = username
         self.wikitext = wikitext
+
+    def is_valued_image(self):
+        """Return whether the given revision is a Valued Image."""
+        vi_pattern = r"""{{VI"""
+        if re.search(vi_pattern, self.wikitext):
+            return True
+        else:
+            return False
 
     def get_categories(self):
         """Return the categories in the given revision."""
