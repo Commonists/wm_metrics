@@ -31,6 +31,15 @@ class CommonsPage():
     def __repr__(self):
         return "%s (%s)" % (self.title, len(self.revisions))
 
+    def get_top_revision(self):
+        """Return the most recent CommonsRevision.
+
+        We assume the revisions list is ordered by time
+        (which is the case when initialized with a dump)
+
+        """
+        return self.revisions[-1]
+
 
 class CommonsRevision():
 
