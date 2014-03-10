@@ -51,6 +51,10 @@ class CommonsRevision():
         self.username = username
         self.wikitext = wikitext
 
+    def get_categories(self):
+        """Return the categories in the given revision."""
+        return get_categories_from_text(self.wikitext)
+
     def __repr__(self):
         return "%s - %s" % (self.timestamp, self.username.encode('utf-8'))
 
