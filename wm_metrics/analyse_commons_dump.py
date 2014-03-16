@@ -16,6 +16,18 @@ class DumpMediaCollection(dict):
         """Initialise the object using an XML dump."""
         self.update(parse_xml_dump(xml_dump))
 
+    def get_state(self, target_datetime):
+        """Return a Collection at the time given."""
+        collection = DumpMediaCollection()
+        for page_id, page in self.items():
+            revisions_bis = [revision for revision in page.revisions
+                             if revision.timestamp < target_datetime]
+            if revisions_bis:
+                new_page = page
+                new_page.revisions = revisions_bis
+                collection[page_id] = new_page
+        return collection
+
     def get_valued_images(self):
         """Return a list of valued images in the collection."""
         return [page_id for (page_id, page) in self.items()
