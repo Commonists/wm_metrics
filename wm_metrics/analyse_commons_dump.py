@@ -28,6 +28,19 @@ class DumpMediaCollection(dict):
                 collection[page_id] = new_page
         return collection
 
+    def get_initial_state(self):
+        """Return a Collection in its initial state."""
+        collection = DumpMediaCollection()
+        for page_id, page in self.items():
+            min_timestamp = min([x.timestamp for x in page.revisions])
+            first_revision = [revision for revision in page.revisions
+                              if revision.timestamp is min_timestamp]
+            new_page = CommonsPage()
+            new_page.title = page.title
+            new_page.revisions = first_revision
+            collection[page_id] = new_page
+        return collection
+
     def get_valued_images(self):
         """Return a list of valued images in the collection."""
         return [page_id for (page_id, page) in self.items()
