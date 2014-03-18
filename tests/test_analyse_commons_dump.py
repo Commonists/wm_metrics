@@ -4,7 +4,6 @@ import unittest
 from os.path import dirname, join
 from datetime import datetime
 from wm_metrics.analyse_commons_dump import get_categories_from_text,\
-    parse_xml_dump,\
     timestamp_to_date
 
 
@@ -27,22 +26,6 @@ class TestAnalyseCommonsDump(unittest.TestCase):
         ]
         for value, expected in values:
             self.assertEqual(timestamp_to_date(value), expected)
-
-    def test_parse_xml_dump(self):
-        """Test parse_xml_dump."""
-        example_dump = join(dirname(__file__), 'data', 'example_dump.xml')
-        results = parse_xml_dump(example_dump)
-        expected = [
-            (u'Kale', date(2005, 7, 23), u'File:Example.jpg'),
-            (u'Steinsplitter', date(2013, 5, 1), u'File:Example.jpg'),
-            (u'Steinsplitter', date(2013, 5, 1), u'File:Example.jpg'),
-            (u'Trijnstel', date(2013, 5, 31), u'File:Example.jpg'),
-            (u'Perhelion', date(2013, 4, 23), u'File:Example en.svg'),
-            ('', date(2013, 9, 19), u'File:Example en.svg'),
-            ('', date(2013, 9, 26), u'File:Example en.svg'),
-            (u'Jafeluv', date(2013, 9, 26), u'File:Example en.svg')
-        ]
-        self.assertEqual(results, expected)
 
 
 if __name__ == '__main__':
