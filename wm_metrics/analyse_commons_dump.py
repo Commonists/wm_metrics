@@ -41,6 +41,34 @@ class DumpMediaCollection(dict):
             collection[page_id] = new_page
         return collection
 
+    def get_differential(self, start_date, end_date):
+        """Return a difference between two dates."""
+        usernames = set()
+        pages_edited = set()
+        final_revisions = list()
+        for page_id, page in self.items():
+            revisions = [revision for revision in page.revisions
+                         if start_date < revision.timestamp < end_date]
+            usernames.update([revision.username for revision in revisions])
+            if revisions:
+                pages_edited.add(page_id)
+                final_revisions.extend(revisions)
+        return final_revisions, usernames, pages_edited
+
+    def simple_diff_report(self, start_date, end_date):
+        """Return an activity text report in a given timeframe.
+
+        This report on the number of edits, editors and files
+        touched between two given dates.
+
+        """
+        diff = self.get_differential(start_date, end_date)
+        final_revisions, usernames, pages_edited = diff
+        text = ("Between %s and %s, %s edits were made "
+                "by %s users on %s distinct files")
+        return text % (start_date.date().isoformat(), end_date.date().isoformat(),
+                       len(final_revisions), len(usernames), len(pages_edited))
+
     def get_valued_images(self):
         """Return a list of valued images in the collection."""
         return [page_id for (page_id, page) in self.items()
