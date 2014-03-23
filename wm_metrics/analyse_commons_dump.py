@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Analysing a Commons collection to retrieve fancy statistics."""
+
 import xml.dom.minidom
 import re
 import datetime
