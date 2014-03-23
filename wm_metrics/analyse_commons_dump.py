@@ -3,6 +3,9 @@
 import xml.dom.minidom
 import re
 import datetime
+from collections import Counter
+
+from wm_metrics.categorisation_statistics import make_categorisation_report
 
 
 class DumpMediaCollection(dict):
@@ -73,6 +76,23 @@ class DumpMediaCollection(dict):
         """Return a list of valued images in the collection."""
         return [page_id for (page_id, page) in self.items()
                 if page.get_top_revision().is_valued_image()]
+
+    def categorisation_report(self):
+        """Return a text categorisation report.
+
+        Iterate over the pages of the media collection, get the top revision,
+        and collects the categories in two Counters - one indexed by category
+        and the other one by file.
+
+        """
+
+        categories_counter = Counter()
+        categories_count_per_file = Counter()
+        for page_id, page in self.items():
+            categories = page.get_top_revision().get_categories()
+            categories_counter.update(categories)
+            categories_count_per_file[page_id] = len(categories)
+        return make_categorisation_report(categories_counter, categories_count_per_file)
 
 
 class CommonsPage():
