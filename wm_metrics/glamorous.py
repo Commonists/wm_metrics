@@ -20,6 +20,12 @@ class GlamorousParser(HTMLParser, object):
 		self.label = None
 		self.feed(self.page)
 
+	def statistics(self):
+		nb_wiki 		= len(self.result.keys())-2
+		images_usages	= int(self.result['Total image usages'])
+		images_used		= int(self.result['Distinct images used'])
+		print "Nb wiki:         %d\nImages usages:   %d\nDistinct images: %d" % (nb_wiki, images_usages, images_used)
+
 	def __category_url__(self):
 		""" 
 		Return the URL to glamorous of the category
@@ -61,7 +67,7 @@ def main():
                         help="The Commons category without Category:")
 	args = parser.parse_args()
 	glamorous = GlamorousParser(args.category)
-	print glamorous.result
+	glamorous.statistics()
 
 if __name__ == "__main__":
 	main()
