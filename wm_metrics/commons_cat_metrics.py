@@ -18,17 +18,17 @@ class CommonsCatMetrics:
 		"""Amount of uploaders on the period"""
 		query = wmflabs_queries.count_uploaders_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		long(self.cursor.fetchone()[0])
+		return long(self.cursor.fetchone()[0])
 
 	def get_nb_files(self, timestamp1, timestamp2):
 		query = wmflabs_queries.count_files_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		long(self.cursor.fetchone()[0])
+		return long(self.cursor.fetchone()[0])
 
 	def get_nb_featured_files(self, timestamp1, timestamp2):
 		query = wmflabs_queries.count_featured_files_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		long(self.cursor.fetchone()[0])
+		return long(self.cursor.fetchone()[0])
 
 	def glamorous(self):
 		"""wrapper to glamorous"""
