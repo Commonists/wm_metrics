@@ -33,7 +33,7 @@ class CommonsCatMetrics:
 	def glamorous(self):
 		"""wrapper to glamorous"""
 		import glamorous
-		glamorous = GlamorousParser(self.category)
+		glamorous = glamorous.GlamorousParser(self.category)
 		glamorous.statistics()
 
 	def close(self):
