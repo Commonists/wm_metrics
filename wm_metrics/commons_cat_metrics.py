@@ -1,6 +1,10 @@
 import MySQLdb
 import mw_util
+from argparse import ArgumentParser
 import wmflabs_queries
+
+T1 = "20140101000000"  
+T2 = "20140401000000"
 
 class CommmonsCatMetrics:
 	"""Wrapper class for the Category Metrics"""
@@ -36,7 +40,7 @@ def main():
                         help="The Commons category without Category:")
 	args = parser.parse_args()
 	metrics = CommonsCatMetrics(args.category)
-	
+	metrics.get_uploaders(T1, T2)
 	metrics.close()
 
 if __name__ == "__main__":
