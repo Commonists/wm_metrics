@@ -6,7 +6,7 @@ import wmflabs_queries
 T1 = "20140101000000"  
 T2 = "20140401000000"
 
-class CommmonsCatMetrics:
+class CommonsCatMetrics:
 	"""Wrapper class for the Category Metrics"""
 	def __init__(self, category):
 		self.catname = category
