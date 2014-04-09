@@ -14,10 +14,21 @@ class CommmonsCatMetrics:
 		self.db = MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf")
 		self.cursor = self.db.cursor()
 
-	def get_uploaders(self, timestamp1, timestamp2):
+	def get_nb_uploaders(self, timestamp1, timestamp2):
+		"""Amount of uploaders on the period"""
 		query = wmflabs_queries.count_uploaders_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		print self.cursor.fetchall()
+		print self.cursor.fetchone()
+
+	def get_nb_files(self, timestamp1, timestamp2):
+		query = wmflabs_queries.ccount_files_in_category(self.catsql, timestamp1, timestamp2)
+		self.cursor.execute(query)
+		print self.cursor.fetchone()
+
+	def get_nb_featured_files(self, timestamp1, timestamp2):
+		query = wmflabs_queries.count_featured_files_in_category(self.catsql, timestamp1, timestamp2)
+		self.cursor.execute(query)
+		print self.cursor.fetchone()
 
 	def glamorous(self):
 		"""wrapper to glamorous"""
@@ -40,7 +51,9 @@ def main():
                         help="The Commons category without Category:")
 	args = parser.parse_args()
 	metrics = CommonsCatMetrics(args.category)
-	metrics.get_uploaders(T1, T2)
+	metrics.get_nb_uploaders(T1, T2)
+	metrics.get_nb_files(T1, T2)
+	metrics.get_nb_featured_files(T1, T2)
 	metrics.close()
 
 if __name__ == "__main__":
