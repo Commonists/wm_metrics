@@ -32,7 +32,7 @@ class CommonsCatMetrics:
 
 	def glamorous(self):
 		"""wrapper to glamorous"""
-		from glamorous import GlamorousParser
+		import glamorous
 		glamorous = GlamorousParser(self.category)
 		glamorous.statistics()
 
@@ -52,6 +52,7 @@ def main():
 	args = parser.parse_args()
 	metrics = CommonsCatMetrics(args.category)
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
+	metrics.glamorous()
 	metrics.close()
 
 if __name__ == "__main__":
