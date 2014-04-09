@@ -18,17 +18,17 @@ class CommonsCatMetrics:
 		"""Amount of uploaders on the period"""
 		query = wmflabs_queries.count_uploaders_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		print self.cursor.fetchone()
+		long(self.cursor.fetchone()[0])
 
 	def get_nb_files(self, timestamp1, timestamp2):
 		query = wmflabs_queries.count_files_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		print self.cursor.fetchone()
+		long(self.cursor.fetchone()[0])
 
 	def get_nb_featured_files(self, timestamp1, timestamp2):
 		query = wmflabs_queries.count_featured_files_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
-		print self.cursor.fetchone()
+		long(self.cursor.fetchone()[0])
 
 	def glamorous(self):
 		"""wrapper to glamorous"""
@@ -51,9 +51,7 @@ def main():
                         help="The Commons category without Category:")
 	args = parser.parse_args()
 	metrics = CommonsCatMetrics(args.category)
-	metrics.get_nb_uploaders(T1, T2)
-	metrics.get_nb_files(T1, T2)
-	metrics.get_nb_featured_files(T1, T2)
+	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
 	metrics.close()
 
 if __name__ == "__main__":
