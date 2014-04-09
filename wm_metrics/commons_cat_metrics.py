@@ -21,7 +21,7 @@ class CommonsCatMetrics:
 		print self.cursor.fetchone()
 
 	def get_nb_files(self, timestamp1, timestamp2):
-		query = wmflabs_queries.ccount_files_in_category(self.catsql, timestamp1, timestamp2)
+		query = wmflabs_queries.count_files_in_category(self.catsql, timestamp1, timestamp2)
 		self.cursor.execute(query)
 		print self.cursor.fetchone()
 
