@@ -52,5 +52,5 @@ class Round:
 			if quarter >=3:
 				year = self.year2+1 
 		return {
-			'start' : str(year) + RoundFDC.QUARTER[index]['start'], 
-			'end' : str(year) + RoundFDC.QUARTER[index]['end'] }
+			'start' : str(year) + Round.QUARTER[index]['start'], 
+			'end' : str(year) + Round.QUARTER[index]['end'] }
