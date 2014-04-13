@@ -75,7 +75,7 @@ def main():
 	args = parser.parse_args()
 	years = [int(y) for y in args.years.split('-')]
 	fdc_round = fdc.Round(years[0], years[1], args.round)
-	metrics = CommonsCatMetrics(args.category, fdc_round, quarter)
+	metrics = CommonsCatMetrics(args.category, fdc_round, args.quarter)
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
 	#metrics.glamorous()
 	metrics.close()
