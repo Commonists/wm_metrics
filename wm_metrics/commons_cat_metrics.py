@@ -4,12 +4,16 @@ import mw_util
 from argparse import ArgumentParser
 import wmflabs_queries
 
-T1 = "20140101000000"  
-T2 = "20140401000000"
-
 class CommonsCatMetrics:
 	"""Wrapper class for the Category Metrics"""
 	def __init__(self, category, round_fdc, q):
+		"""Constructor
+
+		Args:
+			category (string): Category name (without 'Category:' prefix)
+			round_fdc (fdc.Round): FDC round
+			q (int): quarter
+		"""
 		self.catname = category
 		self.catsql = category.replace(" ", "_")
 		self.db = MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
@@ -19,18 +23,20 @@ class CommonsCatMetrics:
 		self.timestamp1 = timestamps['start']
 		self.timestamp2 = timestamps['end']
 
-	def get_nb_uploaders(self, timestamp1, timestamp2):
-		"""Amount of uploaders on the period"""
+	def get_nb_uploaders(self):
+		"""Amount of uploaders on the period."""
 		query = wmflabs_queries.count_uploaders_in_category(self.catsql, self.timestamp1, self.timestamp2)
 		self.cursor.execute(query)
 		return long(self.cursor.fetchone()[0])
 
-	def get_nb_files(self, timestamp1, timestamp2):
+	def get_nb_files(self):
+		"""Amount of files uploaded on the period."""
 		query = wmflabs_queries.count_files_in_category(self.catsql, self.timestamp1, self.timestamp2)
 		self.cursor.execute(query)
 		return long(self.cursor.fetchone()[0])
 
-	def get_nb_featured_files(self, timestamp1, timestamp2):
+	def get_nb_featured_files(self):
+		"""Amount of files that are either FP, VI or QI on Wikimedia Commons."""
 		query = wmflabs_queries.count_featured_files_in_category(self.catsql, self.timestamp1, self.timestamp2)
 		self.cursor.execute(query)
 		return long(self.cursor.fetchone()[0])
@@ -51,18 +57,13 @@ class CommonsCatMetrics:
 			'nb wiki': long(result[2]) }
 
 	def get_nb_files_alltime(self):
-		""" Returns nb of files in category. """
+		""" Returns nb of files in category."""
 		query = wmflabs_queries.count_files_in_category_alltime(self.catsql)
 		self.cursor.execute(query)
 		return long(self.cursor.fetchone()[0])
 
-	def glamorous(self):
-		"""wrapper to glamorous"""
-		import glamorous
-		glamorous = glamorous.GlamorousParser(self.catname)
-		glamorous.statistics()
-
 	def close(self):
+		"""Close the MariaDB connection."""
 		self.db.close()
 
 def main():
@@ -105,7 +106,7 @@ def main():
 	nb_files = metrics.get_nb_files_alltime()
 
 	# printing results
-	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
+	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(), 	metrics.get_nb_featured_files())
 	print "global usage(as of now):"
 	print "\tnb files: %d" % nb_files
 	print "\ttotal usages: %d" % global_usage['total usage']
