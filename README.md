@@ -14,8 +14,8 @@ Authors
 -------
 
 Pierre-Selim,
-Jean-Fred
-Léna
+Jean-Fred,
+Caroline
 
 
 Licence
