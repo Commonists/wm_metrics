@@ -28,4 +28,5 @@ Build status
 ------------
 
 [![Build Status](https://secure.travis-ci.org/Commonists/wm_metrics.png)](http://travis-ci.org/Commonists/wm_metrics)
+[![Coverage Status](https://coveralls.io/repos/Commonists/wm_metrics/badge.png?branch=master)](https://coveralls.io/r/Commonists/wm_metrics?branch=master)
 
