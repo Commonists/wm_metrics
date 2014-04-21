@@ -12,7 +12,7 @@ class CommonsCatMetrics:
 	def __init__(self, category, round_fdc, q):
 		self.catname = category
 		self.catsql = category.replace(" ", "_")
-		self.db = MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf")
+		self.db = MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
 		self.cursor = self.db.cursor()
 		# round fdc
 		timestamps = round_fdc.quarter(q)
@@ -95,11 +95,12 @@ def main():
                         help="The reporting quarter")	
 	# FDC round
 	args = parser.parse_args()
+	category = args.category.decode('utf-8')
 	years = [int(y) for y in args.years.split('-')]
 	fdc_round = fdc.Round(years[0], years[1], args.round)
 
 	# fetching metrics
-	metrics = CommonsCatMetrics(args.category, fdc_round, args.quarter)
+	metrics = CommonsCatMetrics(category, fdc_round, args.quarter)
 	global_usage = metrics.get_global_usage()
 	nb_files = metrics.get_nb_files_alltime()
 
