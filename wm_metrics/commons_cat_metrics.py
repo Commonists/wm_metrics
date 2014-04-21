@@ -42,7 +42,7 @@ class CommonsCatMetrics:
 		Args:
 			main (boolean): whether we only count for main namespaces.
 		"""
-		query = wmflabs_queries.global_usage(self.catsql, main=main)
+		query = wmflabs_queries.global_usage_count(self.catsql, main=main)
 		self.cursor.execute(query)
 		result = self.cursor.fetchone()
 		return { 
