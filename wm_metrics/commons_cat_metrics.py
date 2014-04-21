@@ -93,18 +93,25 @@ def main():
                         metavar="QUARTER",
                         required=True,
                         help="The reporting quarter")	
+	# FDC round
 	args = parser.parse_args()
 	years = [int(y) for y in args.years.split('-')]
 	fdc_round = fdc.Round(years[0], years[1], args.round)
+
+	# fetching metrics
 	metrics = CommonsCatMetrics(args.category, fdc_round, args.quarter)
-	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
 	global_usage = metrics.get_global_usage()
 	nb_files = metrics.get_nb_files_alltime()
+
+	# printing results
+	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
 	print "global usage(as of now):"
 	print "\tnb files: %d" % nb_files
 	print "\ttotal usages: %d" % global_usage['total usage']
 	print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
 	print "\tnb wiki: %d" % global_usage['nb wiki']
+
+	# closing SQL connection
 	metrics.close()
 
 if __name__ == "__main__":
