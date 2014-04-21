@@ -50,6 +50,12 @@ class CommonsCatMetrics:
 			'images used': long(result[1]), 
 			'nb wiki': long(result[2]) }
 
+	def get_nb_files_alltime(self):
+		""" Returns nb of files in category. """
+		query = wmflabs_queries.count_files_in_category_alltime(self.catsql)
+		self.cursor.execute(query)
+		return long(self.cursor.fetchone()[0])
+
 	def glamorous(self):
 		"""wrapper to glamorous"""
 		import glamorous
@@ -92,7 +98,12 @@ def main():
 	fdc_round = fdc.Round(years[0], years[1], args.round)
 	metrics = CommonsCatMetrics(args.category, fdc_round, args.quarter)
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
-	print metrics.get_global_usage()
+	global_usage = metrics.get_global_usage()
+	nb_files = metrics.get_nb_files_alltime()
+	print "global usage(as of now):"
+	print "\tnb files: %d" % nb_files
+	print "\ttotal usages: %d" % global_usage['total usage']
+	print "\timages in use: %d (%.2f%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
 	metrics.close()
 
 if __name__ == "__main__":
