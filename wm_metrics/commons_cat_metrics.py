@@ -103,7 +103,8 @@ def main():
 	print "global usage(as of now):"
 	print "\tnb files: %d" % nb_files
 	print "\ttotal usages: %d" % global_usage['total usage']
-	print "\timages in use: %d (%.2f%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
+	print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
+	print "\tnb wiki: %d" % global_usage['nb wiki']
 	metrics.close()
 
 if __name__ == "__main__":
