@@ -61,3 +61,20 @@ FROM
 	      AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
    GROUP BY page.page_title
    ORDER BY img_timestamp ASC) labels;""" % (category, t1, t2)
+
+def global_usage_count(category, main=False):
+	query = """
+			SELECT /* SLOW_OK */ 
+				COUNT(page.page_title) AS total_usage,
+				COUNT(DISTINCT page.page_title) AS images_used,
+				COUNT(DISTINCT gil.gil_wiki) AS nb_wiki
+			FROM image
+			CROSS JOIN page ON image.img_name = page.page_title 
+			CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
+			CROSS JOIN globalimagelinks gil ON gil.gil_to = image.img_name
+			WHERE
+				categorylinks.cl_to ='%s'""" % category
+	if main:
+		return query + " AND gil.gil_page_namespace_id = 0 AND (gil.gil_wiki!='metawiki')"
+	else:
+		return query
