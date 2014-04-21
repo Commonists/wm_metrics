@@ -35,6 +35,21 @@ class CommonsCatMetrics:
 		self.cursor.execute(query)
 		return long(self.cursor.fetchone()[0])
 
+	def get_global_usage(self, main=False):
+		""" Get global usage metrics (total usages, nb of images used, nb of wiki) 
+		of files in categories.
+
+		Args:
+			main (boolean): whether we only count for main namespaces.
+		"""
+		query = wmflabs_queries.global_usage(self.catsql, main=main)
+		self.cursor.execute(query)
+		result = self.cursor.fetchone()
+		return { 
+			'total usage': long(result[0]), 
+			'images used': long(result[1]), 
+			'nb wiki': long(result[2]) }
+
 	def glamorous(self):
 		"""wrapper to glamorous"""
 		import glamorous
@@ -77,7 +92,7 @@ def main():
 	fdc_round = fdc.Round(years[0], years[1], args.round)
 	metrics = CommonsCatMetrics(args.category, fdc_round, args.quarter)
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(T1, T2), metrics.get_nb_files(T1, T2), 	metrics.get_nb_featured_files(T1, T2))
-	#metrics.glamorous()
+	print metrics.get_global_usage()
 	metrics.close()
 
 if __name__ == "__main__":
