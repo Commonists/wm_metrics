@@ -1,0 +1,4 @@
+[run]
+branch = True
+source = wm_metrics
+include = wm_metrics/*
