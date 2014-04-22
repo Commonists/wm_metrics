@@ -2,6 +2,8 @@
 
 """FDC module dealing with quarter."""
 
+import time
+
 class Round:
 	QUARTER = [
 		{'start' : "0101000000", 'end' : "0331235959"},
@@ -54,3 +56,7 @@ class Round:
 		return {
 			'start' : str(year) + Round.QUARTER[index]['start'], 
 			'end' : str(year) + Round.QUARTER[index]['end'] }
+
+	def _today(self):
+		"""Returns timestamp of today 0000Z"""
+		return time.strftime("%Y%m%d000000", time.gmtime())
