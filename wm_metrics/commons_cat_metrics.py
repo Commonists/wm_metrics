@@ -1,3 +1,13 @@
+"""
+This script computes metrics for FDC on an image category of Wikimedia Commons.
+
+The following line computes metrics for files in "Media supported by Wikimedia France"
+and for the FDC report of year 2012-2013 round 2 quarter 3
+
+python commons_cat_metrics.py --year 2012-2013 --round 2 --quarter 3 --category "Media supported by Wikimedia France"
+
+Please use python commons_cat_metrics.py -h for more information
+"""
 import fdc
 import MySQLdb
 import mw_util
