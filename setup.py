@@ -13,7 +13,7 @@ scripts  = []
 setup(
       name         = 'wm_metrics',
       version      = '0.1' ,
-      author       = 'Pierre-Selim, Jean-Frédéric',
+      author       = 'Pierre-Selim, Jean-Frédéric, Caroline',
       author_email = 'ps.huard@gmail.com',
       url          = 'http://github.com.org/Commonists/wm_metrics',
       description  = 'Computing Wikimedia metrics',
