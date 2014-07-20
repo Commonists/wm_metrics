@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8  -*-
+""" wmflabs_queries.py regroups query builder functions in order to generate queries for wmflabs databases.
+"""
 
 def list_files_in_category(category, t1, t2):
 	"""
