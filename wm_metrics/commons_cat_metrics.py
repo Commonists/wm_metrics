@@ -24,7 +24,6 @@ class CommonsCatMetrics:
 			round_fdc (fdc.Round): FDC round
 			q (int): quarter
 		"""
-		self.catname = category
 		self.catsql = category.replace(" ", "_")
 		self.db = MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
 		self.cursor = self.db.cursor()
@@ -52,7 +51,7 @@ class CommonsCatMetrics:
 		return long(self.cursor.fetchone()[0])
 
 	def get_global_usage(self, main=False):
-		""" Get global usage metrics (total usages, nb of images used, nb of wiki) 
+		""" Get global usage metrics (total usages, nb of images used, nb of wiki)
 		of files in categories.
 
 		Args:
@@ -61,9 +60,9 @@ class CommonsCatMetrics:
 		query = wmflabs_queries.global_usage_count(self.catsql, main=main)
 		self.cursor.execute(query)
 		result = self.cursor.fetchone()
-		return { 
-			'total usage': long(result[0]), 
-			'images used': long(result[1]), 
+		return {
+			'total usage': long(result[0]),
+			'images used': long(result[1]),
 			'nb wiki': long(result[2]) }
 
 	def get_nb_files_alltime(self):
@@ -103,7 +102,7 @@ def main():
                         dest="quarter",
                         metavar="QUARTER",
                         required=True,
-                        help="The reporting quarter")	
+                        help="The reporting quarter")
 	# FDC round
 	args = parser.parse_args()
 	category = args.category.decode('utf-8')
