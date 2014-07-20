@@ -5,22 +5,24 @@
 import time
 
 class Round:
+	"""
+	FDC Round allows to compute accurate timestamps for start and end of each quarter of the round.
+	"""
+
 	QUARTER = [
 		{'start' : "0101000000", 'end' : "0331235959"},
 		{'start' : "0401000000", 'end' : "0630235959"},
 		{'start' : "0701000000", 'end' : "0930235959"},
 		{'start' : "1001000000", 'end' : "1231235959"}
 	]
-	"""
-	FDC Round
-	"""
+
 	def __init__(self, year1, year2, round_number):
 		"""Constructor.
 
 		Args:
 			year1 (int): Year of request of round 1
 			year2 (int): Year of request of round 2
-			round_number (int): FDC round number, 
+			round_number (int): FDC round number,
 				either 1 for round 1 and 2 for round 2
 
 		Raises:
@@ -52,9 +54,9 @@ class Round:
 		if self.round==2:
 			index = (quarter+1)%4
 			if quarter >=3:
-				year = self.year2+1 
+				year = self.year2+1
 		return {
-			'start' : str(year) + Round.QUARTER[index]['start'], 
+			'start' : str(year) + Round.QUARTER[index]['start'],
 			'end' : str(year) + Round.QUARTER[index]['end'] }
 
 	def _today(self):
