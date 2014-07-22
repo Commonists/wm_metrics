@@ -3,6 +3,7 @@
 """FDC module dealing with quarter."""
 
 import time
+from string import Template
 
 class Round:
 	"""
@@ -88,3 +89,39 @@ class Indicator:
 		self.values["q3"] = q3
 		self.values["q4"] = q4
 		self.values["value"] = value
+
+class Report:
+        """Report is build from indicator list and template
+        and generate a report.
+        """
+
+        def __init__(self, indicator_list, template_string=None, template_file=None):
+	        """ Initialize a report.
+
+	        In template variables are named:
+	        	$name.q1, $name.q2 $name.q3, $name.q4, $name.value
+
+	        Args:
+	        	indicator_list (list): list of fdc.Indicator
+	        	template_string (str): Template string of the report to use (iff there is no template_file)
+	        	template_file (file): File containing the template string to use to generate the report
+	        """
+	        self.template = Template(template_string)
+	        self.indicator_values = dict()
+	        if template_string == None and template_file==None:
+	        	raise ValueError("template_string or template_file argument needs to be used.")
+	        if template_file != None:
+	        	# reads template file
+	        	with open(template_file, 'r') as f:
+	        		self.template = Template(f.read())
+        	# fill the dictionnary of values
+        	for indicator in indicator_list:
+        		for key in indicator.values.keys():
+        			var_name = "%s.%s" % (indicator.name, key)
+        			self.indicator_values[var_n]=indicator.values[key]
+
+
+        def generate(self):
+        	""" Generate report from template and indicators.
+        	"""
+        	print self.template.substitute(self.indicator_values)
