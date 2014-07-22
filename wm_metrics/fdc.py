@@ -124,5 +124,4 @@ class Report:
         def generate(self):
         	""" Generate report from template and indicators.
         	"""
-        	print self.indicator_values
         	print self.template.safe_substitute(self.indicator_values)
