@@ -99,7 +99,7 @@ class Report:
 	        """ Initialize a report.
 
 	        In template variables are named:
-	        	$name.q1, $name.q2 $name.q3, $name.q4, $name.value
+	        	$name_q1, $name_q2 $name_q3, $name_q4, $name_value
 
 	        Args:
 	        	indicator_list (list): list of fdc.Indicator
@@ -117,11 +117,12 @@ class Report:
         	# fill the dictionnary of values
         	for indicator in indicator_list:
         		for key in indicator.values.keys():
-        			var_name = "%s.%s" % (indicator.name, key)
-        			self.indicator_values[var_n]=indicator.values[key]
+        			var_name = "%s_%s" % (indicator.name, key)
+        			self.indicator_values[var_name]=indicator.values[key]
 
 
         def generate(self):
         	""" Generate report from template and indicators.
         	"""
-        	print self.template.substitute(self.indicator_values)
+        	print self.indicator_values
+        	print self.template.safe_substitute(self.indicator_values)
