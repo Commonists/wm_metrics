@@ -46,6 +46,8 @@ def make_example_report(fdc_round, category):
 
 def total_uploaders_period(fdc_round, category, db):
 	"""Quick uploaders on entire period indicator"""
+	import wmflabs_queries
+	
 	cat = category.replace(" ", "_")
 	query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
 	db.cursor.execute(query)
