@@ -15,11 +15,13 @@ template_photo = """
 def make_example_report(fdc_round, category):
     """Quick report maker"""
     # Quick and dirty metrics object
-    quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1) for i in range(4)]
+    db = commons_cat_metrics.get_commons_db()
+    quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1, database=db) for i in range(4)]
 
     # retrieving values from metrics object
     files = [quarters[i].get_nb_files() for i in range(4)]
     labels = [100*float(quarters[i].get_nb_featured_files())/float(files[i]) for i in range(4)]
+    db.close()
 
     # Creating reporting
     nb_file = fdc.Indicator("nb", q1=files[0], q2=files[1], q3=files[2], q4=files[3], value=files[0]+files[1]+files[2]+files[3])
