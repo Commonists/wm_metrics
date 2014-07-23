@@ -8,6 +8,7 @@ template_photo = """
 {{Suivi FDC/Groupe|groupe=Soutien aux photographes}}
 {{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=9000}}
 {{Suivi FDC/Indicateur|indicateur=% de fichiers mis en ligne et ayant reçu un label|q1=${featured_q1}|q2=${featured_q2}|q3=${featured_q3}|q4=${featured_q4}|cumul=${featured_value}|Objectif=5%}}
+{{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
 {{Suivi FDC/Fin}}
 """
 
@@ -21,6 +22,10 @@ def make_example_report(fdc_round, category):
     # retrieving values from metrics object
     files = [quarters[i].get_nb_files() for i in range(4)]
     labels = [100*float(quarters[i].get_nb_featured_files())/float(files[i]) for i in range(4)]
+    uploaders = [quarters[i].get_nb_uploaders() for i in range(4)]
+    uploaders.append(total_uploaders_period(fdc_round, category, db))
+	# total uploaders on the period
+
     db.close()
 
     # Creating reporting
@@ -29,9 +34,22 @@ def make_example_report(fdc_round, category):
                                q1=round(labels[0], 2), q2=round(labels[1], 2),
                                q3=round(labels[2], 2), q4=round(labels[3], 2),
                                value=round((labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3])/(nb_file.values['value']), 2))
-
+    nb_uploader = fdc.Indicator("uploaders",
+    							q1=uploaders[0],
+    							q2=uploaders[1],
+    							q3=uploaders[2],
+    							q4=uploaders[3],
+    							value=uploaders[4]
+    	)
     report = fdc.Report([nb_file, pct_labels], template_string=template_photo)
     report.generate()
+
+def total_uploaders_period(fdc_round, category, db):
+	"""Quick uploaders on entire period indicator"""
+	cat = category.replace(" ", "_")
+	query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
+	db.cursor.execute(query)
+	return long(db.cursor.fetchone()[0])
 
 
 def main():
