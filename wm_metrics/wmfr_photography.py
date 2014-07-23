@@ -11,27 +11,35 @@ template_photo = """
 {{Suivi FDC/Fin}}
 """
 
-# FDC round
-fdc_round = fdc.Round(2012, 2013, 2)
 
-# Category used
-category = "Media supported by Wikimedia France"
+def make_example_report(fdc_round, category):
+    """Quick report maker"""
+    # Quick and dirty metrics object
+    quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1) for i in range(4)]
 
-# Quick and dirty metrics object
-quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1) for i in range(4)]
+    # retrieving values from metrics object
+    files = [quarters[i].get_nb_files() for i in range(4)]
+    labels = [100*float(quarters[i].get_nb_featured_files())/float(files[i]) for i in range(4)]
 
-# retrieving values from metrics object
-files = [quarters[i].get_nb_files() for i in range(4)]
-labels   = [100*float(quarters[i].get_nb_featured_files())/float(files[i]) for i in range(4)]
+    # Creating reporting
+    nb_file = fdc.Indicator("nb", q1=files[0], q2=files[1], q3=files[2], q4=files[3], value=files[0]+files[1]+files[2]+files[3])
+    pct_labels = fdc.Indicator("featured",
+                               q1=round(labels[0], 2), q2=round(labels[1], 2),
+                               q3=round(labels[2], 2), q4=round(labels[3], 2),
+                               value=round((labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3])/(nb_file.values['value']), 2))
 
-
-# Creating reporting
-nb_file   = fdc.Indicator("nb", q1=files[0], q2=files[1], q3=files[2], q4=files[3], value=files[0]+files[1]+files[2]+files[3])
-pct_labels= fdc.Indicator("featured", q1=round(labels[0],2), q2=round(labels[1],2), q3=round(labels[2],2), q4=round(labels[3],2), value=round((labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3])/(nb_file.values['value']),2))
-
-report    = fdc.Report([nb_file, pct_labels], template_string=template_photo)
-report.generate()
-
+    report = fdc.Report([nb_file, pct_labels], template_string=template_photo)
+    report.generate()
 
 
-report.generate()
+def main():
+    # FDC round
+    fdc_round = fdc.Round(2012, 2013, 2)
+
+    # Category used
+    category = "Media supported by Wikimedia France"
+    make_example_report(fdc_round, category)
+
+
+if __name__ == "__main__":
+    main()
