@@ -48,9 +48,9 @@ def make_example_report(fdc_round, category):
                                q3=round(labels[2], 2), q4=round(labels[3], 2),
                                value=round((labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3])/(nb_file.values['value']), 2))
     nb_labels = fdc.Indicator("nb_featured",
-                               q1=int(round(labels[0]*files[0])), q2=int(round(labels[1]*files[1])),
-                               q3=int(round(labels[2]*files[2])), q4=int(round(labels[3]*files[3])),
-                               value=int(round(labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3]))
+                               q1=int(round(labels[0]*files[0])/100), q2=int(round(labels[1]*files[1])/100),
+                               q3=int(round(labels[2]*files[2])/100), q4=int(round(labels[3]*files[3])/100),
+                               value=int(round(labels[0]*files[0]+labels[1]*files[1]+labels[2]*files[2]+labels[3]*files[3])/100)
     	)
     nb_uploader = fdc.Indicator("uploaders",
     							q1=uploaders[0],
