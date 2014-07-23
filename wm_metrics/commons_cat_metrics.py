@@ -15,27 +15,28 @@ from argparse import ArgumentParser
 import wmflabs_queries
 
 def get_commons_db():
-	""" Returns an instance of MySQLdb.connect() to tool labs SQL for Wikimedia Commons
-	"""
+	"""Returns an instance of MySQLdb.connect() to tool labs SQL for Wikimedia Commons"""
 	return MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
 
 class CommonsCatMetrics:
 	"""Wrapper class for the Category Metrics"""
-	def __init__(self, category, round_fdc, q, database=None):
+	def __init__(self, category, round_fdc, q, cursor=None):
 		"""Constructor
 
 		Args:
 			category (string): Category name (without 'Category:' prefix)
 			round_fdc (fdc.Round): FDC round
 			q (int): quarter
-			database (MySQLdb.Db): optional connection to mysql server
+			cursor (MySQLdb cursor): optional connection to mysql server
 		"""
 		self.catsql = category.replace(" ", "_")
-		if database==None:
-			self.db = get_commons_db()
+
+		if cursor==None:
+			db = get_commons_db()
+			self.cursor = db.cursor()
 		else:
-			self.db = database
-		self.cursor = self.db.cursor()
+			self.cursor = cursor
+		
 		# round fdc
 		timestamps = round_fdc.quarter(q)
 		self.timestamp1 = timestamps['start']
@@ -82,7 +83,8 @@ class CommonsCatMetrics:
 
 	def close(self):
 		"""Close the MariaDB connection."""
-		self.db.close()
+		self.cursor.close()
+
 
 def main():
 	"""Commons Cat Metrics."""

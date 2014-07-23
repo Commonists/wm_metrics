@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import fdc
 import commons_cat_metrics
+import MySQLdb
 
 # Output template
 template_photo = """
@@ -17,7 +18,10 @@ def make_example_report(fdc_round, category):
     """Quick report maker"""
     # Quick and dirty metrics object
     db = commons_cat_metrics.get_commons_db()
-    quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1, database=db) for i in range(4)]
+    db_cursor = db.cursor()
+
+    # All quarters
+    quarters = [commons_cat_metrics.CommonsCatMetrics(category, fdc_round, i+1, cursor=db_cursor) for i in range(4)]
 
     # retrieving values from metrics object
     files = [quarters[i].get_nb_files() for i in range(4)]
@@ -26,7 +30,7 @@ def make_example_report(fdc_round, category):
     uploaders.append(total_uploaders_period(fdc_round, category, db))
 	# total uploaders on the period
 
-    db.close()
+
 
     # Creating reporting
     nb_file = fdc.Indicator("nb", q1=files[0], q2=files[1], q3=files[2], q4=files[3], value=files[0]+files[1]+files[2]+files[3])
@@ -44,14 +48,18 @@ def make_example_report(fdc_round, category):
     report = fdc.Report([nb_file, pct_labels], template_string=template_photo)
     report.generate()
 
-def total_uploaders_period(fdc_round, category, db):
+    # Ending mysql
+    db_cursor.close()
+    db.close()
+
+def total_uploaders_period(fdc_round, category, db_cursor):
 	"""Quick uploaders on entire period indicator"""
 	import wmflabs_queries
-	import MySQLdb
+
 	cat = category.replace(" ", "_")
 	query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
-	db.cursor().execute(query)
-	return long(db.cursor().fetchone()[0])
+	db_cursor.execute(query)
+	return long(db_cursor.fetchone()[0])
 
 
 def main():
