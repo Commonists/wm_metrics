@@ -60,6 +60,17 @@ class Round:
 			'start' : str(year) + Round.QUARTER[index]['start'],
 			'end' : str(year) + Round.QUARTER[index]['end'] }
 
+	def full_period(self):
+		"""Returns the timestamp of start of the period and the timestamp of end of the period
+
+		Returns:
+			both timestamp of start and end of the period as {'start': "XXX", 'end': "YYY"}
+		"""
+		return {
+			'start' : self.quarter(1)['start'],
+			'end' : self.quarter(4)['end']
+		}
+
 	def _today(self):
 		"""Returns timestamp of today 0000Z"""
 		return time.strftime("%Y%m%d000000", time.gmtime())
