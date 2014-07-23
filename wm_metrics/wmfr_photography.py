@@ -50,8 +50,8 @@ def total_uploaders_period(fdc_round, category, db):
 	import MySQLdb
 	cat = category.replace(" ", "_")
 	query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
-	db.cursor.execute(query)
-	return long(db.cursor.fetchone()[0])
+	db.cursor().execute(query)
+	return long(db.cursor().fetchone()[0])
 
 
 def main():
