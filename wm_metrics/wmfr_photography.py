@@ -45,7 +45,7 @@ def make_example_report(fdc_round, category):
     							q4=uploaders[3],
     							value=uploaders[4]
     	)
-    report = fdc.Report([nb_file, pct_labels], template_string=template_photo)
+    report = fdc.Report([nb_file, pct_labels, nb_uploader], template_string=template_photo)
     report.generate()
 
     # Ending mysql
