@@ -50,26 +50,10 @@ commons_cat_metrics module
     :undoc-members:
     :show-inheritance:
 
-commons_metrics module
-----------------------
-
-.. automodule:: wm_metrics.commons_metrics
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 mw_util module
 --------------
 
 .. automodule:: wm_metrics.mw_util
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-new_editor module
------------------
-
-.. automodule:: wm_metrics.new_editor
     :members:
     :undoc-members:
     :show-inheritance:
