@@ -27,7 +27,7 @@ def make_example_report(fdc_round, category):
     files = [quarters[i].get_nb_files() for i in range(4)]
     labels = [100*float(quarters[i].get_nb_featured_files())/float(files[i]) for i in range(4)]
     uploaders = [quarters[i].get_nb_uploaders() for i in range(4)]
-    uploaders.append(total_uploaders_period(fdc_round, category, db))
+    uploaders.append(total_uploaders_period(fdc_round, category, db_cursor))
 	# total uploaders on the period
 
 
