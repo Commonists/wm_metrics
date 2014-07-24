@@ -8,6 +8,8 @@ from string import Template
 class Round:
 	"""
 	FDC Round allows to compute accurate timestamps for start and end of each quarter of the round.
+	
+	start and end timestamp are returned as a dictionnary of string { 'start': "...", 'end': "..." }
 	"""
 
 	QUARTER = [
