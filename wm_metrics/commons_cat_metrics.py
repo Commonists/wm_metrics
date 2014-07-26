@@ -107,7 +107,7 @@ class Indicators:
 			fdc.Indicator with the number of file for each quarter and total over the whole period
 		"""
 		if self.nb_uploaders==None:
-		self.nb_uploaders =  [self.quarters[i].get_nb_uploaders() for i in range(4)]
+			self.nb_uploaders =  [self.quarters[i].get_nb_uploaders() for i in range(4)]
 
 		cat = self.category.replace(" ", "_")
 		query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
