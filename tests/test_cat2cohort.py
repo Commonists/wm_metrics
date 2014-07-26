@@ -32,3 +32,7 @@ class TestCat2Cohort(unittest.TestCase):
         expected = '\n'.join(self.csvlines)
         self.assertEqual(_userlist_to_CSV_cohort(self.userlist),
                          expected)
+
+
+if __name__ == '__main__':
+    unittest.main()
