@@ -233,7 +233,7 @@ def main():
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(), 	metrics.get_nb_featured_files())
 	print "global usage(as of now):"
 	print "\tnb files: %d" % nb_files
-	print "\ttotal usages: %d" % global_usage['total usage'
+	print "\ttotal usages: %d" % global_usage['total usage']
 	print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
 	print "\tnb wiki: %d" % global_usage['nb wiki']
 
