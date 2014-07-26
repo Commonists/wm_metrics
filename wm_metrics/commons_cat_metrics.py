@@ -14,16 +14,20 @@ import mw_util
 from argparse import ArgumentParser
 import wmflabs_queries
 
+
 def get_commons_db():
 	"""Returns an instance of MySQLdb.connect() to tool labs SQL for Wikimedia Commons"""
 	return MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
 
+
 class Indicators:
+
 	""" This class allows to generate fdc.Indicator for:
 			file upload count
 			file labels count
 			file uploader count
 	"""
+
 	def __init__(self, category, round_fdc, cursor=None):
 		""" Constructor
 
@@ -35,7 +39,8 @@ class Indicators:
 		# All quarters
 		self.category = category
 		self.cursor = cursor
-    	self.quarters = [CommonsCatMetrics(category, fdc_round, i+1, cursor=cursor) for i in range(4)]
+    	self.quarters = [CommonsCatMetrics(category, fdc_round, i + 1, cursor=cursor)
+                      for i in range(4)]
     	self.nb_files = None
     	self.nb_labels = None
     	self.nb_uploaders = None

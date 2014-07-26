@@ -23,6 +23,7 @@ template_photo = """
 {{Suivi FDC/Fin}}
 """
 
+
 def make_example_report(fdc_round, category):
     """Quick report maker"""
     # Quick and dirty metrics object
@@ -37,7 +38,8 @@ def make_example_report(fdc_round, category):
     nb_uploaders = commons_cat_metrics.nb_uploaders_indicator("uploaders")
     pct_uploaders = commons_cat_metrics.pct_uploaders_indicator("featured")
 
-    report = fdc.Report([nb_file, pct_labels, nb_uploader, nb_labels], template_string=template_photo)
+    report = fdc.Report(
+        [nb_file, pct_labels, nb_uploader, nb_labels], template_string=template_photo)
     report.generate()
 
     # Ending mysql
