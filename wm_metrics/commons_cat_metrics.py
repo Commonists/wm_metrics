@@ -39,40 +39,40 @@ class Indicators:
 		# All quarters
 		self.category = category
 		self.cursor = cursor
-    	self.quarters = [CommonsCatMetrics(category, fdc_round, i + 1, cursor=cursor)
-                      for i in range(4)]
-    	self.nb_files = None
-    	self.nb_labels = None
-    	self.nb_uploaders = None
+    		self.quarters = [CommonsCatMetrics(category, fdc_round, i + 1, cursor=cursor)
+        	              for i in range(4)]
+    		self.nb_files = None
+    		self.nb_labels = None
+    		self.nb_uploaders = None
 
-    def nb_files_indicator(self, name):
-    	""" Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
-
-    	Args:
-    		name (str): name of the fdc.Indicator
-
-    	Returns:
-    		fdc.Indicator with the number of file for each quarter and total over the whole period
-    	"""
-    	if self.nb_files == None:
-    		self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
-    	return fdc.Indicator(name,
+	def nb_files_indicator(self, name):
+    		""" Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
+		
+    		Args:
+    			name (str): name of the fdc.Indicator
+		
+    		Returns:
+    			fdc.Indicator with the number of file for each quarter and total over the whole period
+    		"""
+    		if self.nb_files == None:
+    			self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
+    		return fdc.Indicator(name,
     			q1=self.nb_files[0],
     			q2=self.nb_files[1],
     			q3=self.nb_files[2],
     			q4=self.nb_files[3],
     			value=sum(self.nb_files))
 
-    def nb_labels_indicator(self, name):
-    	""" Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total and which
-    	are either FP, QI or VI.
+    	def nb_labels_indicator(self, name):
+    		""" Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total and which
+    		are either FP, QI or VI.
 
-    	Args:
-    		name (str): name of the fdc.Indicator
-    	"""
-    	if self.nb_labels == None:
-    		self.nb_labels = [quarters[i].get_nb_featured_files()) for i in range(4)]
-		return fdc.Indicator(name, 
+    		Args:
+    			name (str): name of the fdc.Indicator
+    		"""
+    		if self.nb_labels == None:
+    			self.nb_labels = [quarters[i].get_nb_featured_files()) for i in range(4)]
+			return fdc.Indicator(name, 
 				q1=self.nb_labels[0],
 				q2=self.nb_labels[1],
 				q3=self.nb_labels[2],
@@ -81,11 +81,11 @@ class Indicators:
 
 	def pct_labels_indicator(self, name):
 	 	""" Returns an FDC indicator with percentage of files uploaded during q1, q2, q3, q4 and total and which
-    	are either FP, QI or VI.
-
-    	Args:
-    		name (str): name of the fdc.Indicator
-    	"""
+    		are either FP, QI or VI.
+		
+    		Args:
+    			name (str): name of the fdc.Indicator
+    		"""
 		if self.nb_files==None:
 			self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
 		if self.nb_nb_labels==None:
@@ -98,15 +98,15 @@ class Indicators:
 				value=round(100*float(sum(self.nb_labels))/sum(self.nb_files), 2))
 
 	def nb_uploaders_indicator(self, name):
-    	""" Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value). 
+    		""" Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value). 
+		
+    		Args:
+    			name (str): name of the fdc.Indicator
 
-    	Args:
-    		name (str): name of the fdc.Indicator
-
-    	Returns:
-    		fdc.Indicator with the number of file for each quarter and total over the whole period
-    	"""
-    	if self.nb_uploaders==None:
+    		Returns:
+    			fdc.Indicator with the number of file for each quarter and total over the whole period
+    		"""
+    		if self.nb_uploaders==None:
 			self.nb_uploaders =  [self.quarters[i].get_nb_uploaders() for i in range(4)]
 
 		cat = self.category.replace(" ", "_")
