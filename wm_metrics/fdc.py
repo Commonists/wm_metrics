@@ -8,6 +8,8 @@ from string import Template
 class Round:
 	"""
 	FDC Round allows to compute accurate timestamps for start and end of each quarter of the round.
+	
+	start and end timestamp are returned as a dictionnary of string { 'start': "...", 'end': "..." }
 	"""
 
 	QUARTER = [
@@ -59,6 +61,17 @@ class Round:
 		return {
 			'start' : str(year) + Round.QUARTER[index]['start'],
 			'end' : str(year) + Round.QUARTER[index]['end'] }
+
+	def full_period(self):
+		"""Returns the timestamp of start of the period and the timestamp of end of the period
+
+		Returns:
+			both timestamp of start and end of the period as {'start': "XXX", 'end': "YYY"}
+		"""
+		return {
+			'start' : self.quarter(1)['start'],
+			'end' : self.quarter(4)['end']
+		}
 
 	def _today(self):
 		"""Returns timestamp of today 0000Z"""

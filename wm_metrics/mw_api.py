@@ -21,6 +21,11 @@ class MwWiki:
 	Wiki API 
 	"""
 	def __init__(self, url_api=DEFAULT_API):
+		""" Constructor.
+		
+		Args:
+			url_api (str): Url of the MediaWiki API
+		"""
 		self.url = url_api
 
 	def __encode_param(self, param):
