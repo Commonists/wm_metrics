@@ -18,6 +18,51 @@ def get_commons_db():
 	"""Returns an instance of MySQLdb.connect() to tool labs SQL for Wikimedia Commons"""
 	return MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
 
+class Indicators:
+	""" This class allows to generate fdc.Indicator for:
+			file upload count
+			file labels count
+			file uploader count
+	"""
+	def __init__(self, category, round_fdc, cursor=None):
+		""" Constructor
+
+		Args:
+			category (string): Category name (without 'Category:' prefix)
+			round_fdc (fdc.Round): FDC round
+			cursor (MySQLdb cursor): optional connection to mysql server
+		"""
+		# All quarters
+    	self.quarters = [CommonsCatMetrics(category, fdc_round, i+1, cursor=cursor) for i in range(4)]
+    	self.nb_files = None
+    	self.nb_labels = None
+
+
+    def nb_files_indicator(self, name):
+    	""" Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
+
+    	Args:
+    		name (str): name of the fdc.Indicator
+
+    	Returns:
+    		fdc.Indicator with the number of file for each quarter and total over the whole period
+    	"""
+    	if self.nb_files == None:
+    		self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
+    	return fdc.Indicator(name,
+    			q1=files[0],
+    			q2=files[1],
+    			q3=files[2],
+    			q4=files[3],
+    			value=files[0]+files[1]+files[2]+files[3])
+
+    def nb_labels_indicator(self, name):
+    	""" Returns an FDC indicator count of files uploaded during q1, q2, q3, q4 and total and which
+    	are either FP, QI or VI.
+    	"""
+    	if self.nb_labels == None:
+    		self.nb_labels = [quarters[i].get_nb_featured_files()) for i in range(4)]
+
 class CommonsCatMetrics:
 	"""Wrapper class for the Category Metrics"""
 	def __init__(self, category, round_fdc, q, cursor=None):
@@ -129,7 +174,7 @@ def main():
 	print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(), 	metrics.get_nb_featured_files())
 	print "global usage(as of now):"
 	print "\tnb files: %d" % nb_files
-	print "\ttotal usages: %d" % global_usage['total usage']
+	print "\ttotal usages: %d" % global_usage['total usage'
 	print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100.*float(global_usage['images used'])/nb_files)
 	print "\tnb wiki: %d" % global_usage['nb wiki']
 
