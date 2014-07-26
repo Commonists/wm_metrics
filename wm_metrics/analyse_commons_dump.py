@@ -192,7 +192,8 @@ def parse_xml_dump(xml_dump):
                         if not username:
                             username = handle_node(revision_node, u'ip')
                         revision = CommonsRevision(timestamp=timestamp_to_date(timestamp),
-                                                   wikitext=handle_node(revision_node, u'text'),
+                                                   wikitext=handle_node(
+                                                       revision_node, u'text'),
                                                    username=username)
                         revisions.append(revision)
                     collection[page_id] = CommonsPage(page_title, revisions)
