@@ -89,7 +89,7 @@ class Indicators:
             """
         if self.nb_files==None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
-        if self.nb_nb_labels==None:
+        if self.nb_labels==None:
             self.nb_labels = [self.quarters[i].get_nb_files() for i in range(4)]
         return fdc.Indicator(name,
                 q1=round(100*float(self.nb_labels[0])/self.nb_files[0], 2),
@@ -113,7 +113,7 @@ class Indicators:
         cat = self.category.replace(" ", "_")
         query = wmflabs_queries.count_uploaders_in_category(cat, self.fdc_round.full_period()['start'] , self.fdc_round.full_period()['end'])
         self.cursor.execute(query)
-        total = long(db_cursor.fetchone()[0])
+        total = long(self.cursor.fetchone()[0])
 
         return fdc.Indicator(name,
                 q1 = self.nb_uploaders[0],
