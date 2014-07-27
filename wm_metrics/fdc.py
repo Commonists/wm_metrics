@@ -140,7 +140,7 @@ class Report:
         for indicator in indicator_list:
             for key in indicator.values.keys():
                 var_name = "%s_%s" % (indicator.name, key)
-                if indicator.value[key]==None:
+                if indicator.values[key]==None:
                     self.indicator_values[var_name] = ""
                 else:
                     self.indicator_values[var_name] = indicator.values[key]
