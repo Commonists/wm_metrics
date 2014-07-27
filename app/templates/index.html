@@ -8,22 +8,29 @@
 
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/bootstrap/current/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/tool/tools-footer.css" />
-    <link rel="stylesheet" href="static/wmmetrics.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='wmmetrics.css')}}">
   </head>
 
   <body>
-
     <a href="https://github.com/Commonists/wm_metrics">
-      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="http://tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
+      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
     <div class="container">
         <div class="page-header">
           <h1 style="margin-top:1em;">wm_metrics</h1>
         </div>
     </div>
+    <div class="container">
+    <p class='lead'>Welcome to wm_metrics − tools for Wikimedia program leaders</p>
+    <ul>
+        <li><a href='./fdc'>FDC reporting</a></li>
+    </ul>
+    </div>
+
+
     <div id="footer">
         <div class="container">
           <a href="//tools.wmflabs.org"><img id="footer-icon" src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Tool Labs" alt="Powered by Wikimedia Tool Labs"></a>
-            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm-metrics">github</a>.</p>
+            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">github</a>.</p>
         </div>
     </div>
 
