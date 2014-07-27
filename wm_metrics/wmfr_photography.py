@@ -36,10 +36,9 @@ def make_example_report(fdc_round, category):
     nb_files = commons_cat_metrics.nb_files_indicator("nb")
     nb_labels = commons_cat_metrics.nb_labels_indicator("nb_featured")
     nb_uploaders = commons_cat_metrics.nb_uploaders_indicator("uploaders")
-    pct_uploaders = commons_cat_metrics.pct_uploaders_indicator("featured")
+    pct_labels = commons_cat_metrics.pct_uploaders_indicator("featured")
 
-    report = fdc.Report(
-        [nb_file, pct_labels, nb_uploader, nb_labels], template_string=template_photo)
+    report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
     report.generate()
 
     # Ending mysql
