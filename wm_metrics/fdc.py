@@ -81,6 +81,9 @@ class Round:
         """Returns timestamp of today 0000Z"""
         return time.strftime("%Y%m%d000000", time.gmtime())
 
+    def __repr__(self):
+        return "%s-%s round%s" % (self.year1, self.year2, self.round)
+
 
 class Indicator:
 
