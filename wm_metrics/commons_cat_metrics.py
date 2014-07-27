@@ -39,6 +39,7 @@ class Indicators:
         # All quarters
         self.category = category
         self.cursor = cursor
+        self.fdc_round = fdc_round
         self.quarters = [CommonsCatMetrics(category, fdc_round, i + 1, cursor=cursor)
                       for i in range(4)]
         self.nb_files = None
@@ -110,7 +111,7 @@ class Indicators:
             self.nb_uploaders =  [self.quarters[i].get_nb_uploaders() for i in range(4)]
 
         cat = self.category.replace(" ", "_")
-        query = wmflabs_queries.count_uploaders_in_category(cat, fdc_round.full_period()['start'] , fdc_round.full_period()['end'])
+        query = wmflabs_queries.count_uploaders_in_category(cat, self.fdc_round.full_period()['start'] , self.fdc_round.full_period()['end'])
         self.cursor.execute(query)
         total = long(db_cursor.fetchone()[0])
 
