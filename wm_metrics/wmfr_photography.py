@@ -34,12 +34,12 @@ def make_example_report(fdc_round, category):
         db_cursor = db.cursor()
 
         # Metrics
-        commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
+        metrics = commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
         # Retrieving all indicators
-        nb_files = commons_cat_metrics.nb_files_indicator("nb")
-        nb_labels = commons_cat_metrics.nb_labels_indicator("nb_featured")
-        nb_uploaders = commons_cat_metrics.nb_uploaders_indicator("uploaders")
-        pct_labels = commons_cat_metrics.pct_uploaders_indicator("featured")
+        nb_files = metrics.nb_files_indicator("nb")
+        nb_labels = metrics.nb_labels_indicator("nb_featured")
+        nb_uploaders = metrics.nb_uploaders_indicator("uploaders")
+        pct_labels = metrics.pct_uploaders_indicator("featured")
 
         report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
         fdc_report = report.generate()
