@@ -28,12 +28,12 @@ class Indicators:
             file uploader count
     """
 
-    def __init__(self, category, round_fdc, cursor=None):
+    def __init__(self, category, fdc_round, cursor=None):
         """ Constructor
 
         Args:
             category (string): Category name (without 'Category:' prefix)
-            round_fdc (fdc.Round): FDC round
+            fdc_round (fdc.Round): FDC round
             cursor (MySQLdb cursor): optional connection to mysql server
         """
         # All quarters
