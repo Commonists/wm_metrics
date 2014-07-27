@@ -24,8 +24,11 @@ def compute_fdc_report():
     category = request.form['category']
     fdc_year = int(request.form['year'])
     fdc_round = fdc.Round(fdc_year-1, fdc_year, int(request.form['round']))
-    results = wmfr_photography.make_example_report(fdc_round, category)
-    return results
+    try:
+        results = wmfr_photography.make_example_report(fdc_round, category)
+        return results
+    except wmfr_photography.WMmetricsException, e:
+        return render_template('error.html', message=e)
 
 if __name__ == "__main__":
     app.run(debug=True)
