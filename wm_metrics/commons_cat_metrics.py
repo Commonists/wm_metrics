@@ -80,6 +80,22 @@ class Indicators:
             q4=self.nb_labels[3],
             value=sum(self.nb_labels))
 
+    def __percent(self, a, b, decimals=2):
+        """ Percentage of a/b rounded with decimals. If b==0 it returns None.
+
+        Args:
+            a: numerator
+            b: denominator
+            decimals: amount of decimals to return (default 2)
+
+        Returns:
+            100*a/b 
+        """
+        if b==0:
+            return None
+        else:
+            return round(100*float(a)/b, decimals)
+
     def pct_labels_indicator(self, name):
         """ Returns an FDC indicator with percentage of files uploaded during q1, q2, q3, q4 and total and which
             are either FP, QI or VI.
@@ -92,11 +108,11 @@ class Indicators:
         if self.nb_labels==None:
             self.nb_labels = [self.quarters[i].get_nb_files() for i in range(4)]
         return fdc.Indicator(name,
-                q1=round(100*float(self.nb_labels[0])/self.nb_files[0], 2),
-                q2=round(100*float(self.nb_labels[1])/self.nb_files[1], 2),
-                q3=round(100*float(self.nb_labels[2])/self.nb_files[2], 2),
-                q4=round(100*float(self.nb_labels[3])/self.nb_files[3], 2),
-                value=round(100*float(sum(self.nb_labels))/sum(self.nb_files), 2))
+                q1=self.__percent(self.nb_labels[0], self.nb_files[0]),
+                q2=self.__percent(self.nb_labels[1], self.nb_files[1]),
+                q3=self.__percent(self.nb_labels[2], self.nb_files[2]),
+                q4=self.__percent(self.nb_labels[3], self.nb_files[3]),
+                value=self.__percent(sum(self.nb_labels),sum(self.nb_files)))
 
     def nb_uploaders_indicator(self, name):
         """ Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value). 
