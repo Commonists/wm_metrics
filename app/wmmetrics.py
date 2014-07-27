@@ -25,18 +25,22 @@ def compute_fdc_report():
     fdc_year = int(request.form['year'])
     round_num = int(request.form['round'])
     fdc_round = fdc.Round(fdc_year-1, fdc_year, round_num)
+    results = 'Nothing'
     try:
         results = wmfr_photography.make_example_report(fdc_round, category)
-        return render_template('fdc-report-results.html',
-                               category=category,
-                               fdc_round=fdc_round,
-                               contents=results)
     except wmfr_photography.WMmetricsException, e:
         message = 'Something went wrong in Wm_metrics: ' + e.message
         return render_template('error.html', message=message)
+    try:
+        return render_template('fdc-report-results.html',
+                               category=category,
+                               fdc_round=fdc_round,
+                               contents=results.decode('utf-8'))
+    except UnicodeDecodeError, e:
+        return render_template('error.html', message='Unicode error')
     except Exception, e:
-        message = 'Something went wrong somewhere: ' + e.message
         return render_template('error.html', message=e)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
