@@ -39,11 +39,12 @@ def make_example_report(fdc_round, category):
     pct_labels = commons_cat_metrics.pct_uploaders_indicator("featured")
 
     report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
-    report.generate()
+    fdc_report = report.generate()
 
     # Ending mysql
     db_cursor.close()
     db.close()
+    return fdc_report
 
 
 def main():
@@ -52,7 +53,7 @@ def main():
 
     # Category used
     category = "Media supported by Wikimedia France"
-    make_example_report(fdc_round, category)
+    print make_example_report(fdc_round, category)
 
 
 if __name__ == "__main__":
