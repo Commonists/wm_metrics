@@ -19,5 +19,13 @@ def index():
 def fdc_report_page():
     return render_template('fdc-report.html')
 
+@app.route("/fdc/submit", methods=["POST"])
+def compute_fdc_report():
+    category = request.form['category']
+    fdc_year = int(request.form['year'])
+    fdc_round = fdc.Round(fdc_year-1, fdc_year, int(request.form['round']))
+    results = wmfr_photography.make_example_report(fdc_round, category)
+    return results
+
 if __name__ == "__main__":
     app.run(debug=True)
