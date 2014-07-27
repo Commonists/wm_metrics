@@ -2,6 +2,7 @@
 import fdc
 import commons_cat_metrics
 import MySQLdb
+import _mysql_exceptions
 
 # Output template
 template_photo = """
@@ -22,29 +23,33 @@ template_photo = """
 {{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
 {{Suivi FDC/Fin}}
 """
-
+class WMmetricsException(Exception):
+    pass
 
 def make_example_report(fdc_round, category):
     """Quick report maker"""
     # Quick and dirty metrics object
-    db = commons_cat_metrics.get_commons_db()
-    db_cursor = db.cursor()
+    try:
+        db = commons_cat_metrics.get_commons_db()
+        db_cursor = db.cursor()
 
-    # Metrics
-    commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
-    # Retrieving all indicators
-    nb_files = commons_cat_metrics.nb_files_indicator("nb")
-    nb_labels = commons_cat_metrics.nb_labels_indicator("nb_featured")
-    nb_uploaders = commons_cat_metrics.nb_uploaders_indicator("uploaders")
-    pct_labels = commons_cat_metrics.pct_uploaders_indicator("featured")
+        # Metrics
+        commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
+        # Retrieving all indicators
+        nb_files = commons_cat_metrics.nb_files_indicator("nb")
+        nb_labels = commons_cat_metrics.nb_labels_indicator("nb_featured")
+        nb_uploaders = commons_cat_metrics.nb_uploaders_indicator("uploaders")
+        pct_labels = commons_cat_metrics.pct_uploaders_indicator("featured")
 
-    report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
-    fdc_report = report.generate()
+        report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
+        fdc_report = report.generate()
 
-    # Ending mysql
-    db_cursor.close()
-    db.close()
-    return fdc_report
+        # Ending mysql
+        db_cursor.close()
+        db.close()
+        return fdc_report
+    except _mysql_exceptions.OperationalError:
+        raise WMmetricsException("Problem with database connection")
 
 
 def main():
