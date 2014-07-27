@@ -45,6 +45,7 @@ class Indicators:
         self.nb_files = None
         self.nb_labels = None
         self.nb_uploaders = None
+        self.global_usage = None
 
     def nb_files_indicator(self, name):
         """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
@@ -137,6 +138,36 @@ class Indicators:
                 q3 = self.nb_uploaders[2],
                 q4 = self.nb_uploaders[3],
                 value = total)
+
+    def total_usage_indicator(self, name):
+        """ Returns an FDC indicator with count of usages of image from the category.
+        
+        Args:
+            name (str): name of the fdc.Indicator
+        """
+        if self.global_usage == None:
+            self.global_usage = self.quarters[0].get_global_usage()
+        return fdc.Indicator(name, value=self.global_usage['total usage'])
+
+    def nb_image_used_indicator(self, name):
+        """ Returns an FDC indicator with count of image used from the category. 
+
+        Args:
+            name (str): name of the fdc.Indicator
+        """
+        if self.global_usage == None:
+            self.global_usage = self.quarters[0].get_global_usage()
+        return fdc.Indicator(name, value=self.global_usage['images used'])        
+
+    def nb_wiki_indicator(self, name):
+        """ Returns an FDC indicator with count of wiki using an image from the category. 
+
+        Args:
+            name (str): name of the fdc.Indicator
+        """
+        if self.global_usage == None:
+            self.global_usage = self.quarters[0].get_global_usage()
+        return fdc.Indicator(name, value=self.global_usage['nb wiki'])   
 
 
 class CommonsCatMetrics:
