@@ -18,10 +18,10 @@ class TestTraffic(unittest.TestCase):
         expected = 'http://stats.grok.se/json/fr/201301/France'
         self.assertEqual(result, expected)
 
-    def test_make_latest_url(self):
-        """test _make_latest_url()."""
+    def test_make_url_latest(self):
+        """test make_url_latest()."""
         traffic = Traffic('France', 'fr')
-        result = traffic._make_latest_url(90)
+        result = traffic._make_url_latest(90)
         expected = 'http://stats.grok.se/json/fr/latest90/France'
         self.assertEqual(result, expected)
 
