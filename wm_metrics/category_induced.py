@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-import mw_api, mw_util, json, codecs, MySQLdb, operator
+import mw_api, mw_util, json, codecs, MySQLdb, operator, sys
 
 class CategoryInduced:
     def __init__(self, category):
@@ -88,15 +88,18 @@ def main():
     ci = CategoryInduced(mw_util.str2cat(args.category))
     ci.categories = ci.list_category()
     first_images = [ci.first_image(x) for x in ci.categories]
+	print "--------------------sys encoding--------------------"
+	s
+	print sys.stdout.encoding
     print "--------------------first images--------------------"
     print first_images
-    images = [x.decode('utf-8')[5:] for x in ci.list_images()]
+    images = [x.encode('utf-8')[5:] for x in ci.list_images()]
     print "----------------------images------------------------"
     print images
-    result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0] in images]
+    result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0].replace("_", " ") in images]
     print "----------------------result------------------------"
-    print first_images[1]['first'][0].encode('utf-8')
-    print first_images[1]['first'][0].encode('utf-8') in images
+    print first_images[1]['first'][0].replace("_", " ")
+    print first_images[1]['first'][0].replace("_", " ") in images
     print result
 
 if __name__ == "__main__":
