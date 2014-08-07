@@ -33,7 +33,6 @@ class CategoryInduced:
             result = json.loads(cache.read())
         else:
             res = []
-            i = 0
             lastContinue = ""
             props={
                 "prop"  : "categories",
@@ -45,36 +44,32 @@ class CategoryInduced:
                 "gcmlimit" : "max"
                   }
             while True:
-                    result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(
-                        properties=props)))
+                    result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(properties=props)))
                     dic = result[u'query'][u'pages']
                     list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
                     liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
                     resu = set()
                     for l in liste2:
                         resu.update([x[u'title'] for x in l])
-              #      print "----------------------resu---------------------"
-              #      print resu
-                    for element in resu:
-                        if res.count(element) == 0:
-                            res.append(element)
-        #           res.extend(resu)
+                    self.smart_append(res, resu)
                     if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
-                #        print "---------result query continue----------------"
-                #        print result['query-continue']
                         lastContinue = result['query-continue']['categorymembers']
                         self.update(props, lastContinue)
                     else:
                         break
         return res
+        
+    def smart_append(self, l2, l1):
+        for e in l1:
+            if e not in l2:
+              l2.append(e)
 
     def first_image(self, category):
-        self.catsql = category[9:].replace(" ", "_")
+        self.catsql = category.replace("Category:", "").replace(" ", "_")
         self.cursor.execute(self.query, self.catsql)
         cat_content = self.catsql.encode('utf-8')
         first_content = [x[0].decode('utf-8') for x in self.cursor.fetchall()]
-        res = {'cat': cat_content, 'first': first_content}
-  #      print res
+        res = [cat_content, first_content]
         return res
 
     def list_images(self):
@@ -121,11 +116,11 @@ def main():
     first_images.sort()
     print "--------------------first images--------------------"
     print "%s categories to check" % (len(first_images))
-    print first_images
+  #  print first_images
     images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
     print "----------------------images------------------------"
     print "%s images" % (len(images))
-    result = [first_images[x]['cat'] for x in range(len(first_images)) if (len(first_images[x]['first']) > 0 and first_images[x]['first'][0] in images)]
+    result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
     result.sort()
     print "----------------------result------------------------"
     print "%s new categories created" % (len(result))
