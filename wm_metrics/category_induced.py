@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 import mw_api, mw_util, json, codecs, MySQLdb, operator, sys
+from collections import Counter
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -35,6 +36,7 @@ class CategoryInduced:
     #        result = json.loads(cache.read())
         else:
             res = []
+            c = counter()
             lastContinue = ""
             props={
                 "prop"  : "categories",
@@ -50,16 +52,17 @@ class CategoryInduced:
                     dic = result[u'query'][u'pages']
                     list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
                     liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
-                    resu = set()
                     for l in liste2:
-                        resu.update([x[u'title'] for x in l])
-                    self.smart_append(res, resu)
+                        categories = [x[u'title'] for x in l]
+                        res.extend(categories)
+                        c.update(categories)
                     if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                         lastContinue = result['query-continue']['categorymembers']
                         self.update(props, lastContinue)
                     else:
                         break
-        return res
+        print "%s elements with %s unique ones" % (sum(c.values), len(c.keys()))
+        return set(res)
         
     def smart_append(self, l2, l1):
         for e in l1:
