@@ -28,7 +28,7 @@ class CategoryInduced:
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
         result = None
-        if false:
+        if False:
             result = None
     #    if os.path.exists(cache_name):
     #        cache = codecs.open(cache_name, 'r', 'utf-8')
