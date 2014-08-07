@@ -92,10 +92,10 @@ class CategoryInduced:
             result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(props)))
             res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
             res = [x.encode('utf-8') for x in res1]
+            list.extend(res)
             if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                 lastContinue = result['query-continue']['categorymembers']
                 self.update(props, lastContinue)
-                list.extend(res)
             else:
                 break
         return list
