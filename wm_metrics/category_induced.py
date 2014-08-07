@@ -29,6 +29,7 @@ class CategoryInduced:
         cache_name = "cache/%s.cache" % (self.category)
         result = None
         if false:
+            result = None
     #    if os.path.exists(cache_name):
     #        cache = codecs.open(cache_name, 'r', 'utf-8')
     #        result = json.loads(cache.read())
