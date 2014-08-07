@@ -82,7 +82,7 @@ class CategoryInduced:
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
         lastContinue = ""
-        pros = {
+        props = {
                     "list"         : "categorymembers",
                     "cmtitle"      : self.category,
                     "cmprop"       : "title",
