@@ -119,12 +119,15 @@ def main():
     ci = CategoryInduced(mw_util.str2cat(args.category))
     ci.categories = ci.list_category()
     first_images = [ci.first_image(x) for x in ci.categories]
-   #  print "--------------------first images--------------------"
+    first_images.sort()
+    print "--------------------first images--------------------"
     print "%s categories to check" % (len(first_images))
+    print first_images
     images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
-   # print "----------------------images------------------------"
+    print "----------------------images------------------------"
     print "%s images" % (len(images))
     result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0] in images]
+    result.sort()
     print "----------------------result------------------------"
     print "%s new categories created" % (len(result))
     print result
