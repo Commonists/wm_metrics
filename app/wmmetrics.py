@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 import os
 import sys
 from flask import Flask, render_template, request
@@ -24,10 +25,20 @@ def compute_fdc_report():
     category = request.form['category']
     fdc_year = int(request.form['year'])
     round_num = int(request.form['round'])
+    nb_uploaders_on = 'indicator-uploaders' in request.form
+    nb_files_on = 'indicator-files' in request.form
+    nb_labels_on = 'indicator-highlighted' in request.form
+    pct_labels_on = 'indicator-highlighted_percentage' in request.form
+
     fdc_round = fdc.Round(fdc_year-1, fdc_year, round_num)
     results = 'Nothing'
     try:
-        results = wmfr_photography.make_example_report(fdc_round, category)
+        results = wmfr_photography.make_example_report(fdc_round, category,
+                        nb_files_on=nb_files_on,
+                        nb_labels_on=nb_labels_on,
+                        nb_uploaders_on=nb_uploaders_on,
+                        pct_labels_on=pct_labels_on)
+
     except wmfr_photography.WMmetricsException, e:
         message = 'Something went wrong in Wm_metrics: ' + e.message
         return render_template('error.html', message=message)

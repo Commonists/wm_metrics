@@ -27,11 +27,21 @@
         <h2>Generate a report</h2>
         <form action="fdc/submit" method="post" enctype="multipart/form-data">
           <ul class="formelements">
-
             <li>
             <label for="category">Category:</label><br>
             <input type="text" name="category"  placeholder="The category to report on" size=50 value="">
             </li>
+            <h3>Indicators</h3>
+            <li><label for="Indicators">Indicators to report on: </label><br>
+
+  <ul>
+   <li><label for="indicator-uploaders"><input type="checkbox" name="indicator-uploaders" id="indicator-uploaders">Number of uploaders</label></li>
+   <li><label for="indicator-files"><input type="checkbox" name="indicator-files" id="indicator-files">Number of files uploaded</label></li>
+   <li><label for="indicator-highlighted"><input type="checkbox" name="indicator-highlighted" id="indicator-highlighted">Number of highlighted files</label></li>
+   <li><label for="indicator-highlighted_percentage"><input type="checkbox" name="indicator-highlighted_percentage" id="indicator-highlighted_percentage">Percentage of highlighted files</label></li>
+  </ul>
+</li>
+            <h3>FDC round information</h3>
             <li><label for="year">FDC Year: </label><br>
             <select style="width:100px;" class="use-chosen" data-placeholder="Year" name="year" >
             <option>2013</option>
