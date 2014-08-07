@@ -28,9 +28,10 @@ class CategoryInduced:
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
         result = None
-        if os.path.exists(cache_name):
-            cache = codecs.open(cache_name, 'r', 'utf-8')
-            result = json.loads(cache.read())
+        if false:
+    #    if os.path.exists(cache_name):
+    #        cache = codecs.open(cache_name, 'r', 'utf-8')
+    #        result = json.loads(cache.read())
         else:
             res = []
             lastContinue = ""
@@ -48,7 +49,7 @@ class CategoryInduced:
                     dic = result[u'query'][u'pages']
                     list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
                     liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
-                    resu = set()
+                    resu = set()q
                     for l in liste2:
                         resu.update([x[u'title'] for x in l])
                     self.smart_append(res, resu)
