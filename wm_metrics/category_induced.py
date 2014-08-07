@@ -36,7 +36,7 @@ class CategoryInduced:
     #        result = json.loads(cache.read())
         else:
             res = []
-            c = counter()
+          #  c = Counter()
             lastContinue = ""
             props={
                 "prop"  : "categories",
@@ -45,7 +45,7 @@ class CategoryInduced:
                 "generator" : "categorymembers",
                 "gcmtitle" : self.category,
                 "gcmprop" : "title",
-                "gcmlimit" : "max"
+                "gcmlimit" : 20
                   }
             while True:
                     result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(properties=props)))
@@ -55,13 +55,13 @@ class CategoryInduced:
                     for l in liste2:
                         categories = [x[u'title'] for x in l]
                         res.extend(categories)
-                        c.update(categories)
+           #             c.update(categories)
                     if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                         lastContinue = result['query-continue']['categorymembers']
                         self.update(props, lastContinue)
                     else:
                         break
-        print "%s elements with %s unique ones" % (sum(c.values), len(c.keys()))
+      #  print "%s elements with %s unique ones" % (sum(c.values()), len(c.keys()))
         return set(res)
         
     def smart_append(self, l2, l1):
