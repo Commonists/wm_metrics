@@ -50,7 +50,7 @@ class CategoryInduced:
                     dic = result[u'query'][u'pages']
                     list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
                     liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
-                    resu = set()q
+                    resu = set()
                     for l in liste2:
                         resu.update([x[u'title'] for x in l])
                     self.smart_append(res, resu)
