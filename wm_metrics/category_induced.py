@@ -19,7 +19,7 @@ class CategoryInduced:
         self.query = """SELECT page.page_title
                         FROM page
                         JOIN categorylinks ON page.page_id = categorylinks.cl_from
-                        WHERE categorylinks.cl_to = %s AND categorylinks.cl_type = file
+                        WHERE categorylinks.cl_to = %s AND categorylinks.cl_type = "file"
                         ORDER BY categorylinks.cl_timestamp ASC
                         LIMIT 1;"""
 
