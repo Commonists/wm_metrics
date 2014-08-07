@@ -5,29 +5,36 @@ import MySQLdb
 import _mysql_exceptions
 
 # Output template
-template_photo = """
-== Indicateur avec pourcentages ==
+template_photo_start = """
+== Rapport  ==
 {{Suivi FDC/En-tête}}
 {{Suivi FDC/Groupe|groupe=Soutien aux photographes}}
-{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=9000}}
-{{Suivi FDC/Indicateur|indicateur=% de fichiers mis en ligne et ayant reçu un label|q1=${featured_q1}|q2=${featured_q2}|q3=${featured_q3}|q4=${featured_q4}|cumul=${featured_value}|Objectif=5%}}
-{{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
-{{Suivi FDC/Fin}}
-
-== Indicateurs sans pourcentages ==
-
-{{Suivi FDC/En-tête}}
-{{Suivi FDC/Groupe|groupe=Soutien aux photographes}}
-{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=9000}}
-{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne et ayant reçu un label|q1=${nb_featured_q1}|q2=${nb_featured_q2}|q3=${nb_featured_q3}|q4=${nb_featured_q4}|cumul=${nb_featured_value}|Objectif=450}}
-{{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
-{{Suivi FDC/Fin}}
 """
+
+nb_files_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=9000}}
+"""
+pct_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=% de fichiers mis en ligne et ayant reçu un label|q1=${featured_q1}|q2=${featured_q2}|q3=${featured_q3}|q4=${featured_q4}|cumul=${featured_value}|Objectif=5%}}
+"""
+
+nb_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne et ayant reçu un label|q1=${nb_featured_q1}|q2=${nb_featured_q2}|q3=${nb_featured_q3}|q4=${nb_featured_q4}|cumul=${nb_featured_value}|Objectif=450}}
+"""
+
+nb_uploaders_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
+"""
+
+template_photo_end = """{{Suivi FDC/Fin}}
+"""
+
+
 class WMmetricsException(Exception):
     pass
 
-def make_example_report(fdc_round, category):
-    """Quick report maker"""
+def make_example_report(fdc_round, category, 
+                        nb_files_on=True,
+                        nb_labels_on=True,
+                        nb_uploaders_on=True,
+                        pct_labels_on=True):
+    """Quick report maker. Indicators can be disabled by passing argument False"""
     # Quick and dirty metrics object
     try:
         db = commons_cat_metrics.get_commons_db()
@@ -35,11 +42,29 @@ def make_example_report(fdc_round, category):
 
         # Metrics
         metrics = commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
+        # Init indicators with None so they can be enabled/disabled by option
+        nb_files = None
+        nb_labels = None
+        nb_uploaders = None
+        pct_labels = None
+        template_photo = template_photo_start
         # Retrieving all indicators
-        nb_files = metrics.nb_files_indicator("nb")
-        nb_labels = metrics.nb_labels_indicator("nb_featured")
-        nb_uploaders = metrics.nb_uploaders_indicator("uploaders")
-        pct_labels = metrics.pct_labels_indicator("featured")
+        if nb_files_on:
+            nb_files = metrics.nb_files_indicator("nb")
+            template_photo += nb_files_tmpl
+        if nb_labels_on:
+            nb_labels = metrics.nb_labels_indicator("nb_featured")
+            template_photo += nb_labels_tmpl
+        if nb_uploaders_on:
+            nb_uploaders = metrics.nb_uploaders_indicator("uploaders")
+            template_photo += nb_uploaders_tmpl
+        if pct_labels_on:
+            pct_labels = metrics.pct_labels_indicator("featured")
+            template_photo += pct_labels_tmpl
+        template_photo += template_photo_end
+
+        # List of indicators selected
+        list_of_indicators = [ indicator  for indicator in [nb_files, pct_labels, nb_uploaders, nb_labels] if indicator is not None ]
 
         report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
         fdc_report = report.generate()
@@ -58,7 +83,7 @@ def main():
 
     # Category used
     category = "Media supported by Wikimedia France"
-    print make_example_report(fdc_round, category)
+    print make_example_report(fdc_round, category, nb_files_on=True, nb_labels_on=False, nb_uploaders_on=False, pct_labels_on=False)
 
 
 if __name__ == "__main__":
