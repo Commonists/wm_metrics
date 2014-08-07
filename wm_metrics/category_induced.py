@@ -61,10 +61,9 @@ class CategoryInduced:
                             res.append(element)
         #           res.extend(resu)
                     if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
-                        print "---------result query continue----------------"
-                        print result['query-continue']
+                #        print "---------result query continue----------------"
+                #        print result['query-continue']
                         lastContinue = result['query-continue']['categorymembers']
-              #          print lastContinue
 						self.update(props, lastContinue)
                     else:
                         break
