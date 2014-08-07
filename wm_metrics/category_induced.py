@@ -99,7 +99,7 @@ class CategoryInduced:
                 break
         return res
 		
-	def update(self, props, lastContinue):
+    def update(self, props, lastContinue):
         for p in lastContinue:
             props[p] = lastContinue[p]
 
