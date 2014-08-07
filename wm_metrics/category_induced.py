@@ -88,22 +88,19 @@ class CategoryInduced:
                     "cmprop"       : "title",
                     "cmlimit"      : "max",
                 }
-		while True:
-			result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(pros)))
-	#       print self.category
-			res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
-			res = [x.encode('utf-8') for x in res1]
-			if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
+        while True:
+            result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(pros)))
+            res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
+            res = [x.encode('utf-8') for x in res1]
+            if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                 lastContinue = result['query-continue']['categorymembers']
-				self.update(props, lastContinue)
+                self.update(props, lastContinue)
             else:
                 break
-	#       print "List of images"
-   #	    print res
         return res
 		
 	def update(self, props, lastContinue):
-		for p in lastContinue:
+        for p in lastContinue:
             props[p] = lastContinue[p]
 
 def main():
