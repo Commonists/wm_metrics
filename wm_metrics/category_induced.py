@@ -64,7 +64,7 @@ class CategoryInduced:
                 #        print "---------result query continue----------------"
                 #        print result['query-continue']
                         lastContinue = result['query-continue']['categorymembers']
-						self.update(props, lastContinue)
+                        self.update(props, lastContinue)
                     else:
                         break
         return res
@@ -95,7 +95,7 @@ class CategoryInduced:
 			res = [x.encode('utf-8') for x in res1]
 			if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                 lastContinue = result['query-continue']['categorymembers']
-                self.update(props, lastContinue)
+				self.update(props, lastContinue)
             else:
                 break
 	#       print "List of images"
