@@ -81,7 +81,7 @@ class CategoryInduced:
     def list_images(self):
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
-		lastContinue = ""
+        lastContinue = ""
         pros = {
                     "list"         : "categorymembers",
                     "cmtitle"      : self.category,
