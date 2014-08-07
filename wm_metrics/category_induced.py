@@ -125,7 +125,7 @@ def main():
     images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
     print "----------------------images------------------------"
     print "%s images" % (len(images))
-    result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0] in images]
+    result = [first_images[x]['cat'] for x in range(len(first_images)) if (len(first_images[x]['first']) > 0 and first_images[x]['first'][0] in images)]
     result.sort()
     print "----------------------result------------------------"
     print "%s new categories created" % (len(result))
