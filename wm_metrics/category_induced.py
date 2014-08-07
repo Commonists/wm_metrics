@@ -81,6 +81,7 @@ class CategoryInduced:
     def list_images(self):
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
+        list = []
         lastContinue = ""
         props = {
                     "list"         : "categorymembers",
@@ -95,9 +96,10 @@ class CategoryInduced:
             if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                 lastContinue = result['query-continue']['categorymembers']
                 self.update(props, lastContinue)
+                list.extend(res)
             else:
                 break
-        return res
+        return list
 		
     def update(self, props, lastContinue):
         for p in lastContinue:
