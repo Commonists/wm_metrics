@@ -19,7 +19,7 @@ class CategoryInduced:
         self.query = """SELECT page.page_title
                         FROM page
                         JOIN categorylinks ON page.page_id = categorylinks.cl_from
-                        WHERE categorylinks.cl_to = %s
+                        WHERE categorylinks.cl_to = %s AND page.cl_type = file
                         ORDER BY categorylinks.cl_timestamp ASC
                         LIMIT 1;"""
 
@@ -42,7 +42,6 @@ class CategoryInduced:
                 "generator" : "categorymembers",
                 "gcmtitle" : self.category,
                 "gcmprop" : "title",
-                #       "gcnamespace" : "6",
                 "gcmlimit" : "max"
                   }
             while True:
