@@ -1,7 +1,10 @@
-# -*- coding: utf-8 -*-
+ -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 import mw_api, mw_util, json, codecs, MySQLdb, operator, sys
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 class CategoryInduced:
     def __init__(self, category):
@@ -20,7 +23,7 @@ class CategoryInduced:
                         ORDER BY categorylinks.cl_timestamp ASC
                         LIMIT 1;"""
 
- 
+
     def list_category(self):
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
@@ -29,24 +32,44 @@ class CategoryInduced:
             cache = codecs.open(cache_name, 'r', 'utf-8')
             result = json.loads(cache.read())
         else:
-            result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(
-                properties={
-                    "prop"	: "categories",
-                    "cllimit" : "max",
-                    "clir" : "ascending",
-                    "generator" : "categorymembers",
-                    "gcmtitle" : self.category,
-                    "gcmprop" : "title",
-                    "gcnamespace" : "6",
-                    "gcmlimit" : "max",
-                })))
-        dic = result[u'query'][u'pages']
-        list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
-        liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
-        resu = set()
-        for l in liste2:
-            resu.update([x[u'title'] for x in l])
-        return resu
+            res = []
+            i = 0
+            lastContinue = ""
+            props={
+                "prop"  : "categories",
+                "cllimit" : "max",
+                "cldir" : "ascending",
+                "generator" : "categorymembers",
+                "gcmtitle" : self.category,
+                "gcmprop" : "title",
+                #       "gcnamespace" : "6",
+                "gcmlimit" : "max"
+                  }
+            while True:
+                    result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(
+                        properties=props)))
+                    dic = result[u'query'][u'pages']
+                    list = sorted(dic.iteritems(), reverse=False, key=operator.itemgetter(1))
+                    liste2 = [x[1][u'categories'] for x in list if u'categories' in x[1].keys()]
+                    resu = set()
+                    for l in liste2:
+                        resu.update([x[u'title'] for x in l])
+              #      print "----------------------resu---------------------"
+              #      print resu
+                    for element in resu:
+                        if res.count(element) == 0:
+                            res.append(element)
+        #           res.extend(resu)
+                    if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
+                        print "---------result query continue----------------"
+                        print result['query-continue']
+                        lastContinue = result['query-continue']['categorymembers']
+                        print lastContinue
+                        for p in lastContinue:
+                            props[p] = lastContinue[p]
+                    else:
+                        break
+        return res
 
     def first_image(self, category):
         self.catsql = category[9:].replace(" ", "_")
@@ -59,20 +82,30 @@ class CategoryInduced:
 
     def list_images(self):
         import os.path
-        cache_name = "cache/%s.cache" % (self.category)
-        result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(
-                properties={
+        cache_name = "cache/%s.cache" % (self.category
+		lastContinue = ""
+        pros = {
                     "list"         : "categorymembers",
                     "cmtitle"      : self.category,
                     "cmprop"       : "title",
                     "cmlimit"      : "max",
-                })))
- #       print self.category 
-        res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
-        res = [x.encode('utf-8') for x in res1]
- #       print "List of images"
- #       print res
-	return res
+                }
+		while True:
+			result = json.loads(self.commons.send_to_api(mw_api.MwApiQuery(pros)))
+	#       print self.category
+			res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
+			res = [x.encode('utf-8') for x in res1]
+			if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
+            #    print "---------result query continue----------------"
+            #    print result['query-continue']
+                lastContinue = result['query-continue']['categorymembers']
+                for p in lastContinue:
+                    props[p] = lastContinue[p]
+            else:
+                break
+	#       print "List of images"
+   #	    print res
+        return res
 
 def main():
     from argparse import ArgumentParser
@@ -88,19 +121,15 @@ def main():
     ci = CategoryInduced(mw_util.str2cat(args.category))
     ci.categories = ci.list_category()
     first_images = [ci.first_image(x) for x in ci.categories]
-	print "--------------------sys encoding--------------------"
-	s
-	print sys.stdout.encoding
-    print "--------------------first images--------------------"
-    print first_images
-    images = [x.encode('utf-8')[5:] for x in ci.list_images()]
-    print "----------------------images------------------------"
-    print images
-    result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0].replace("_", " ") in images]
+   #  print "--------------------first images--------------------"
+    print "%s categories to check" % (len(first_images))
+    images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
+   # print "----------------------images------------------------"
+    print "%s images" % (len(images))
+    result = [first_images[x]['cat'] for x in range(len(first_images)) if first_images[x]['first'][0] in images]
     print "----------------------result------------------------"
-    print first_images[1]['first'][0].replace("_", " ")
-    print first_images[1]['first'][0].replace("_", " ") in images
+    print "%s new categories created" % (len(result))
     print result
 
 if __name__ == "__main__":
-    main()
+    main()		
