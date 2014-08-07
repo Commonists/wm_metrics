@@ -66,7 +66,7 @@ def make_example_report(fdc_round, category,
         # List of indicators selected
         list_of_indicators = [ indicator  for indicator in [nb_files, pct_labels, nb_uploaders, nb_labels] if indicator is not None ]
 
-        report = fdc.Report([nb_files, pct_labels, nb_uploaders, nb_labels], template_string=template_photo)
+        report = fdc.Report(list_of_indicators, template_string=template_photo)
         fdc_report = report.generate()
 
         # Ending mysql
