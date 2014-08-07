@@ -1,4 +1,4 @@
--*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 #!/usr/bin/python
 
 import mw_api, mw_util, json, codecs, MySQLdb, operator, sys
