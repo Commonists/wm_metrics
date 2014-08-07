@@ -39,7 +39,7 @@ class CategoryInduced:
             props={
                 "prop"  : "categories",
                 "cllimit" : "max",
-                "cldir" : "ascending",
+      #          "cldir" : "ascending",
                 "generator" : "categorymembers",
                 "gcmtitle" : self.category,
                 "gcmprop" : "title",
