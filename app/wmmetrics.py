@@ -9,6 +9,8 @@ sys.path.insert(0, os.path.join(current_dir, '..'))
 from wm_metrics import fdc
 from wm_metrics import wmfr_photography
 from wm_metrics import commons_cat_metrics
+from wm_metrics import category_induced
+from wm_metrics import mw_util
 
 app = Flask(__name__)
 
@@ -19,6 +21,10 @@ def index():
 @app.route("/fdc")
 def fdc_report_page():
     return render_template('fdc-report.html')
+
+@app.route("/category-induced")
+def category_induced_page():
+    return render_template('category-induced.html')
 
 @app.route("/fdc/submit", methods=["POST"])
 def compute_fdc_report():
@@ -51,6 +57,17 @@ def compute_fdc_report():
         return render_template('error.html', message='Unicode error')
     except Exception, e:
         return render_template('error.html', message=e)
+
+@app.route("/category-induced/submit", methods=["POST"])
+def compute_category_induced():
+    ci = category_induced.CategoryInduced(mw_util.str2cat(request.form['category']))
+    ci.categories = ci.list_category()
+    first_images = [ci.first_image(x) for x in ci.categories]
+    first_images.sort()
+    images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
+    result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
+    result.sort()
+    return render_template('category-induced-result.html',contents=result.decode('utf-8'))
 
 
 if __name__ == "__main__":
