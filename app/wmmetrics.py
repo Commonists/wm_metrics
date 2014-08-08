@@ -61,8 +61,9 @@ def compute_fdc_report():
 
 @app.route("/category-induced/submit", methods=["POST"])
 def compute_category_induced():
+    category = mw_util.str2cat(request.form['category'])
     try:
-        ci = category_induced.CategoryInduced(mw_util.str2cat(request.form['category']))
+        ci = category_induced.CategoryInduced(category)
         ci.categories = ci.list_category()
         first_images = [ci.first_image(x) for x in ci.categories]
         first_images.sort()
