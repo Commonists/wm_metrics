@@ -58,16 +58,21 @@ def compute_fdc_report():
     except Exception, e:
         return render_template('error.html', message=e)
 
+
 @app.route("/category-induced/submit", methods=["POST"])
 def compute_category_induced():
-    ci = category_induced.CategoryInduced(mw_util.str2cat(request.form['category']))
-    ci.categories = ci.list_category()
-    first_images = [ci.first_image(x) for x in ci.categories]
-    first_images.sort()
-    images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
-    result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
-    result.sort()
-    return render_template('category-induced-result.html',contents=result.decode('utf-8'))
+    try:
+        ci = category_induced.CategoryInduced(mw_util.str2cat(request.form['category']))
+        ci.categories = ci.list_category()
+        first_images = [ci.first_image(x) for x in ci.categories]
+        first_images.sort()
+        images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
+        result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
+        result.sort()
+        contents = '\n'.join(result)
+        return render_template('category-induced-result.html', category=category, contents=contents)
+    except Exception, e:
+        return render_template('error.html', message=e)
 
 
 if __name__ == "__main__":
