@@ -76,5 +76,11 @@ def compute_category_induced():
         return render_template('error.html', message=e)
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    message = "Page does not exist."
+    return render_template('error.html', message=message), 404
+
+
 if __name__ == "__main__":
     app.run(debug=True)
