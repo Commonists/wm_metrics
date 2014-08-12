@@ -6,20 +6,20 @@ import _mysql_exceptions
 
 # Output template
 template_photo_start = """
-== Rapport  ==
+== Report  ==
 {{Suivi FDC/En-tête}}
-{{Suivi FDC/Groupe|groupe=Soutien aux photographes}}
+{{Suivi FDC/Groupe|groupe=Category analysis}}
 """
 
-nb_files_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=9000}}
+nb_files_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of files online|q1= ${nb_q1} |q2= ${nb_q2} |q3= ${nb_q3} |q4= ${nb_q4} |cumul= ${nb_value}|Objectif=}}
 """
-pct_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=% de fichiers mis en ligne et ayant reçu un label|q1=${featured_q1}|q2=${featured_q2}|q3=${featured_q3}|q4=${featured_q4}|cumul=${featured_value}|Objectif=5%}}
-"""
-
-nb_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre de fichiers mis en ligne et ayant reçu un label|q1=${nb_featured_q1}|q2=${nb_featured_q2}|q3=${nb_featured_q3}|q4=${nb_featured_q4}|cumul=${nb_featured_value}|Objectif=450}}
+pct_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=Percentage of highlighted files|q1=${featured_q1}|q2=${featured_q2}|q3=${featured_q3}|q4=${featured_q4}|cumul=${featured_value}|Objectif=}}
 """
 
-nb_uploaders_tmpl = """{{Suivi FDC/Indicateur|indicateur=Nombre d'utilisateurs|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=80}}
+nb_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of highlighted files|q1=${nb_featured_q1}|q2=${nb_featured_q2}|q3=${nb_featured_q3}|q4=${nb_featured_q4}|cumul=${nb_featured_value}|Objectif=}}
+"""
+
+nb_uploaders_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of users|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=}}
 """
 
 template_photo_end = """{{Suivi FDC/Fin}}
