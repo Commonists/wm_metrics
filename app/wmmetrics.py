@@ -72,7 +72,7 @@ def compute_category_induced():
         images_count = len(images)
         result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
         result.sort()
-        results_count = len(results)
+        results_count = len(result)
         categories_traversed_count = len(first_images)
         contents = '\n'.join(result)
         return render_template('category-induced-result.html',
