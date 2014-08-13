@@ -67,7 +67,7 @@ def compute_category_induced():
         ci.categories = ci.list_category()
         first_images = [ci.first_image(x) for x in ci.categories]
         first_images.sort()
-        images_count = len(first_images)
+        categories_count = len(first_images)
         images = [x.decode('utf-8')[5:].replace(" ", "_")  for x in ci.list_images()]
         images_count = len(images)
         result = [first_images[x][0] for x in range(len(first_images)) if (len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
