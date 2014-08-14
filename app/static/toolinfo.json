@@ -1,0 +1,10 @@
+{
+    "name" : "wm-metrics",
+    "title" : "wm_metrics - metrics tools for Wikimedia program leaders",
+    "description" : "Wm-metrics is a set of tools to analyse collections of content on Wikimedia Commons",
+    "url" : "http://tools.wmflabs.org/wm-metrics/",
+    "keywords" : "metrics, commons, fdc, media",
+    "author" : "Pierre-Selim, Jean-Fred, Caroline",
+    "repository" : "https://github.com/Commonists/wm-metrics.git"
+}
+
