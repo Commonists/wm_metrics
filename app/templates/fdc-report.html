@@ -14,57 +14,83 @@
 
   <body>
     <a href="https://github.com/Commonists/wm_metrics">
-      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
-    <div class="container">
-        <div class="page-header">
-          <h1 style="margin-top:1em;">wm_metrics − Easy FDC report generation</h1>
+      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"/></a>
+
+   <div class="container">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">wm-metrics</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/fdc">FDC reporting</a></li>
+                <li><a href="/category-induced">CategoryInduced</a></li>
+              </ul>
+            </li>
+            <li>
+                <a style="margin:0px;padding:0px;margin-top:4px" href="//tools.wmflabs.org">
+                    <img src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Labs" border="0"/></a>
+            </li>
+          </ul>
         </div>
     </div>
-    <div class="container">
-        <p class='lead'>Easily generate FDC reports of given indicators</p>
-        <p>With this tool you may select a category to track and generate the relevant FDC report pieces.</p>
+    <hr />
 
-        <h2>Generate a report</h2>
-        <form action="fdc/submit" method="post" enctype="multipart/form-data">
-          <ul class="formelements">
-            <li>
-            <label for="category">Category:</label><br>
-            <input type="text" name="category"  placeholder="The category to report on" size=50 value="">
-            </li>
+    <!-- Content -->
+    <h1 style="margin-top:1em;">Easy FDC report generation</h1>
+
+    <p class='lead'>Select indicators and a category to track and generate the FDC report pieces</p>
+
+    <form action="fdc/submit" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <div class="input-group">
+                <span class="input-group-addon">Category:</span>
+                <input type="text" class="form-control" id="category" name="category" placeholder="Media created by technology pool of Wikimedia Sverige" />
+            </div>
+        </div>
+        <div class="form-group">
             <h3>Indicators</h3>
-            <li><label for="Indicators">Indicators to report on: </label><br>
-
-  <ul>
-   <li><label for="indicator-uploaders"><input type="checkbox" name="indicator-uploaders" id="indicator-uploaders">Number of uploaders</label></li>
-   <li><label for="indicator-files"><input type="checkbox" name="indicator-files" id="indicator-files">Number of files uploaded</label></li>
-   <li><label for="indicator-highlighted"><input type="checkbox" name="indicator-highlighted" id="indicator-highlighted">Number of highlighted files</label></li>
-   <li><label for="indicator-highlighted_percentage"><input type="checkbox" name="indicator-highlighted_percentage" id="indicator-highlighted_percentage">Percentage of highlighted files</label></li>
-  </ul>
-</li>
+            <span class="help-block">Indicators to report on.</span>
+<label for="indicator-uploaders"><input type="checkbox" name="indicator-uploaders" id="indicator-uploaders">Number of uploaders</label><br/>
+<label for="indicator-files"><input type="checkbox" name="indicator-files" id="indicator-files">Number of files uploaded</label><br/>
+<label for="indicator-highlighted"><input type="checkbox" name="indicator-highlighted" id="indicator-highlighted">Number of highlighted files</label><br/>
+<label for="indicator-highlighted_percentage"><input type="checkbox" name="indicator-highlighted_percentage" id="indicator-highlighted_percentage">Percentage of highlighted files</label><br/>
+        </div>
             <h3>FDC round information</h3>
-            <li><label for="year">FDC Year: </label><br>
-            <select style="width:100px;" class="use-chosen" data-placeholder="Year" name="year" >
-            <option>2013</option>
-            <option>2014</option>
-            </select></li>
+        <div class="form-group">
 
-            <li><label for="round">FDC round: </label><br>
+            <label for="year">FDC Year: </label>
+            <select style="width:100px;" class="use-chosen" data-placeholder="Year" name="year" >
+                <option>2013</option>
+                <option>2014</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="round">FDC round: </label>
             <select style="width:100px;" class="use-chosen" data-placeholder="Round" name="round" >
             <option>1</option>
             <option>2</option>
-            </select></li>
-
-            <li>
-            <input type="submit" >
-            </li>
-          </ul>
-        </form>
-    </div>
-    <div id="footer">
-        <div class="container">
-          <a href="//tools.wmflabs.org"><img id="footer-icon" src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Tool Labs" alt="Powered by Wikimedia Tool Labs"></a>
-            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">github</a>.</p>
+            </select>
         </div>
+
+        <button type="submit" class="btn btn-primary">Make report</button>
+    </form>
+    <!-- Footer -->
+    <div id="footer" class='footer'>
+    <hr />
+            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">Github</a> under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
     </div>
 
     <script src="//tools.wmflabs.org/static/res/jquery/current/jquery.min.js"></script>

@@ -3,3 +3,21 @@
   max-width: 800px;
   padding: 0 15px;
 }
+
+.dl-horizontal dd {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  max-width: 800px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+}

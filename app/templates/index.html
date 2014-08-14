@@ -13,26 +13,57 @@
 
   <body>
     <a href="https://github.com/Commonists/wm_metrics">
-      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
-    <div class="container">
-        <div class="page-header">
-          <h1 style="margin-top:1em;">wm_metrics</h1>
+      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"/></a>
+
+   <div class="container">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">wm-metrics</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/fdc">FDC reporting</a></li>
+                <li><a href="/category-induced">CategoryInduced</a></li>
+              </ul>
+            </li>
+            <li>
+                <a style="margin:0px;padding:0px;margin-top:4px" href="//tools.wmflabs.org">
+                    <img src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Labs" border="0"/></a>
+            </li>
+          </ul>
         </div>
     </div>
-    <div class="container">
+    <hr />
+
+    <!-- Content -->
+    <h1>wm-metrics</h1>
     <p class='lead'>Welcome to wm_metrics − tools for Wikimedia program leaders</p>
-    <ul>
-        <li><a href='./fdc'>FDC reporting</a></li>
-        <li><a href='./category-induced'>Category Induced</a></li>
-    </ul>
-    </div>
+    <p>We build tools to analyse collections of content on Wikimedia Commons and highlight the awesome work of volunteers.</p>
 
-
-    <div id="footer">
-        <div class="container">
-          <a href="//tools.wmflabs.org"><img id="footer-icon" src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Tool Labs" alt="Powered by Wikimedia Tool Labs"></a>
-            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">github</a>.</p>
+        <div class="well">
+        <dl class="dl-horizontal">
+            <dt><a href='./fdc'>FDC reporting</a></dt>
+                <dd>Easily generate FDC reports of given indicators</dd>
+            <dt><a href='./fdc'>Category Induced</a></dt>
+                <dd>Measure the categories induced by a collection</dd>
+        </dl>
         </div>
+
+    <!-- Footer -->
+    <div id="footer" class='footer'>
+    <hr />
+            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">Github</a> under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
     </div>
 
     <script src="//tools.wmflabs.org/static/res/jquery/current/jquery.min.js"></script>
