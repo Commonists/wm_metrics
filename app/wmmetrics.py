@@ -31,6 +31,10 @@ def compute_fdc_report():
     category = request.form['category']
     fdc_year = int(request.form['year'])
     round_num = int(request.form['round'])
+    prefix = "Category:"
+    if category.startswith(prefix):
+        category = category[len(prefix):]
+
     nb_uploaders_on = 'indicator-uploaders' in request.form
     nb_files_on = 'indicator-files' in request.form
     nb_labels_on = 'indicator-highlighted' in request.form
