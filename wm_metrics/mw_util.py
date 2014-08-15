@@ -16,6 +16,5 @@ def str2cat(category):
     """
     prefix = "Category:"
     if not category.startswith(prefix):
-        return "%s%s" % (prefix, category)
-    else:
-        return category
+        category = "%s%s" % (prefix, category)
+    return category.replace(' ', '_')

@@ -12,6 +12,7 @@ class TestMWutil(unittest.TestCase):
         values = [
             ('A', 'Category:A'),
             ('Category:B', 'Category:B'),
+            ('C D', 'Category:C_D'),
         ]
         for value, expected in values:
             self.assertEqual(str2cat(value), expected)
