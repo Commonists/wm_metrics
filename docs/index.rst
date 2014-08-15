@@ -9,6 +9,7 @@ wm_metrics - Wikimedia metrics
 wm_metrics is a set of metrics tools for Wikimedia program leaders.
 
 * **Repo:** `<https://github.com/Commonists/wm_metrics>`_
+* **Webapp:** `<http://tools.wmflabs.org/wm-metrics/>`_
 
 Modules
 =======
