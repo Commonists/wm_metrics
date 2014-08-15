@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/bootstrap/current/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/tool/tools-footer.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
     <link rel="stylesheet" href="{{url_for('static', filename='wmmetrics.css')}}">
   </head>
 
@@ -56,7 +57,7 @@
             <label for="category">Category:</label>
             <div class="input-group">
                 <span class="input-group-addon">Category:</span>
-                <input type="text" class="form-control" id="category" name="category" placeholder="110_ans_d'automobile_au_Grand_Palais_-_Supported_by_Wikimedia_France" />
+                <input type="text" class="form-control" id="category-search" name="category" placeholder="110_ans_d'automobile_au_Grand_Palais_-_Supported_by_Wikimedia_France" />
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Compute</button>
@@ -70,5 +71,7 @@
 
     <script src="//tools.wmflabs.org/static/res/jquery/current/jquery.min.js"></script>
     <script src="//tools.wmflabs.org/static/res/bootstrap/current/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="{{url_for('static', filename='commons-search.js')}}"></script>
   </body>
 </html>
