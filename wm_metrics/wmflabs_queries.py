@@ -37,6 +37,9 @@ ORDER BY img_timestamp ASC;""" % (category, t1, t2)
 
 
 def count_files_in_category_alltime(category):
+    """
+    Count files in the category (without limit on upload date) at the time of the query.
+    """
     return u"""
 		SELECT /* SLOW_OK */ COUNT(page.page_title) AS IMAGES
 		FROM image
@@ -64,6 +67,9 @@ ORDER BY img_timestamp ASC;""" % (category, t1, t2)
 
 
 def count_featured_files_in_category(category, t1, t2):
+    """
+    Count featured pictures in the category uploaded between timestamp t1 and t2.
+    """
     return u"""SELECT /* SLOW_OK */ COUNT(*)
 FROM 
 	(SELECT /* SLOW_OK */ page.page_title
@@ -81,6 +87,13 @@ FROM
 
 
 def global_usage_count(category, main=False):
+    """
+    Returns global usage query
+    
+    Args:
+    	category (str): category name
+    	main (bool): optional in order to account only for file used in main namespaces
+    """
     query = """
 			SELECT /* SLOW_OK */ 
 				COUNT(page.page_title) AS total_usage,
