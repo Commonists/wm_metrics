@@ -9,7 +9,7 @@ $( "#category-search" ).autocomplete({
  * @param respond The Callback
  */
 function search_category(request, respond){
-    return $.getJSON("http://commons.wikimedia.org/w/api.php?callback=?",
+    return $.getJSON("https://commons.wikimedia.org/w/api.php?callback=?",
       {
           search: request.term,
           action: "opensearch",
