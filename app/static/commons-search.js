@@ -26,7 +26,7 @@ function search_category(request, respond){
  * @param data The MediaWiki JSON response
  */
 function process_api_results(data) {
-    return data[1];
+    return data[1].map(cut_category_prefix);
 }
 
 /**
