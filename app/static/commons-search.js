@@ -17,6 +17,14 @@ function search_category(request, respond){
           namespace: 14
       },
       function( data ) {
-          respond(data[1]);
+          respond(process_api_results(data));
       });
+}
+
+/**
+ * Process the MediaWiki api results
+ * @param data The MediaWiki JSON response
+ */
+function process_api_results(data) {
+    return data[1];
 }
