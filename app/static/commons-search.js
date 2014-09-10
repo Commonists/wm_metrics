@@ -28,3 +28,12 @@ function search_category(request, respond){
 function process_api_results(data) {
     return data[1];
 }
+
+/**
+ * Cut a prefixed-category string into a non-prefixed
+ * @param {String} str The string to cut.
+ * @return {String}
+ */
+function cut_category_prefix(str) {
+    return str.substring(9);
+}
