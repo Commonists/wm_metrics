@@ -1,6 +1,12 @@
 #-*- coding: utf-8 -*-
 #!/usr/bin/python
 
+""" Compute the induced Category of a Category.
+
+Induced category of a category C is a category created to describe
+images of category C.
+"""
+
 import mw_api, mw_util, json, codecs, MySQLdb, operator, sys
 from collections import Counter
 
@@ -26,6 +32,7 @@ class CategoryInduced:
 
 
     def list_category(self):
+    	""" Returns List categories inside self.category. """
         import os.path
         cache_name = "cache/%s.cache" % (self.category)
         result = None
