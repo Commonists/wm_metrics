@@ -103,11 +103,11 @@ class Indicators:
         
             Args:
                 name (str): name of the fdc.Indicator
-            """
+        """
         if self.nb_files==None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
         if self.nb_labels==None:
-            self.nb_labels = [self.quarters[i].get_nb_files() for i in range(4)]
+            self.nb_labels = [self.quarters[i].get_nb_featured_files() for i in range(4)]
         return fdc.Indicator(name,
                 q1=self.__percent(self.nb_labels[0], self.nb_files[0]),
                 q2=self.__percent(self.nb_labels[1], self.nb_files[1]),
