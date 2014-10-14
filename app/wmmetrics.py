@@ -36,6 +36,8 @@ def compute_fdc_report():
     fdc_year = int(request.form['year'])
     round_num = int(request.form['round'])
     prefix = "Category:"
+    if not category:
+        return render_template('error.html', message='No category provided')
     if category.startswith(prefix):
         category = category[len(prefix):]
 
