@@ -1,53 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>wm-metrics</title>
-
-    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/bootstrap/3.1.1/css/bootstrap.min.css" />
+{% extends "base.html" %}
+{% block title %}Easy FDC reporting{% endblock %}
+{% block css %}
+    {{ super() }}
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.min.css" />
     <link rel="stylesheet" href="//tools.wmflabs.org/static/res/jquery-ui/1.11.1/jquery-ui.min.css" />
-    <link rel="stylesheet" href="{{url_for('static', filename='wmmetrics.css')}}"/>
-  </head>
-
-  <body>
-    <a href="https://github.com/Commonists/wm_metrics">
-      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"/></a>
-
-   <div class="container">
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-static-top" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./">wm-metrics</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav pull-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="./fdc">FDC reporting</a></li>
-                <li><a href="./category-induced">CategoryInduced</a></li>
-              </ul>
-            </li>
-            <li>
-                <a style="margin:0px;padding:0px;margin-top:4px" href="//tools.wmflabs.org">
-                    <img src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Labs" border="0"/></a>
-            </li>
-          </ul>
-        </div>
-    </div>
-    <hr />
-
-    <!-- Content -->
+{% endblock %}
+{% block content %}
     <h1 style="margin-top:1em;">Easy FDC report generation</h1>
 
     <p class='lead'>Select indicators and a category to track and generate the FDC report pieces</p>
@@ -88,16 +46,11 @@
 
         <button type="submit" class="btn btn-primary">Make report</button>
     </form>
-    <!-- Footer -->
-    <div id="footer" class='footer'>
-    <hr />
-            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">Github</a> under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
-    </div>
+{% endblock %}
 
-    <script src="//tools.wmflabs.org/static/res/jquery/2.1.0/jquery.min.js"></script>
-    <script src="//tools.wmflabs.org/static/res/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+{% block javascript %}
+{{ super() }}
     <script src="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.jquery.min.js"></script>
     <script src="{{url_for('static', filename='commons-search.js')}}"></script>
     <script type="text/javascript">$('.use-chosen').chosen({search_contains: true});</script>
-  </body>
-</html>
+{% endblock %}

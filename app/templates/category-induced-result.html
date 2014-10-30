@@ -1,40 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>wm-metrics</title>
-
-    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/bootstrap/3.1.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.min.css" />
-    <link rel="stylesheet" href="{{url_for('static', filename='wmmetrics.css')}}">
-  </head>
-
-  <body>
-    <a href="https://github.com/Commonists/wm_metrics">
-      <img style="position: absolute; top: 0; right: 0; border: 0; margin: 0; z-index: 9000;" src="//tools.wmflabs.org/static/res/logos/forkme_right_darkblue.png" alt="Fork me on GitHub"></a>
-    <div class="container">
-        <div class="page-header">
-          <h1 style="margin-top:1em;">wm_metrics − Category Induced</h1>
-        </div>
-    </div>
-    <div class="container">
-        <p class='lead'>Results for category [[{{ category }}]] </p>
-        <p>{{ images_count }} images considered, {{ categories_count }} categories explored.</p>
-        <p>{{ results_count }} categories induced:
-        <pre>{{ contents }}</pre>
-    </div>
-    <div id="footer">
-        <div class="container">
-          <a href="//tools.wmflabs.org"><img id="footer-icon" src="//tools.wmflabs.org/static/res/logos/powered-by-tool-labs.png" title="Powered by Wikimedia Tool Labs" alt="Powered by Wikimedia Tool Labs"></a>
-            <p class="text-muted">wm-metrics by Pierre-Selim, Jean-Fred, Caroline. Source is available on <a href="https://github.com/Commonists/wm_metrics">github</a>.</p>
-        </div>
-    </div>
-
-    <script src="//tools.wmflabs.org/static/res/jquery/2.1.0/jquery.min.js"></script>
-    <script src="//tools.wmflabs.org/static/res/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.jquery.min.js"></script>
-    <script type="text/javascript">$('.use-chosen').chosen({search_contains: true});</script>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %}CategoryInduced{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/jquery-ui/1.11.1/jquery-ui.min.css" />
+{% endblock %}
+{% block content %}
+    <p class='lead'>Results for category [[{{ category }}]] </p>
+    <p>{{ images_count }} images considered, {{ categories_count }} categories explored.</p>
+    <p>{{ results_count }} categories induced:
+    <pre>{{ contents }}</pre>
+{% endblock %}
