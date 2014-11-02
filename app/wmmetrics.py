@@ -1,7 +1,9 @@
 # -*- coding: latin-1 -*-
 import os
 import sys
+import logging
 from flask import Flask, render_template, request
+from logging.handlers import RotatingFileHandler
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..'))
@@ -41,6 +43,8 @@ def compute_fdc_report():
     if category.startswith(prefix):
         category = category[len(prefix):]
 
+    app.logger.info('FDC report %s-%s on %s' % (fdc_year, round_num, category))
+
     nb_uploaders_on = 'indicator-uploaders' in request.form
     nb_files_on = 'indicator-files' in request.form
     nb_labels_on = 'indicator-highlighted' in request.form
@@ -72,6 +76,7 @@ def compute_fdc_report():
 @app.route("/category-induced/submit", methods=["POST"])
 def compute_category_induced():
     category = mw_util.str2cat(request.form['category'])
+    app.logger.info('CategoryInduced on %s' % (category))
     try:
         ci = category_induced.CategoryInduced(category)
         ci.categories = ci.list_category()
@@ -104,4 +109,7 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
+    handler = RotatingFileHandler('usage.log', maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
     app.run(debug=True)
