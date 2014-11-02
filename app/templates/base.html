@@ -25,15 +25,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="./">wm-metrics</a>
+          <a class="navbar-brand" href="{{url_for('.index')}}">wm-metrics</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav pull-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="./fdc">FDC reporting</a></li>
-                <li><a href="./category-induced">CategoryInduced</a></li>
+                <li><a href="{{ url_for('.fdc_page') }}">FDC reporting</a></li>
+                <li><a href="{{ url_for('.category_induced_page') }}">CategoryInduced</a></li>
               </ul>
             </li>
             <li>
