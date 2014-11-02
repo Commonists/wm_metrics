@@ -7,6 +7,7 @@ from flask import request
 import time
 import logging
 from logging import FileHandler
+from logging.handlers import RotatingFileHandler
 
 formatter = logging.Formatter("%(asctime)s: %(message)s", "%Y-%m-%d %H:%M:%S")
 
