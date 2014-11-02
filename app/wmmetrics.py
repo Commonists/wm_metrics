@@ -1,9 +1,8 @@
 # -*- coding: latin-1 -*-
 import os
 import sys
-import logging
+
 from flask import Flask, render_template, request
-from logging.handlers import RotatingFileHandler
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..'))
@@ -109,7 +108,4 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
-    handler = RotatingFileHandler('usage.log', maxBytes=10000, backupCount=1)
-    handler.setLevel(logging.INFO)
-    app.logger.addHandler(handler)
     app.run(debug=True)

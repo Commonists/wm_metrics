@@ -7,11 +7,20 @@ from flask import request
 import time
 import logging
 from logging import FileHandler
-logger = FileHandler('error.log')
-app.logger.setLevel(logging.DEBUG)
-app.logger.addHandler(logger)
-app.logger.debug(u"Flask server started " + time.asctime())
 
+formatter = logging.Formatter("%(asctime)s: %(message)s", "%Y-%m-%d %H:%M:%S")
+
+error_handler = FileHandler('error.log')
+error_handler.setFormatter(formatter)
+app.logger.setLevel(logging.DEBUG)
+app.logger.addHandler(error_handler)
+
+usage_handler = RotatingFileHandler('usage.log', maxBytes=10000, backupCount=1)
+usage_handler.setFormatter(formatter)
+usage_handler.setLevel(logging.INFO)
+app.logger.addHandler(usage_handler)
+
+app.logger.debug(u"Flask server started")
 
 @app.after_request
 def write_access_log(response):
