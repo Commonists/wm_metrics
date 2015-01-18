@@ -23,7 +23,7 @@ sys.setdefaultencoding("utf-8")
 class CategoryInduced:
 
     def __init__(self, category):
-        url_api = 'https://commons.wikimedia.org/w/api.php')
+        url_api = 'https://commons.wikimedia.org/w/api.php'
         self.commons = mw_api.MwWiki(url_api=url_api)
         self.category = category.replace(" ", "_").decode('utf-8')
         self.categories = []
@@ -113,8 +113,7 @@ class CategoryInduced:
             res1 = [x[u'title'] for x in result[u'query'][u'categorymembers']]
             res = [x.encode('utf-8') for x in res1]
             list.extend(res)
-            if 'query-continue' in result.keys()
-                and 'categorymembers' in result['query-continue'].keys():
+            if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
                 lastContinue = result['query-continue']['categorymembers']
                 self.update(props, lastContinue)
             else:
