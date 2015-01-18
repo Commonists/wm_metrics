@@ -56,7 +56,7 @@ class Indicators:
         Returns:
             fdc.Indicator with the number of file for each quarter and total over the whole period
         """
-        if self.nb_files == None:
+        if self.nb_files is None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
         return fdc.Indicator(name,
                              q1=self.nb_files[0],
@@ -72,7 +72,7 @@ class Indicators:
         Args:
             name (str): name of the fdc.Indicator
         """
-        if self.nb_labels == None:
+        if self.nb_labels is None:
             self.nb_labels = [
                 self.quarters[i].get_nb_featured_files() for i in range(4)]
         return fdc.Indicator(name,
@@ -105,9 +105,9 @@ class Indicators:
             Args:
                 name (str): name of the fdc.Indicator
         """
-        if self.nb_files == None:
+        if self.nb_files is None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
-        if self.nb_labels == None:
+        if self.nb_labels is None:
             self.nb_labels = [
                 self.quarters[i].get_nb_featured_files() for i in range(4)]
         return fdc.Indicator(name,
@@ -130,7 +130,7 @@ class Indicators:
         Returns:
             fdc.Indicator with the number of file for each quarter and total over the whole period
         """
-        if self.nb_uploaders == None:
+        if self.nb_uploaders is None:
             self.nb_uploaders = [
                 self.quarters[i].get_nb_uploaders() for i in range(4)]
 
@@ -153,7 +153,7 @@ class Indicators:
         Args:
             name (str): name of the fdc.Indicator
         """
-        if self.global_usage == None:
+        if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
         return fdc.Indicator(name, value=self.global_usage['total usage'])
 
@@ -163,7 +163,7 @@ class Indicators:
         Args:
             name (str): name of the fdc.Indicator
         """
-        if self.global_usage == None:
+        if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
         return fdc.Indicator(name, value=self.global_usage['images used'])
 
@@ -173,7 +173,7 @@ class Indicators:
         Args:
             name (str): name of the fdc.Indicator
         """
-        if self.global_usage == None:
+        if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
         return fdc.Indicator(name, value=self.global_usage['nb wiki'])
 
@@ -193,7 +193,7 @@ class CommonsCatMetrics:
         """
         self.catsql = category.replace(" ", "_")
 
-        if cursor == None:
+        if cursor is None:
             db = get_commons_db()
             self.cursor = db.cursor()
         else:

@@ -132,7 +132,7 @@ class Report:
         """
         self.template = Template(template_string)
         self.indicator_values = dict()
-        if template_string == None and template_file == None:
+        if template_string is None and template_file is None:
             raise ValueError(
                 "template_string or template_file argument needs to be used.")
         if template_file != None:
