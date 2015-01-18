@@ -1,9 +1,10 @@
 wm metrics
 ==========
-[![Build Status](https://secure.travis-ci.org/Commonists/wm_metrics.png)](http://travis-ci.org/Commonists/wm_metrics)
-[![Coverage Status](https://coveralls.io/repos/Commonists/wm_metrics/badge.png?branch=master)](https://coveralls.io/r/Commonists/wm_metrics?branch=master)
-[![Documentation](http://img.shields.io/badge/doc-latest-blue.svg)](http://wm-metrics.readthedocs.org/)
-[![License](http://img.shields.io/badge/license-MIT-orange.svg)](http://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/Commonists/wm_metrics.svg)](http://travis-ci.org/Commonists/wm_metrics)
+[![Coverage Status](https://coveralls.io/repos/Commonists/wm_metrics/badge.svg?branch=master)](https://coveralls.io/r/Commonists/wm_metrics?branch=master)
+[![Code Health](https://landscape.io/github/Commonists/wm_metrics/master/landscape.svg?style=flat)](https://landscape.io/github/Commonists/wm_metrics/master)
+[![Documentation Status](https://readthedocs.org/projects/wm-metrics/badge/?version=latest)](https://readthedocs.org/projects/wm-metrics/?badge=latest)
+[![License](http://img.shields.io/badge/license-MIT-orange.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 Metrics tools for Wikimedia program leaders.
 
