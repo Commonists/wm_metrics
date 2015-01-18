@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """
 glamorous.py
-	A Glamorous parser to retieve file usage among the wikimedia projects.
+    A Glamorous parser to retieve file usage among the wikimedia projects.
 """
 from HTMLParser import HTMLParser
 from argparse import ArgumentParser
@@ -27,13 +27,15 @@ class GlamorousParser(HTMLParser, object):
         nb_wiki = len(self.result.keys()) - 2
         images_usages = int(self.result['Total image usages'])
         images_used = int(self.result['Distinct images used'])
-        print "Nb wiki:         %d\nImages usages:   %d\nDistinct images: %d" % (nb_wiki, images_usages, images_used)
+        print "Nb wiki:         %d\nImages usages:   %d\nDistinct images: %d" % \
+            (nb_wiki, images_usages, images_used)
 
     def __category_url__(self):
-        """ 
+        """
         Return the URL to glamorous of the category
         """
-        return "http://tools.wmflabs.org/glamtools/glamorous.php?doit=1&category=%s&use_globalusage=1&ns0=1" % self.category
+        return "http://tools.wmflabs.org/glamtools/glamorous.php?doit=1&category=%s&use_globalusage=1&ns0=1" % \
+            self.category
 
     def handle_starttag(self, tag, attrs):
         if tag == 'th' and self.status == 0:

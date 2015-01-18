@@ -29,7 +29,8 @@ template_photo_end = """{{Suivi FDC/Fin}}
 class WMmetricsException(Exception):
     pass
 
-def make_example_report(fdc_round, category, 
+
+def make_example_report(fdc_round, category,
                         nb_files_on=True,
                         nb_labels_on=True,
                         nb_uploaders_on=True,
@@ -41,7 +42,8 @@ def make_example_report(fdc_round, category,
         db_cursor = db.cursor()
 
         # Metrics
-        metrics = commons_cat_metrics.Indicators(category, fdc_round, cursor=db_cursor)
+        metrics = commons_cat_metrics.Indicators(
+            category, fdc_round, cursor=db_cursor)
         # Init indicators with None so they can be enabled/disabled by option
         nb_files = None
         nb_labels = None
@@ -64,7 +66,8 @@ def make_example_report(fdc_round, category,
         template_photo += template_photo_end
 
         # List of indicators selected
-        list_of_indicators = [ indicator  for indicator in [nb_files, pct_labels, nb_uploaders, nb_labels] if indicator is not None ]
+        list_of_indicators = [indicator for indicator in [
+            nb_files, pct_labels, nb_uploaders, nb_labels] if indicator is not None]
 
         report = fdc.Report(list_of_indicators, template_string=template_photo)
         fdc_report = report.generate()
