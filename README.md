@@ -20,9 +20,9 @@ Overview
 Authors 
 -------
 
-Pierre-Selim,
-Jean-Fred,
-Caroline
+[Pierre-Selim],
+[Jean-Frédéric],
+[Caroline]
 
 
 Licence
@@ -31,3 +31,6 @@ Licence
 This code is free software released under the terms of the MIT license.
 
 [ToolLabs]: http://tools.wmflabs.org/wm-metrics/
+[Pierre-Selim]: https://github.com/PierreSelim
+[Jean-Frédéric]: https://github.com/JeanFred
+[Caroline]: https://github.com/Krho
