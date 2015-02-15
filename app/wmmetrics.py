@@ -83,7 +83,7 @@ def compute_category_induced():
         return render_template('category-induced-result.html',
                                category=category,
                                images_count=ci.images_count,
-                               categories_count=ci.categories_count,
+                               categories_count=ci.categories_traversed_count,
                                results_count=ci.results_count,
                                contents=contents)
     except Exception, e:
