@@ -125,6 +125,30 @@ class CategoryInduced:
             props[p] = lastContinue[p]
 
 
+def induce_categories(category):
+    ci = CategoryInduced(category)
+    ci.categories = ci.list_category()
+    first_images = [ci.first_image(x) for x in ci.categories]
+    first_images.sort()
+    categories_count = len(first_images)
+    images = [x.decode('utf-8')[5:].replace(" ", "_") for x in ci.list_images()]
+    images_count = len(images)
+    result = [first_images[x][0] for x in range(len(first_images))
+              if (len(first_images[x][1]) > 0
+                  and first_images[x][1][0] in images)]
+    result.sort()
+    results_count = len(result)
+    categories_traversed_count = len(first_images)
+
+    print "--------------------first images--------------------"
+    print "%s categories to check" % categories_traversed_count
+    print "----------------------images------------------------"
+    print "%s images" % images_count
+    print "----------------------result------------------------"
+    print "%s new categories created" % results_count
+    print result
+
+
 def main():
     from argparse import ArgumentParser
     description = "Computes metrics about a commons category"
@@ -136,23 +160,9 @@ def main():
                         required=True,
                         help="The category on which we compute metrics")
     args = parser.parse_args()
-    ci = CategoryInduced(mw_util.str2cat(args.category))
-    ci.categories = ci.list_category()
-    first_images = [ci.first_image(x) for x in ci.categories]
-    first_images.sort()
-    print "--------------------first images--------------------"
-    print "%s categories to check" % (len(first_images))
-  #  print first_images
-    images = [x.decode('utf-8')[5:].replace(" ", "_")
-              for x in ci.list_images()]
-    print "----------------------images------------------------"
-    print "%s images" % (len(images))
-    result = [first_images[x][0] for x in range(len(first_images)) if (
-        len(first_images[x][1]) > 0 and first_images[x][1][0] in images)]
-    result.sort()
-    print "----------------------result------------------------"
-    print "%s new categories created" % (len(result))
-    print result
+    category = mw_util.str2cat(args.category)
+    induce_categories(category)
+
 
 if __name__ == "__main__":
     main()
