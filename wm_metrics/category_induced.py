@@ -133,7 +133,7 @@ class CategoryInduced:
         self.images_count = len(self.images)
         self.result = [first_images[x][0] for x in range(len(first_images))
                        if (len(first_images[x][1]) > 0
-                           and first_images[x][1][0] in images)]
+                           and first_images[x][1][0] in self.images)]
         self.result.sort()
         self.results_count = len(self.result)
         self.categories_traversed_count = len(first_images)
