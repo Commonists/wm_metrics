@@ -83,11 +83,6 @@ class CategoryInduced:
   #  print "%s elements with %s unique ones" % (sum(c.values()), len(c.keys()))
         return set(res)
 
-    def smart_append(self, l2, l1):
-        for e in l1:
-            if e not in l2:
-                l2.append(e)
-
     def first_image(self, category):
         self.catsql = category.replace("Category:", "").replace(" ", "_")
         self.cursor.execute(self.query, self.catsql)
