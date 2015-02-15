@@ -125,30 +125,28 @@ class CategoryInduced:
             props[p] = lastContinue[p]
 
 
-def induce_categories(category):
-    ci = CategoryInduced(category)
-    ci.categories = ci.list_category()
-    first_images = [ci.first_image(x) for x in ci.categories]
-    first_images.sort()
-    images = [x.decode('utf-8')[5:].replace(" ", "_") for x in ci.list_images()]
-    images_count = len(images)
-    result = [first_images[x][0] for x in range(len(first_images))
-              if (len(first_images[x][1]) > 0
-                  and first_images[x][1][0] in images)]
-    result.sort()
-    results_count = len(result)
-    categories_traversed_count = len(first_images)
-    return (categories_traversed_count, images_count, results_count, result)
+    def induce_categories(self):
+        self.categories = self.list_category()
+        first_images = [self.first_image(x) for x in self.categories]
+        first_images.sort()
+        self.images = [x.decode('utf-8')[5:].replace(" ", "_") for x in self.list_images()]
+        self.images_count = len(images)
+        self.result = [first_images[x][0] for x in range(len(first_images))
+                       if (len(first_images[x][1]) > 0
+                           and first_images[x][1][0] in images)]
+        self.result.sort()
+        self.results_count = len(self.result)
+        self.categories_traversed_count = len(first_images)
 
 
-def print_report(categories_traversed_count, images_count, results_count, result):
-    print "--------------------first images--------------------"
-    print "%s categories to check" % categories_traversed_count
-    print "----------------------images------------------------"
-    print "%s images" % images_count
-    print "----------------------result------------------------"
-    print "%s new categories created" % results_count
-    print result
+    def print_report(self):
+        print "--------------------first images--------------------"
+        print "%s categories to check" % self.categories_traversed_count
+        print "----------------------images------------------------"
+        print "%s images" % self.images_count
+        print "----------------------result------------------------"
+        print "%s new categories created" % self.results_count
+        print self.result
 
 
 def main():
@@ -163,8 +161,9 @@ def main():
                         help="The category on which we compute metrics")
     args = parser.parse_args()
     category = mw_util.str2cat(args.category)
-    (categories_traversed_count, images_count, results_count, result) = induce_categories(category)
-    print_report(categories_traversed_count, images_count, results_count, result)
+    ci = CategoryInduced(category)
+    ci.induce_categories()
+    ci.print_report()
 
 
 if __name__ == "__main__":
