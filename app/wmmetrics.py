@@ -96,5 +96,11 @@ def page_not_found(error):
     return render_template('error.html', message=message), 404
 
 
+@app.errorhandler(500)
+def error_500(error):
+    message = "Internal wm-metrics error (aka 500)"
+    return render_template('error.html', message=message), 500
+
+
 if __name__ == "__main__":
     app.run(debug=True)
