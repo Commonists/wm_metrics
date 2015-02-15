@@ -130,7 +130,6 @@ def induce_categories(category):
     ci.categories = ci.list_category()
     first_images = [ci.first_image(x) for x in ci.categories]
     first_images.sort()
-    categories_count = len(first_images)
     images = [x.decode('utf-8')[5:].replace(" ", "_") for x in ci.list_images()]
     images_count = len(images)
     result = [first_images[x][0] for x in range(len(first_images))
@@ -139,7 +138,10 @@ def induce_categories(category):
     result.sort()
     results_count = len(result)
     categories_traversed_count = len(first_images)
+    return (categories_traversed_count, images_count, results_count, result)
 
+
+def print_report(categories_traversed_count, images_count, results_count, result):
     print "--------------------first images--------------------"
     print "%s categories to check" % categories_traversed_count
     print "----------------------images------------------------"
@@ -161,7 +163,8 @@ def main():
                         help="The category on which we compute metrics")
     args = parser.parse_args()
     category = mw_util.str2cat(args.category)
-    induce_categories(category)
+    (categories_traversed_count, images_count, results_count, result) = induce_categories(category)
+    print_report(categories_traversed_count, images_count, results_count, result)
 
 
 if __name__ == "__main__":
