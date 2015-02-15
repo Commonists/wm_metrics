@@ -130,7 +130,7 @@ class CategoryInduced:
         first_images = [self.first_image(x) for x in self.categories]
         first_images.sort()
         self.images = [x.decode('utf-8')[5:].replace(" ", "_") for x in self.list_images()]
-        self.images_count = len(images)
+        self.images_count = len(ci.images)
         self.result = [first_images[x][0] for x in range(len(first_images))
                        if (len(first_images[x][1]) > 0
                            and first_images[x][1][0] in images)]
