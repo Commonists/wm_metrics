@@ -1,5 +1,5 @@
-#-*- coding: utf-8 -*-
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# !/usr/bin/python
 
 """ Compute the induced Category of a Category.
 
@@ -28,7 +28,9 @@ class CategoryInduced:
         self.first_images = []
         """"DB instantiation"""
         self.db = MySQLdb.connect(host="commonswiki.labsdb",
-            db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
+                                  db="commonswiki_p",
+                                  read_default_file="~/replica.my.cnf",
+                                  charset='utf8')
         self.cursor = self.db.cursor()
         # TODO: prendre que des images
         self.query = """SELECT page.page_title
@@ -117,7 +119,6 @@ class CategoryInduced:
         for p in lastContinue:
             props[p] = lastContinue[p]
 
-
     def induce_categories(self):
         self.categories = self.list_category()
         first_images = [self.first_image(x) for x in self.categories]
@@ -130,7 +131,6 @@ class CategoryInduced:
         self.result.sort()
         self.results_count = len(self.result)
         self.categories_traversed_count = len(first_images)
-
 
     def print_report(self):
         print "--------------------first images--------------------"
