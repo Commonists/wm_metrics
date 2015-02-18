@@ -42,45 +42,34 @@ class CategoryInduced:
 
     def list_category(self):
         """ Returns List categories inside self.category. """
-        import os.path
-        cache_name = "cache/%s.cache" % (self.category)
         result = None
-        if False:
-            result = None
-    #    if os.path.exists(cache_name):
-    #        cache = codecs.open(cache_name, 'r', 'utf-8')
-    #        result = json.loads(cache.read())
-        else:
-            res = []
-          #  c = Counter()
-            lastContinue = ""
-            props = {
-                "prop": "categories",
-                "cllimit": "max",
-                #          "cldir" : "ascending",
-                "generator": "categorymembers",
-                "gcmtitle": self.category,
-                "gcmprop": "title",
-                "gcmlimit": 20
-            }
-            while True:
-                result = json.loads(
-                    self.commons.send_to_api(mw_api.MwApiQuery(properties=props)))
-                dic = result[u'query'][u'pages']
-                list = sorted(
-                    dic.iteritems(), reverse=False, key=operator.itemgetter(1))
-                liste2 = [x[1][u'categories']
-                          for x in list if u'categories' in x[1].keys()]
-                for l in liste2:
-                    categories = [x[u'title'] for x in l]
-                    res.extend(categories)
-       #             c.update(categories)
-                if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
-                    lastContinue = result['query-continue']['categorymembers']
-                    self.update(props, lastContinue)
-                else:
-                    break
-  #  print "%s elements with %s unique ones" % (sum(c.values()), len(c.keys()))
+        res = []
+        lastContinue = ""
+        props = {
+            "prop": "categories",
+            "cllimit": "max",
+            #          "cldir" : "ascending",
+            "generator": "categorymembers",
+            "gcmtitle": self.category,
+            "gcmprop": "title",
+            "gcmlimit": 20
+        }
+        while True:
+            result = json.loads(
+                self.commons.send_to_api(mw_api.MwApiQuery(properties=props)))
+            dic = result[u'query'][u'pages']
+            list = sorted(
+                dic.iteritems(), reverse=False, key=operator.itemgetter(1))
+            liste2 = [x[1][u'categories']
+                      for x in list if u'categories' in x[1].keys()]
+            for l in liste2:
+                categories = [x[u'title'] for x in l]
+                res.extend(categories)
+            if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
+                lastContinue = result['query-continue']['categorymembers']
+                self.update(props, lastContinue)
+            else:
+                break
         return set(res)
 
     def first_image(self, category):
@@ -92,8 +81,6 @@ class CategoryInduced:
         return res
 
     def list_images(self):
-        import os.path
-        cache_name = "cache/%s.cache" % (self.category)
         list = []
         lastContinue = ""
         props = {
