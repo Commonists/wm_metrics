@@ -10,11 +10,9 @@ images of category C.
 import mw_api
 import mw_util
 import json
-import codecs
 import MySQLdb
 import operator
 import sys
-from collections import Counter
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
