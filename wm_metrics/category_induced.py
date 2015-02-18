@@ -26,12 +26,7 @@ class CategoryInduced:
         self.category = category.replace(" ", "_").decode('utf-8')
         self.categories = []
         self.first_images = []
-        """"DB instantiation"""
-        self.db = MySQLdb.connect(host="commonswiki.labsdb",
-                                  db="commonswiki_p",
-                                  read_default_file="~/replica.my.cnf",
-                                  charset='utf8')
-        self.cursor = self.db.cursor()
+        self.init_database_connection()
         # TODO: prendre que des images
         self.query = """SELECT page.page_title
                         FROM page
@@ -39,6 +34,16 @@ class CategoryInduced:
                         WHERE categorylinks.cl_to = %s AND categorylinks.cl_type = "file"
                         ORDER BY categorylinks.cl_timestamp ASC
                         LIMIT 1;"""
+
+
+    def init_database_connection(self):
+        """Initialise the connection to the database."""
+        self.db = MySQLdb.connect(host="commonswiki.labsdb",
+                                  db="commonswiki_p",
+                                  read_default_file="~/replica.my.cnf",
+                                  charset='utf8')
+        self.cursor = self.db.cursor()
+
 
     def list_category(self):
         """ Returns List categories inside self.category. """
