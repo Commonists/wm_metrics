@@ -13,9 +13,14 @@ import json
 import MySQLdb
 import operator
 import sys
+from _mysql_exceptions import OperationalError
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
+
+
+class DatabaseException(Exception):
+    pass
 
 
 class CategoryInduced:
@@ -35,15 +40,17 @@ class CategoryInduced:
                         ORDER BY categorylinks.cl_timestamp ASC
                         LIMIT 1;"""
 
-
     def init_database_connection(self):
         """Initialise the connection to the database."""
-        self.db = MySQLdb.connect(host="commonswiki.labsdb",
-                                  db="commonswiki_p",
-                                  read_default_file="~/replica.my.cnf",
-                                  charset='utf8')
-        self.cursor = self.db.cursor()
-
+        try:
+            host = "commonswiki.labsdb"
+            self.db = MySQLdb.connect(host=host,
+                                      db="commonswiki_p",
+                                      read_default_file="~/replica.my.cnf",
+                                      charset='utf8')
+            self.cursor = self.db.cursor()
+        except OperationalError:
+            raise DatabaseException("Could not connect to host %s" % host)
 
     def list_category(self):
         """ Returns List categories inside self.category. """
