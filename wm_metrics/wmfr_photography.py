@@ -22,6 +22,9 @@ nb_labels_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of highlighted file
 nb_uploaders_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of users|q1=${uploaders_q1}|q2=${uploaders_q2}|q3=${uploaders_q3}|q4=${uploaders_q4}|cumul=${uploaders_value}|Objectif=}}
 """
 
+nb_usages_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of global usages|q1=${usages_q1}|q2=${usages_q2}|q3=${usages_q3}|q4=${usages_q4}|cumul=${usages_value}|Objectif=}}
+"""
+
 template_photo_end = """{{Suivi FDC/Fin}}
 """
 
@@ -34,7 +37,8 @@ def make_example_report(fdc_round, category,
                         nb_files_on=True,
                         nb_labels_on=True,
                         nb_uploaders_on=True,
-                        pct_labels_on=True):
+                        pct_labels_on=True,
+                        nb_usages_on=True):
     """Quick report maker. Indicators can be disabled by passing argument False"""
     # Quick and dirty metrics object
     try:
@@ -63,6 +67,9 @@ def make_example_report(fdc_round, category,
         if pct_labels_on:
             pct_labels = metrics.pct_labels_indicator("featured")
             template_photo += pct_labels_tmpl
+        if nb_usages_on:
+            nb_usages = metrics.total_usage_indicator("usages")
+            template_photo += nb_usages_tmpl 
         template_photo += template_photo_end
 
         # List of indicators selected
