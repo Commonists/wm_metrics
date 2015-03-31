@@ -103,7 +103,10 @@ def main():
 
     # Category used
     category = "Media supported by Wikimedia France"
-    print make_example_report(fdc_round, category, nb_files_on=True, nb_labels_on=False, nb_uploaders_on=False, pct_labels_on=False)
+    print make_example_report(fdc_round, category,
+                              nb_files_on=False, nb_labels_on=False,
+                              nb_uploaders_on=False, pct_labels_on=False,
+                              pixel_count_on=True)
 
 
 if __name__ == "__main__":
