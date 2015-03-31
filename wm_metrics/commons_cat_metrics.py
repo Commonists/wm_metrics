@@ -46,6 +46,7 @@ class Indicators:
         self.nb_labels = None
         self.nb_uploaders = None
         self.global_usage = None
+        self.pixel_count = None
 
     def nb_files_indicator(self, name):
         """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
