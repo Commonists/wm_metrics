@@ -25,6 +25,9 @@ nb_uploaders_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of users|q1=${up
 nb_usages_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of global usages|q1=${usages_q1}|q2=${usages_q2}|q3=${usages_q3}|q4=${usages_q4}|cumul=${usages_value}|Objectif=}}
 """
 
+pixel_count_tmpl = """{{Suivi FDC/Indicateur|indicateur=Number of pixels|q1=${pixels_q1}|q2=${pixels_q2}|q3=${pixels_q3}|q4=${pixels_q4}|cumul=${pixels_value}|Objectif=}}
+"""
+
 template_photo_end = """{{Suivi FDC/Fin}}
 """
 
@@ -38,7 +41,8 @@ def make_example_report(fdc_round, category,
                         nb_labels_on=True,
                         nb_uploaders_on=True,
                         pct_labels_on=True,
-                        nb_usages_on=True):
+                        nb_usages_on=False,
+                        pixel_count_on=False):
     """Quick report maker. Indicators can be disabled by passing argument False"""
     # Quick and dirty metrics object
     try:
@@ -69,12 +73,16 @@ def make_example_report(fdc_round, category,
             template_photo += pct_labels_tmpl
         if nb_usages_on:
             nb_usages = metrics.total_usage_indicator("usages")
-            template_photo += nb_usages_tmpl 
+            template_photo += nb_usages_tmpl
+        if pixel_count_on:
+            pixel_count = metrics.pixel_count_indicator("pixels")
+            template_photo += pixel_count_tmpl
         template_photo += template_photo_end
 
         # List of indicators selected
         list_of_indicators = [indicator for indicator in [
-            nb_files, pct_labels, nb_uploaders, nb_labels] if indicator is not None]
+            nb_files, pct_labels, nb_uploaders, nb_labels, nb_usages, pixel_count]
+            if indicator is not None]
 
         report = fdc.Report(list_of_indicators, template_string=template_photo)
         fdc_report = report.generate()

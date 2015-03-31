@@ -109,3 +109,19 @@ def global_usage_count(category, main=False):
         return query + " AND gil.gil_page_namespace_id = 0 AND (gil.gil_wiki!='metawiki')"
     else:
         return query
+
+
+def pixel_count(category, t1, t2):
+    query = """
+SELECT /* SLOW_OK */
+    SUM(image.img_size) AS 'sum_size',
+    SUM(image.img_width*image.img_height) AS 'sum_pixel'
+FROM image
+CROSS JOIN page ON image.img_name = page.page_title
+CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
+LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
+WHERE
+    categorylinks.cl_to = '%s'
+    AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
+""" % (category, t1, t2)
+    return query

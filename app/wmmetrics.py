@@ -48,15 +48,17 @@ def compute_fdc_report():
     nb_files_on = 'indicator-files' in request.form
     nb_labels_on = 'indicator-highlighted' in request.form
     pct_labels_on = 'indicator-highlighted_percentage' in request.form
+    pixel_count_on = 'indicator-pixel-count' in request.form
 
-    fdc_round = fdc.Round(fdc_year-1, fdc_year, round_num)
+    fdc_round = fdc.Round(fdc_year - 1, fdc_year, round_num)
     results = 'Nothing'
     try:
         results = wmfr_photography.make_example_report(fdc_round, category,
                         nb_files_on=nb_files_on,
                         nb_labels_on=nb_labels_on,
                         nb_uploaders_on=nb_uploaders_on,
-                        pct_labels_on=pct_labels_on)
+                        pct_labels_on=pct_labels_on,
+                        pixel_count_on=pixel_count_on)
 
     except wmfr_photography.WMmetricsException, e:
         message = 'Something went wrong in Wm_metrics: ' + e.message

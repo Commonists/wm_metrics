@@ -177,6 +177,18 @@ class Indicators:
             self.global_usage = self.quarters[0].get_global_usage()
         return fdc.Indicator(name, value=self.global_usage['nb wiki'])
 
+    def pixel_count_indicator(self, name):
+        if self.pixel_count is None:
+            self.pixel_count = [
+                self.quarters[i].get_pixel_count() for i in range(4)]
+
+        return fdc.Indicator(name,
+                             q1=self.pixel_count[0],
+                             q2=self.pixel_count[1],
+                             q3=self.pixel_count[2],
+                             q4=self.pixel_count[3],
+                             value=sum(self.pixel_count))
+
 
 class CommonsCatMetrics:
 
@@ -245,6 +257,11 @@ class CommonsCatMetrics:
         query = wmflabs_queries.count_files_in_category_alltime(self.catsql)
         self.cursor.execute(query)
         return long(self.cursor.fetchone()[0])
+
+    def get_pixel_count(self):
+        query = wmflabs_queries.pixel_count(self.catsql, self.timestamp1, self.timestamp2)
+        self.cursor.execute(query)
+        return long(self.cursor.fetchone()[1])
 
     def close(self):
         """Close the MariaDB connection."""
