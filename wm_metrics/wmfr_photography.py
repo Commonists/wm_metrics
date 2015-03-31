@@ -57,6 +57,8 @@ def make_example_report(fdc_round, category,
         nb_labels = None
         nb_uploaders = None
         pct_labels = None
+        nb_usages = None
+        pixel_count = None
         template_photo = template_photo_start
         # Retrieving all indicators
         if nb_files_on:
