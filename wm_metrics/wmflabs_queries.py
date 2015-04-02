@@ -114,7 +114,6 @@ def global_usage_count(category, main=False):
 def pixel_count(category, t1, t2):
     query = """
 SELECT /* SLOW_OK */
-    SUM(image.img_size) AS 'sum_size',
     SUM(image.img_width*image.img_height) AS 'sum_pixel'
 FROM image
 CROSS JOIN page ON image.img_name = page.page_title
