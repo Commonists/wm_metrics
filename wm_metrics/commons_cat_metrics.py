@@ -322,7 +322,7 @@ def main():
     print "\ttotal usages: %d" % global_usage['total usage']
     print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100. * float(global_usage['images used']) / nb_files)
     print "\tnb wiki: %d" % global_usage['nb wiki']
-    print "\tpixels: %d" % pixel_count
+    print "pixels: %d" % pixel_count
 
     # closing SQL connection
     metrics.close()
