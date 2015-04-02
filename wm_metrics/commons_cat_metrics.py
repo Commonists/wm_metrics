@@ -262,7 +262,11 @@ class CommonsCatMetrics:
     def get_pixel_count(self):
         query = wmflabs_queries.pixel_count(self.catsql, self.timestamp1, self.timestamp2)
         self.cursor.execute(query)
-        return long(self.cursor.fetchone()[0])
+        try:
+            count = long(self.cursor.fetchone()[0])
+        except TypeError:
+            count = 0
+        return count
 
     def close(self):
         """Close the MariaDB connection."""
