@@ -11,6 +11,7 @@ Please use python commons_cat_metrics.py -h for more information
 import fdc
 import MySQLdb
 import mw_util
+import logging
 from argparse import ArgumentParser
 import wmflabs_queries
 
@@ -265,6 +266,7 @@ class CommonsCatMetrics:
         try:
             count = long(self.cursor.fetchone()[0])
         except TypeError:
+            logging.debug('Error querying Pixel Count. Assuming Zero.')
             count = 0
         return count
 
