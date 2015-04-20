@@ -31,7 +31,7 @@ CROSS JOIN page ON image.img_name = page.page_title
 CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
 LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
 WHERE
-    categorylinks.cl_to = '%s'
+    categorylinks.cl_to = %s
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
 ORDER BY img_timestamp ASC;"""
 
@@ -46,7 +46,7 @@ def count_files_in_category_alltime():
         CROSS JOIN page ON image.img_name = page.page_title
         CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
         WHERE
-            categorylinks.cl_to = '%s';
+            categorylinks.cl_to = %s;
     """
 
 
@@ -61,7 +61,7 @@ CROSS JOIN page ON image.img_name = page.page_title
 CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
 LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
 WHERE
-    categorylinks.cl_to = '%s'
+    categorylinks.cl_to = %s
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
 ORDER BY img_timestamp ASC;"""
 
@@ -79,7 +79,7 @@ FROM
         CROSS JOIN categorylinks c2 ON page.page_id = c2.cl_from
         LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
         WHERE
-            categorylinks.cl_to = '%s'
+            categorylinks.cl_to = %s
             AND IF(oldimage.oi_timestamp is NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
             AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
    GROUP BY page.page_title
@@ -104,7 +104,7 @@ def global_usage_count(main=False):
             CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
             CROSS JOIN globalimagelinks gil ON gil.gil_to = image.img_name
             WHERE
-                categorylinks.cl_to ='%s'"""
+                categorylinks.cl_to = %s"""
     if main:
         return query + " AND gil.gil_page_namespace_id = 0 AND (gil.gil_wiki!='metawiki')"
     else:
@@ -120,7 +120,7 @@ CROSS JOIN page ON image.img_name = page.page_title
 CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
 LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestamp = (SELECT MIN(o.oi_timestamp) FROM oldimage o WHERE o.oi_name = image.img_name)
 WHERE
-    categorylinks.cl_to = '%s'
+    categorylinks.cl_to = %s
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
 """
     return query
