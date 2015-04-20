@@ -50,7 +50,7 @@ class Indicators:
         self.pixel_count = None
 
     def nb_files_indicator(self, name):
-        """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value). 
+        """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value).
 
         Args:
             name (str): name of the fdc.Indicator
@@ -124,7 +124,7 @@ class Indicators:
                              value=self.__percent(sum(self.nb_labels), sum(self.nb_files)))
 
     def nb_uploaders_indicator(self, name):
-        """ Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value). 
+        """ Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value).
 
         Args:
             name (str): name of the fdc.Indicator
@@ -137,9 +137,8 @@ class Indicators:
                 self.quarters[i].get_nb_uploaders() for i in range(4)]
 
         cat = self.category.replace(" ", "_")
-        query = wmflabs_queries.count_uploaders_in_category(
-            cat, self.fdc_round.full_period()['start'], self.fdc_round.full_period()['end'])
-        self.cursor.execute(query)
+        query = wmflabs_queries.count_uploaders_in_category()
+        self.cursor.execute(query, (cat, self.fdc_round.full_period()['start'], self.fdc_round.full_period()['end']))
         total = long(self.cursor.fetchone()[0])
 
         return fdc.Indicator(name,
@@ -160,7 +159,7 @@ class Indicators:
         return fdc.Indicator(name, value=self.global_usage['total usage'])
 
     def nb_image_used_indicator(self, name):
-        """ Returns an FDC indicator with count of image used from the category. 
+        """ Returns an FDC indicator with count of image used from the category.
 
         Args:
             name (str): name of the fdc.Indicator
@@ -170,7 +169,7 @@ class Indicators:
         return fdc.Indicator(name, value=self.global_usage['images used'])
 
     def nb_wiki_indicator(self, name):
-        """ Returns an FDC indicator with count of wiki using an image from the category. 
+        """ Returns an FDC indicator with count of wiki using an image from the category.
 
         Args:
             name (str): name of the fdc.Indicator
@@ -220,23 +219,20 @@ class CommonsCatMetrics:
 
     def get_nb_uploaders(self):
         """Amount of uploaders on the period."""
-        query = wmflabs_queries.count_uploaders_in_category(
-            self.catsql, self.timestamp1, self.timestamp2)
-        self.cursor.execute(query)
+        query = wmflabs_queries.count_uploaders_in_category()
+        self.cursor.execute(query, (self.catsql, self.timestamp1, self.timestamp2))
         return long(self.cursor.fetchone()[0])
 
     def get_nb_files(self):
         """Amount of files uploaded on the period."""
-        query = wmflabs_queries.count_files_in_category(
-            self.catsql, self.timestamp1, self.timestamp2)
-        self.cursor.execute(query)
+        query = wmflabs_queries.count_files_in_category()
+        self.cursor.execute(query, (self.catsql, self.timestamp1, self.timestamp2))
         return long(self.cursor.fetchone()[0])
 
     def get_nb_featured_files(self):
         """Amount of files that are either FP, VI or QI on Wikimedia Commons."""
-        query = wmflabs_queries.count_featured_files_in_category(
-            self.catsql, self.timestamp1, self.timestamp2)
-        self.cursor.execute(query)
+        query = wmflabs_queries.count_featured_files_in_category()
+        self.cursor.execute(query, (self.catsql, self.timestamp1, self.timestamp2))
         return long(self.cursor.fetchone()[0])
 
     def get_global_usage(self, main=False):
@@ -246,8 +242,8 @@ class CommonsCatMetrics:
         Args:
             main (boolean): whether we only count for main namespaces.
         """
-        query = wmflabs_queries.global_usage_count(self.catsql, main=main)
-        self.cursor.execute(query)
+        query = wmflabs_queries.global_usage_count(main=main)
+        self.cursor.execute(query, (self.catsql))
         result = self.cursor.fetchone()
         return {
             'total usage': long(result[0]),
@@ -261,8 +257,8 @@ class CommonsCatMetrics:
         return long(self.cursor.fetchone()[0])
 
     def get_pixel_count(self):
-        query = wmflabs_queries.pixel_count(self.catsql, self.timestamp1, self.timestamp2)
-        self.cursor.execute(query)
+        query = wmflabs_queries.pixel_count()
+        self.cursor.execute(query, (self.catsql, self.timestamp1, self.timestamp2))
         try:
             count = long(self.cursor.fetchone()[0])
         except TypeError:
@@ -316,7 +312,7 @@ def main():
     pixel_count = metrics.get_pixel_count()
 
     # printing results
-    print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(),  metrics.get_nb_featured_files())
+    print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(), metrics.get_nb_featured_files())
     print "global usage(as of now):"
     print "\tnb files: %d" % nb_files
     print "\ttotal usages: %d" % global_usage['total usage']

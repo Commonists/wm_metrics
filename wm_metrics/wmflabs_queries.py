@@ -36,7 +36,7 @@ WHERE
 ORDER BY img_timestamp ASC;""" % (category, t1, t2)
 
 
-def count_files_in_category_alltime(category):
+def count_files_in_category_alltime():
     """
     Count files in the category (without limit on upload date) at the time of the query.
     """
@@ -47,10 +47,10 @@ def count_files_in_category_alltime(category):
         CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
         WHERE
             categorylinks.cl_to = '%s';
-    """ % category
+    """
 
 
-def count_uploaders_in_category(category, t1, t2):
+def count_uploaders_in_category():
     """
     count_uploaders_in_category
             Count distinct users that have uploaded a files that belongs to category between timestamp t1 and t2
@@ -63,10 +63,10 @@ LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestam
 WHERE
     categorylinks.cl_to = '%s'
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
-ORDER BY img_timestamp ASC;""" % (category, t1, t2)
+ORDER BY img_timestamp ASC;"""
 
 
-def count_featured_files_in_category(category, t1, t2):
+def count_featured_files_in_category():
     """
     Count featured pictures in the category uploaded between timestamp t1 and t2.
     """
@@ -83,10 +83,10 @@ FROM
             AND IF(oldimage.oi_timestamp is NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
             AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
    GROUP BY page.page_title
-   ORDER BY img_timestamp ASC) labels;""" % (category, t1, t2)
+   ORDER BY img_timestamp ASC) labels;"""
 
 
-def global_usage_count(category, main=False):
+def global_usage_count(main=False):
     """
     Returns global usage query
 
@@ -104,14 +104,14 @@ def global_usage_count(category, main=False):
             CROSS JOIN categorylinks ON page.page_id = categorylinks.cl_from
             CROSS JOIN globalimagelinks gil ON gil.gil_to = image.img_name
             WHERE
-                categorylinks.cl_to ='%s'""" % category
+                categorylinks.cl_to ='%s'"""
     if main:
         return query + " AND gil.gil_page_namespace_id = 0 AND (gil.gil_wiki!='metawiki')"
     else:
         return query
 
 
-def pixel_count(category, t1, t2):
+def pixel_count():
     query = """
 SELECT /* SLOW_OK */
     SUM(image.img_width*image.img_height) AS 'sum_pixel'
@@ -122,5 +122,5 @@ LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestam
 WHERE
     categorylinks.cl_to = '%s'
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
-""" % (category, t1, t2)
+"""
     return query
