@@ -20,7 +20,7 @@ WHERE
 ORDER BY img_timestamp ASC;""" % (category, t1, t2)
 
 
-def count_files_in_category(category, t1, t2):
+def count_files_in_category():
     """
     count_files_in_category
             List all files in category uploaded between timestamp t1 and t2
@@ -33,7 +33,7 @@ LEFT JOIN oldimage ON image.img_name = oldimage.oi_name AND oldimage.oi_timestam
 WHERE
     categorylinks.cl_to = '%s'
     AND IF(oldimage.oi_timestamp IS NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
-ORDER BY img_timestamp ASC;""" % (category, t1, t2)
+ORDER BY img_timestamp ASC;"""
 
 
 def count_files_in_category_alltime():
