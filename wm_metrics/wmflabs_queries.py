@@ -81,7 +81,7 @@ FROM
         WHERE
             categorylinks.cl_to = %s
             AND IF(oldimage.oi_timestamp is NULL, img_timestamp, oldimage.oi_timestamp)  BETWEEN %s AND %s
-            AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_supported_by_Wikimedia_France" OR c2.cl_to = "Featured_pictures_supported_by_Wikimedia_France")
+            AND (c2.cl_to = "Quality_images" OR c2.cl_to = "Valued_images_sorted_by_promotion_date" OR c2.cl_to = "Featured_pictures_supported_on_Wikimedia_Commons")
    GROUP BY page.page_title
    ORDER BY img_timestamp ASC) labels;"""
 
