@@ -55,7 +55,7 @@ class Round:
         """
         year = self.year2
         index = quarter - 1
-        if not quarter in range(1, 5):
+        if quarter not in range(1, 5):
             raise ValueError(
                 "quarter should be between 1 and 4 but is %d" % quarter)
         if self.round == 2:
@@ -141,7 +141,7 @@ class Report:
         if template_string is None and template_file is None:
             raise ValueError(
                 "template_string or template_file argument needs to be used.")
-        if template_file != None:
+        if template_file is not None:
             # reads template file
             with open(template_file, 'r') as f:
                 self.template = Template(f.read())
@@ -149,7 +149,7 @@ class Report:
         for indicator in indicator_list:
             for key in indicator.values.keys():
                 var_name = "%s_%s" % (indicator.name, key)
-                if indicator.values[key] == None:
+                if indicator.values[key] is None:
                     self.indicator_values[var_name] = ""
                 else:
                     self.indicator_values[var_name] = indicator.values[key]

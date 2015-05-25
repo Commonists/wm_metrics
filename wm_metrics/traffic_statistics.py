@@ -23,7 +23,7 @@ class Traffic:
         Args:
             latest (int): 30, 60 or 90
         """
-        if not latest in [30, 60, 90]:
+        if latest not in [30, 60, 90]:
             raise ValueError("Expected 30, 60 or 90 instead of %s" % (latest))
         return "http://stats.grok.se/json/{0:s}/latest{1:d}/{2:s}".format(self.site, latest, self.title)
 
