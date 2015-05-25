@@ -23,13 +23,12 @@ class CommonsCatMetrics:
 
     """Wrapper class for the Category Metrics"""
 
-    def __init__(self, category, round_fdc, q, cursor=None):
+    def __init__(self, category, period, cursor=None):
         """Constructor
 
         Args:
             category (string): Category name (without 'Category:' prefix)
-            round_fdc (fdc.Round): FDC round
-            q (int): quarter
+            period (Period): period of time for the metrics observation
             cursor (MySQLdb cursor): optional connection to mysql server
         """
         self.catsql = category.replace(" ", "_")
@@ -40,10 +39,8 @@ class CommonsCatMetrics:
         else:
             self.cursor = cursor
 
-        # round fdc
-        timestamps = round_fdc.quarter(q)
-        self.timestamp1 = timestamps['start']
-        self.timestamp2 = timestamps['end']
+        self.timestamp1 = period.start
+        self.timestamp2 = period.end
 
     def get_nb_uploaders(self):
         """Amount of uploaders on the period."""
@@ -131,10 +128,12 @@ def main():
     args = parser.parse_args()
     category = args.category.decode('utf-8')
     years = [int(y) for y in args.years.split('-')]
+
     fdc_round = fdc.Round(years[0], years[1], args.round)
 
-    # fetching metrics
-    metrics = CommonsCatMetrics(category, fdc_round, args.quarter)
+    time_period = fdc_round.to_period_for_quarter(args.quarter)
+
+    metrics = CommonsCatMetrics(category, time_period)
     global_usage = metrics.get_global_usage()
     nb_files = metrics.get_nb_files_alltime()
     pixel_count = metrics.get_pixel_count()

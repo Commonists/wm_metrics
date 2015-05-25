@@ -23,7 +23,8 @@ class Indicators:
         self.category = category
         self.cursor = cursor
         self.fdc_round = fdc_round
-        self.quarters = [CommonsCatMetrics(category, fdc_round, i + 1, cursor=cursor)
+
+        self.quarters = [CommonsCatMetrics(category, fdc_round.to_period_for_quarter(i + 1), cursor=cursor)
                          for i in range(4)]
         self.nb_files = None
         self.nb_labels = None
