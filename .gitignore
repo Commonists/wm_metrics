@@ -200,6 +200,7 @@ var/
 sdist/
 develop-eggs/
 .installed.cfg
+.venv
 
 # Installer logs
 pip-log.txt
@@ -207,6 +208,7 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
+htmlcov/
 
 #Translations
 *.mo
