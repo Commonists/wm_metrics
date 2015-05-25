@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import fdc
 import commons_cat_metrics
-import MySQLdb
 import _mysql_exceptions
 
 # Output template

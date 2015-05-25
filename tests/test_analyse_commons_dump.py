@@ -1,7 +1,6 @@
 """Unit tests for Dump analysing stuff."""
 
 import unittest
-from os.path import dirname, join
 from datetime import datetime
 from wm_metrics.analyse_commons_dump import get_categories_from_text,\
     timestamp_to_date

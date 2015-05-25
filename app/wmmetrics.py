@@ -9,7 +9,6 @@ sys.path.insert(0, os.path.join(current_dir, '..'))
 
 from wm_metrics import fdc
 from wm_metrics import wmfr_photography
-from wm_metrics import commons_cat_metrics
 from wm_metrics import category_induced
 from wm_metrics import mw_util
 

@@ -3,7 +3,6 @@
 
 import re
 import urllib
-import codecs
 import json
 import httplib2
 
