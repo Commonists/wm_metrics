@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import re
 import urllib
@@ -25,9 +25,7 @@ class MwQueryError(Exception):
 
 class MwWiki:
 
-    """ 
-    Wiki API 
-    """
+    """Wiki API"""
 
     def __init__(self, url_api=DEFAULT_API):
         """ Constructor.
@@ -48,7 +46,7 @@ class MwWiki:
         url_req = "%s?action=%s" % (self.url, request.action)
         # add each property
         for k in request.prop.keys():
-            #url_req += "&%s=%s" % (k, urlEncodeNonAscii(request.prop[k]))
+            # url_req += "&%s=%s" % (k, urlEncodeNonAscii(request.prop[k]))
             url_req += "&%s=%s" % (k, self.__encode_param(request.prop[k]))
         # add the format
         url_req += "&format=%s" % (request.format)
@@ -129,9 +127,7 @@ class MwWiki:
 
 class MwApi:
 
-    """ 
-    Access to API 
-    """
+    """Access to API"""
 
     def __init__(self, action, properties=dict(), format="json"):
         self.action = action

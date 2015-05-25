@@ -102,7 +102,7 @@ class CommonsPage():
     """Represent a page."""
 
     def __init__(self, title=None, revisions=None):
-        #super(CommonsPage, self).__init__()
+        # super(CommonsPage, self).__init__()
         self.title = title
         if not revisions:
             revisions = []
@@ -126,7 +126,7 @@ class CommonsRevision():
     """Representation of a Revision (timestamp + username + wikitext)."""
 
     def __init__(self, timestamp=None, username=None, wikitext=None):
-        #super(CommonsRevision, self).__init__()
+        # super(CommonsRevision, self).__init__()
         self.timestamp = timestamp
         self.username = username
         self.wikitext = wikitext

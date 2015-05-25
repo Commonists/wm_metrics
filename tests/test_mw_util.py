@@ -3,6 +3,7 @@
 import unittest
 from wm_metrics.mw_util import str2cat
 
+
 class TestMWutil(unittest.TestCase):
 
     """Test methods from mw_util."""

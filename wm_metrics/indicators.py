@@ -76,7 +76,7 @@ class Indicators:
             decimals: amount of decimals to return (default 2)
 
         Returns:
-            100*a/b 
+            100*a/b
         """
         if b == 0:
             return None
