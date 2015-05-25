@@ -84,6 +84,12 @@ class Round:
     def __repr__(self):
         return "%s-%s round%s" % (self.year1, self.year2, self.round)
 
+    def to_period_for_quarter(self, quarter):
+        import period
+        fdc_period = self.quarter(quarter)
+        time_period = period.Period(fdc_period['start'], fdc_period['end'])
+        return time_period
+
 
 class Indicator:
 
