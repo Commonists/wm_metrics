@@ -29,7 +29,13 @@ class Report:
                 "template_string or template_file argument needs to be used.")
         if template_file is not None:
             self.template = self._read_template_file(template_file)
-        # fill the dictionnary of values
+        self._fill_indicator_contents(indicator_list)
+
+    def _read_template_file(self, template_file):
+        with open(template_file, 'r') as f:
+            return Template(f.read())
+
+    def _fill_indicator_contents(self, indicator_list):
         for indicator in indicator_list:
             for key in indicator.values.keys():
                 var_name = "%s_%s" % (indicator.name, key)
@@ -37,10 +43,6 @@ class Report:
                     self.indicator_values[var_name] = ""
                 else:
                     self.indicator_values[var_name] = indicator.values[key]
-
-    def _read_template_file(self, template_file):
-        with open(template_file, 'r') as f:
-            return Template(f.read())
 
     def generate(self):
         """ Generate report from template and indicators.
