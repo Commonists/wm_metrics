@@ -1,11 +1,11 @@
-import fdc
+from fdc.indicator import Indicator as fdc_indicator
 from commons_cat_metrics import CommonsCatMetrics
 import wmflabs_queries
 
 
 class Indicators:
 
-    """ This class allows to generate fdc.Indicator for:
+    """ This class allows to generate fdc_indicator for:
             file upload count
             file labels count
             file uploader count
@@ -36,14 +36,14 @@ class Indicators:
         """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value).
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
 
         Returns:
-            fdc.Indicator with the number of file for each quarter and total over the whole period
+            fdc_indicator with the number of file for each quarter and total over the whole period
         """
         if self.nb_files is None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
-        return fdc.Indicator(name,
+        return fdc_indicator(name,
                              q1=self.nb_files[0],
                              q2=self.nb_files[1],
                              q3=self.nb_files[2],
@@ -55,12 +55,12 @@ class Indicators:
         are either FP, QI or VI.
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
         """
         if self.nb_labels is None:
             self.nb_labels = [
                 self.quarters[i].get_nb_featured_files() for i in range(4)]
-        return fdc.Indicator(name,
+        return fdc_indicator(name,
                              q1=self.nb_labels[0],
                              q2=self.nb_labels[1],
                              q3=self.nb_labels[2],
@@ -88,14 +88,14 @@ class Indicators:
             are either FP, QI or VI.
 
             Args:
-                name (str): name of the fdc.Indicator
+                name (str): name of the fdc_indicator
         """
         if self.nb_files is None:
             self.nb_files = [self.quarters[i].get_nb_files() for i in range(4)]
         if self.nb_labels is None:
             self.nb_labels = [
                 self.quarters[i].get_nb_featured_files() for i in range(4)]
-        return fdc.Indicator(name,
+        return fdc_indicator(name,
                              q1=self.__percent(
                                  self.nb_labels[0], self.nb_files[0]),
                              q2=self.__percent(
@@ -110,10 +110,10 @@ class Indicators:
         """ Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value).
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
 
         Returns:
-            fdc.Indicator with the number of file for each quarter and total over the whole period
+            fdc_indicator with the number of file for each quarter and total over the whole period
         """
         if self.nb_uploaders is None:
             self.nb_uploaders = [
@@ -124,7 +124,7 @@ class Indicators:
         self.cursor.execute(query, (cat, self.fdc_round.full_period()['start'], self.fdc_round.full_period()['end']))
         total = long(self.cursor.fetchone()[0])
 
-        return fdc.Indicator(name,
+        return fdc_indicator(name,
                              q1=self.nb_uploaders[0],
                              q2=self.nb_uploaders[1],
                              q3=self.nb_uploaders[2],
@@ -135,38 +135,38 @@ class Indicators:
         """ Returns an FDC indicator with count of usages of image from the category.
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
         """
         if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
-        return fdc.Indicator(name, value=self.global_usage['total usage'])
+        return fdc_indicator(name, value=self.global_usage['total usage'])
 
     def nb_image_used_indicator(self, name):
         """ Returns an FDC indicator with count of image used from the category.
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
         """
         if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
-        return fdc.Indicator(name, value=self.global_usage['images used'])
+        return fdc_indicator(name, value=self.global_usage['images used'])
 
     def nb_wiki_indicator(self, name):
         """ Returns an FDC indicator with count of wiki using an image from the category.
 
         Args:
-            name (str): name of the fdc.Indicator
+            name (str): name of the fdc_indicator
         """
         if self.global_usage is None:
             self.global_usage = self.quarters[0].get_global_usage()
-        return fdc.Indicator(name, value=self.global_usage['nb wiki'])
+        return fdc_indicator(name, value=self.global_usage['nb wiki'])
 
     def pixel_count_indicator(self, name):
         if self.pixel_count is None:
             self.pixel_count = [
                 self.quarters[i].get_pixel_count() for i in range(4)]
 
-        return fdc.Indicator(name,
+        return fdc_indicator(name,
                              q1=self.pixel_count[0],
                              q2=self.pixel_count[1],
                              q3=self.pixel_count[2],
