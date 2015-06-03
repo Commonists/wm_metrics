@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import fdc
+from fdc.round import Round
+from fdc.report import Report
 import commons_cat_metrics
 import _mysql_exceptions
 
@@ -85,7 +86,7 @@ def make_example_report(fdc_round, category,
             nb_files, pct_labels, nb_uploaders, nb_labels, nb_usages, pixel_count]
             if indicator is not None]
 
-        report = fdc.Report(list_of_indicators, template_string=template_photo)
+        report = Report(list_of_indicators, template_string=template_photo)
         fdc_report = report.generate()
 
         # Ending mysql
@@ -98,7 +99,7 @@ def make_example_report(fdc_round, category,
 
 def main():
     # FDC round
-    fdc_round = fdc.Round(2012, 2013, 2)
+    fdc_round = Round(2012, 2013, 2)
 
     # Category used
     category = "Media supported by Wikimedia France"

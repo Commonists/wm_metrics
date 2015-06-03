@@ -12,7 +12,7 @@ import MySQLdb
 import logging
 from argparse import ArgumentParser
 import wmflabs_queries
-import fdc
+from fdc.round import Round
 
 
 def get_commons_db():
@@ -130,7 +130,7 @@ def main():
     category = args.category.decode('utf-8')
     years = [int(y) for y in args.years.split('-')]
 
-    fdc_round = fdc.Round(years[0], years[1], args.round)
+    fdc_round = Round(years[0], years[1], args.round)
 
     time_period = fdc_round.to_period_for_quarter(args.quarter)
 

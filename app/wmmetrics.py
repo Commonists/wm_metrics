@@ -7,7 +7,7 @@ from flask import Flask, render_template, request
 current_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..'))
 
-from wm_metrics import fdc
+from wm_metrics.fdc.round import Round
 from wm_metrics import wmfr_photography
 from wm_metrics import category_induced
 from wm_metrics import mw_util
@@ -49,7 +49,7 @@ def compute_fdc_report():
     pct_labels_on = 'indicator-highlighted_percentage' in request.form
     pixel_count_on = 'indicator-pixel-count' in request.form
 
-    fdc_round = fdc.Round(fdc_year - 1, fdc_year, round_num)
+    fdc_round = Round(fdc_year - 1, fdc_year, round_num)
     results = 'Nothing'
     try:
         results = wmfr_photography.make_example_report(fdc_round, category,
