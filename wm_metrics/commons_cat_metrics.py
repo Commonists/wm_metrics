@@ -8,16 +8,11 @@ python commons_cat_metrics.py --year 2012-2013 --round 2 --quarter 3 --category 
 
 Please use python commons_cat_metrics.py -h for more information
 """
-import MySQLdb
 import logging
 from argparse import ArgumentParser
 import wmflabs_queries
 from fdc.round import Round
-
-
-def get_commons_db():
-    """Returns an instance of MySQLdb.connect() to tool labs SQL for Wikimedia Commons"""
-    return MySQLdb.connect(host="commonswiki.labsdb", db="commonswiki_p", read_default_file="~/replica.my.cnf", charset='utf8')
+from database_connection import get_commons_db
 
 
 class CommonsCatMetrics:
