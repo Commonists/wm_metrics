@@ -2,6 +2,7 @@
 from fdc.round import Round
 from fdc.report import Report
 import commons_cat_metrics
+from indicators import Indicators
 import _mysql_exceptions
 
 # Output template
@@ -50,7 +51,7 @@ def make_example_report(fdc_round, category,
         db_cursor = db.cursor()
 
         # Metrics
-        metrics = commons_cat_metrics.Indicators(
+        metrics = Indicators(
             category, fdc_round, cursor=db_cursor)
         # Init indicators with None so they can be enabled/disabled by option
         nb_files = None
