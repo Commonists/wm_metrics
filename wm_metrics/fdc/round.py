@@ -3,7 +3,7 @@
 
 
 import time
-from .. import period
+from ..helpers import period
 
 
 class Round(object):

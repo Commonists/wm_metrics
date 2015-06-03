@@ -2,7 +2,7 @@
 
 import unittest
 from wm_metrics.fdc.round import Round
-from wm_metrics import period
+from wm_metrics.helpers import period
 
 
 class TestFdcRound(unittest.TestCase):
