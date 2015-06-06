@@ -1,17 +1,8 @@
 """
-This script computes metrics for FDC on an image category of Wikimedia Commons.
-
-The following line computes metrics for files in "Media supported by Wikimedia France"
-and for the FDC report of year 2012-2013 round 2 quarter 3
-
-python commons_cat_metrics.py --year 2012-2013 --round 2 --quarter 3 --category "Media supported by Wikimedia France"
-
-Please use python commons_cat_metrics.py -h for more information
+Metrics for FDC on an image category of Wikimedia Commons.
 """
 import logging
-from argparse import ArgumentParser
 import wmflabs_queries
-from fdc.round import Round
 from database_connection import get_commons_db
 
 
@@ -91,60 +82,23 @@ class CommonsCatMetrics:
         """Close the MariaDB connection."""
         self.cursor.close()
 
+    def make_report(self):
+        """Return a text report with all metrics."""
+        text_report = ''
+        nb_files = self.get_nb_files_alltime()
+        pixel_count = self.get_pixel_count()
 
-def main():
-    """Commons Cat Metrics."""
-    parser = ArgumentParser(description="Commons Cat Metrics")
+        global_usage = self.get_global_usage()
+        images_in_use = global_usage['images used']
+        percent_images_in_use = 100. * float(global_usage['images used']) / nb_files
 
-    parser.add_argument("-c", "--category",
-                        type=str,
-                        dest="category",
-                        metavar="CAT",
-                        required=True,
-                        help="The Commons category without Category:")
-    parser.add_argument("-y", "--year",
-                        type=str,
-                        dest="years",
-                        metavar="YEAR",
-                        required=True,
-                        help="The FDC year, e.g 2011-2012")
-    parser.add_argument("-r", "--round",
-                        type=int,
-                        dest="round",
-                        metavar="ROUND",
-                        required=True,
-                        help="The FDC round, i.e. 1 or 2")
-    parser.add_argument("-q", "--quarter",
-                        type=int,
-                        dest="quarter",
-                        metavar="QUARTER",
-                        required=True,
-                        help="The reporting quarter")
-    # FDC round
-    args = parser.parse_args()
-    category = args.category.decode('utf-8')
-    years = [int(y) for y in args.years.split('-')]
-
-    fdc_round = Round(years[0], years[1], args.round)
-
-    time_period = fdc_round.to_period_for_quarter(args.quarter)
-
-    metrics = CommonsCatMetrics(category, time_period)
-    global_usage = metrics.get_global_usage()
-    nb_files = metrics.get_nb_files_alltime()
-    pixel_count = metrics.get_pixel_count()
-
-    # printing results
-    print "nb uploaders: %d\nnb files: %d\nnb featured content: %d" % (metrics.get_nb_uploaders(), metrics.get_nb_files(), metrics.get_nb_featured_files())
-    print "global usage(as of now):"
-    print "\tnb files: %d" % nb_files
-    print "\ttotal usages: %d" % global_usage['total usage']
-    print "\timages in use: %d (%.2f %%)" % (global_usage['images used'], 100. * float(global_usage['images used']) / nb_files)
-    print "\tnb wiki: %d" % global_usage['nb wiki']
-    print "pixels: %d" % pixel_count
-
-    # closing SQL connection
-    metrics.close()
-
-if __name__ == "__main__":
-    main()
+        text_report += "nb uploaders: %d" % self.get_nb_uploaders()
+        text_report += "nb files: %d" % self.get_nb_files(),
+        text_report += "nb featured content: %d" % self.get_nb_featured_files()
+        text_report += "global usage(as of now):"
+        text_report += "\tnb files: %d" % nb_files
+        text_report += "\ttotal usages: %d" % global_usage['total usage']
+        text_report += "\timages in use: %d (%.2f %%)" % (images_in_use, percent_images_in_use)
+        text_report += "\tnb wiki: %d" % global_usage['nb wiki']
+        text_report += "pixels: %d" % pixel_count
+        return text_report
