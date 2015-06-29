@@ -65,7 +65,6 @@ class DumpMediaCollection(dict):
 
         This report on the number of edits, editors and files
         touched between two given dates.
-
         """
         diff = self.get_differential(start_date, end_date)
         final_revisions, usernames, pages_edited = diff
@@ -85,7 +84,6 @@ class DumpMediaCollection(dict):
         Iterate over the pages of the media collection, get the top revision,
         and collects the categories in two Counters - one indexed by category
         and the other one by file.
-
         """
 
         categories_counter = Counter()
@@ -97,7 +95,7 @@ class DumpMediaCollection(dict):
         return make_categorisation_report(categories_counter, categories_count_per_file)
 
 
-class CommonsPage():
+class CommonsPage(object):
 
     """Represent a page."""
 
@@ -121,7 +119,7 @@ class CommonsPage():
         return self.revisions[-1]
 
 
-class CommonsRevision():
+class CommonsRevision(object):
 
     """Representation of a Revision (timestamp + username + wikitext)."""
 
