@@ -1,4 +1,7 @@
 # -*- coding: latin-1 -*-
+
+"""wm_metrics flask webapp module."""
+
 import os
 import sys
 
@@ -17,21 +20,25 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """Home page of the wm_metrics tool."""
     return render_template('index.html')
 
 
 @app.route("/fdc")
 def fdc_report_page():
+    """Form to create your FDC report."""
     return render_template('fdc-report.html')
 
 
 @app.route("/category-induced")
 def category_induced_page():
+    """Form to compute the Category induced."""
     return render_template('category-induced.html')
 
 
 @app.route("/fdc/submit", methods=["POST"])
 def compute_fdc_report():
+    """FDC report generation."""
     category = request.form['category']
     fdc_year = int(request.form['year'])
     round_num = int(request.form['round'])
@@ -75,6 +82,7 @@ def compute_fdc_report():
 
 @app.route("/category-induced/submit", methods=["POST"])
 def compute_category_induced():
+    """Compute the induced categories."""
     category = mw_util.str2cat(request.form['category'])
     app.logger.info('CategoryInduced on %s' % (category))
     try:
