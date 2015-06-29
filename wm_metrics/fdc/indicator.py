@@ -1,5 +1,5 @@
 
-class Indicator:
+class Indicator(object):
 
     """Indicator for FDC reports have values for Q1, Q2, Q3, Q4 or/and a value.
     it allows to follow the evolution of an indicator during the quarters and have its final value

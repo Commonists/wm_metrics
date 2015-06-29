@@ -5,7 +5,7 @@
 from string import Template
 
 
-class Report:
+class Report(object):
 
     """Report is build from indicator list and template
     and generate a report.
