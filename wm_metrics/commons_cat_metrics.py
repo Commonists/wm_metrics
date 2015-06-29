@@ -1,6 +1,5 @@
-"""
-Metrics for FDC on an image category of Wikimedia Commons.
-"""
+"""Metrics for FDC on an image category of Wikimedia Commons."""
+
 import logging
 import wmflabs_queries
 from database_connection import get_commons_db
