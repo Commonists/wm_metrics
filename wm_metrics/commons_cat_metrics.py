@@ -5,7 +5,7 @@ import wmflabs_queries
 from database_connection import get_commons_db
 
 
-class CommonsCatMetrics:
+class CommonsCatMetrics(object):
 
     """Wrapper class for the Category Metrics"""
 
