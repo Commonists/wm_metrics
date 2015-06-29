@@ -97,10 +97,11 @@ class MwWiki:
         except KeyError:
             print "Empty result for --> %s" % (url_req)
 
-    def process_query(self, request, result=[]):
-        """
-        Quick and dirty continue support for list query
-        """
+    def process_query(self, request, previous_result=None):
+        """Quick and dirty continue support for list query."""
+        results = []
+        if previous_result is not None:
+            results = previous_result
         if request.action != 'query':
             raise MwQueryError("action is not a query")
         result_name = None
@@ -110,7 +111,7 @@ class MwWiki:
             raise MwQueryError("query has no list")
         query_result = json.loads(self.send_to_api(request))
 
-        result.extend(query_result[request.action][result_name])
+        results.extend(query_result[request.action][result_name])
 
         if 'query-continue' in query_result.keys():
             props = request.prop
@@ -119,20 +120,24 @@ class MwWiki:
             for p in continue_args:
                 print "\tcontinuing query with %s -> %s" % (p, continue_args)
                 props[p] = continue_args[p]
-            print "\tresult of query is %d lenght" % (len(result))
-            return self.process_query(MwApiQuery(properties=props), result=result)
+            print "\tresult of query is %d lenght" % (len(results))
+            return self.process_query(MwApiQuery(properties=props),
+                                      previous_result=results)
         else:
-            return result
+            return results
 
 
 class MwApi:
 
     """Access to API"""
 
-    def __init__(self, action, properties=dict(), format="json"):
+    def __init__(self, action, properties=None, format="json"):
+        if properties is None:
+            self.prop = dict()
+        else:
+            self.prop = properties
         self.action = action
         self.format = format
-        self.prop = properties
 
 
 class MwApiQuery(MwApi):
@@ -141,7 +146,10 @@ class MwApiQuery(MwApi):
     Query actions to the API
     """
 
-    def __init__(self, properties=dict(), format="json"):
+    def __init__(self, properties=None, format="json"):
+        if properties is None:
+            self.prop = dict()
+        else:
+            self.prop = properties
         self.action = 'query'
         self.format = format
-        self.prop = properties
