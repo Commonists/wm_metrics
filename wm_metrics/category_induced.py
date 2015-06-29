@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # !/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """ Compute the induced Category of a Category.
 
@@ -56,7 +56,7 @@ class CategoryInduced:
         """ Returns List categories inside self.category. """
         result = None
         res = []
-        lastContinue = ""
+        lastcontinue = ""
         props = {
             "prop": "categories",
             "cllimit": "max",
@@ -78,8 +78,8 @@ class CategoryInduced:
                 categories = [x[u'title'] for x in l]
                 res.extend(categories)
             if 'query-continue' in result.keys() and 'categorymembers' in result['query-continue'].keys():
-                lastContinue = result['query-continue']['categorymembers']
-                self.update(props, lastContinue)
+                lastcontinue = result['query-continue']['categorymembers']
+                self.update(props, lastcontinue)
             else:
                 break
         return set(res)
