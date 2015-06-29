@@ -11,12 +11,9 @@ DEFAULT_API = "https://commons.wikimedia.org/w/api.php"
 MAX_URL_SIZE = 1024
 
 
-def urlEncodeNonAscii(b):
-    """Encode Non ASCII characters."""
-    return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
-
-
 class MwQueryError(Exception):
+
+    """Exception raised when the client encounters a problem."""
 
     def __init__(self, value):
         self.value = value
@@ -56,7 +53,6 @@ class MwWiki:
         url_req = "%s?action=%s" % (self.url, request.action)
         # add each property
         for k in request.prop.keys():
-            # url_req += "&%s=%s" % (k, urlEncodeNonAscii(request.prop[k]))
             url_req += "&%s=%s" % (k, self.__encode_param(request.prop[k]))
         # add the format
         url_req += "&format=%s" % (request.format)
