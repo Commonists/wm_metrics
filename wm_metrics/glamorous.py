@@ -1,8 +1,8 @@
-#!/usr/bin/python
-"""
-glamorous.py
-    A Glamorous parser to retieve file usage among the wikimedia projects.
-"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""A Glamorous parser to retieve file usage among the wikimedia projects."""
+
 from HTMLParser import HTMLParser
 from argparse import ArgumentParser
 import urllib
@@ -10,9 +10,7 @@ import urllib
 
 class GlamorousParser(HTMLParser, object):
 
-    """
-    HTML parser glamorous
-    """
+    """HTML parser glamorous"""
 
     def __init__(self, category):
         super(GlamorousParser, self).__init__()

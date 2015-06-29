@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from fdc.round import Round
 from fdc.report import Report
 import commons_cat_metrics
