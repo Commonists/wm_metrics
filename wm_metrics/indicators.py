@@ -1,9 +1,11 @@
+"""Indicator and object to model it."""
+
 from fdc.indicator import Indicator as fdc_indicator
 from commons_cat_metrics import CommonsCatMetrics
 import wmflabs_queries
 
 
-class Indicators:
+class Indicators(object):
 
     """ This class allows to generate fdc_indicator for:
             file upload count
@@ -12,7 +14,7 @@ class Indicators:
     """
 
     def __init__(self, category, fdc_round, cursor=None):
-        """ Constructor
+        """Constructor
 
         Args:
             category (string): Category name (without 'Category:' prefix)
@@ -33,7 +35,7 @@ class Indicators:
         self.pixel_count = None
 
     def nb_files_indicator(self, name):
-        """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value).
+        """Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total (value).
 
         Args:
             name (str): name of the fdc_indicator
@@ -51,7 +53,7 @@ class Indicators:
                              value=sum(self.nb_files))
 
     def nb_labels_indicator(self, name):
-        """ Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total and which
+        """Returns an FDC indicator with count of files uploaded during q1, q2, q3, q4 and total and which
         are either FP, QI or VI.
 
         Args:
@@ -84,10 +86,11 @@ class Indicators:
             return round(100 * float(a) / b, decimals)
 
     def pct_labels_indicator(self, name):
-        """ Returns an FDC indicator with percentage of files uploaded during q1, q2, q3, q4 and total and which
-            are either FP, QI or VI.
+        """FDC indicator with percentage of files which are FP, QI or VI
 
-            Args:
+        This indicator is filled with values during q1, q2, q3, q4 and total.
+
+        Args:
                 name (str): name of the fdc_indicator
         """
         if self.nb_files is None:
@@ -107,7 +110,9 @@ class Indicators:
                              value=self.__percent(sum(self.nb_labels), sum(self.nb_files)))
 
     def nb_uploaders_indicator(self, name):
-        """ Returns an FDC indicator with count of uploaders that have uploaded during q1, q2, q3, q4 and total (value).
+        """FDC indicator with count of uploaders.
+
+        This indicator is filled with values during q1, q2, q3, q4 and total.
 
         Args:
             name (str): name of the fdc_indicator
@@ -132,7 +137,9 @@ class Indicators:
                              value=total)
 
     def total_usage_indicator(self, name):
-        """ Returns an FDC indicator with count of usages of image from the category.
+        """FDC indicator with count of usages of image from the category.
+
+        This indicator is filled with total value only.
 
         Args:
             name (str): name of the fdc_indicator
@@ -142,7 +149,7 @@ class Indicators:
         return fdc_indicator(name, value=self.global_usage['total usage'])
 
     def nb_image_used_indicator(self, name):
-        """ Returns an FDC indicator with count of image used from the category.
+        """FDC indicator with count of image used from the category.
 
         Args:
             name (str): name of the fdc_indicator
@@ -152,7 +159,9 @@ class Indicators:
         return fdc_indicator(name, value=self.global_usage['images used'])
 
     def nb_wiki_indicator(self, name):
-        """ Returns an FDC indicator with count of wiki using an image from the category.
+        """FDC indicator with count of wiki using an image from the category.
+
+        This indicator is filled with total value only.
 
         Args:
             name (str): name of the fdc_indicator
@@ -162,6 +171,13 @@ class Indicators:
         return fdc_indicator(name, value=self.global_usage['nb wiki'])
 
     def pixel_count_indicator(self, name):
+        """FDR indicator that counts pixels uploaded.
+
+        This indicator is filled with values during q1, q2, q3, q4 and total.
+
+        Args:
+            name (str): name of the fdc_indicator
+        """
         if self.pixel_count is None:
             self.pixel_count = [
                 self.quarters[i].get_pixel_count() for i in range(4)]
