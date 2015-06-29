@@ -52,7 +52,7 @@ class MwWiki:
         # add action to url
         url_req = "%s?action=%s" % (self.url, request.action)
         # add each property
-        for k in request.prop.keys():
+        for k in request.prop:
             url_req += "&%s=%s" % (k, self.__encode_param(request.prop[k]))
         # add the format
         url_req += "&format=%s" % (request.format)
@@ -65,9 +65,9 @@ class MwWiki:
 
     def process_prop_query(self, request, titles):
         """Quick and dirty prop query support."""
-        if request.action != 'query' or not 'prop' in request.prop.keys():
+        if request.action != 'query' or not 'prop' in request.prop:
             raise MwQueryError('Not a prop query')
-        if 'titles' in request.prop.keys():
+        if 'titles' in request.prop:
             raise MwQueryError(
                 'process_prop_query should not have titles in the request object')
         url_base = self.send_to_api(request, debug=True)
@@ -94,7 +94,7 @@ class MwWiki:
             uri = httplib2.iri2uri(unicode(url_req))
             req_result = json.loads(urllib.urlopen(uri).read())
             # req_result = json.loads(self.__get_url(url_req).read())
-            if 'query-continue' in req_result.keys():
+            if 'query-continue' in req_result:
                 raise MwQueryError("continue not supported for prop query")
             r = req_result['query']['pages']
             for p in r:
@@ -110,7 +110,7 @@ class MwWiki:
         if request.action != 'query':
             raise MwQueryError("action is not a query")
         result_name = None
-        if 'list' in request.prop.keys():
+        if 'list' in request.prop:
             result_name = request.prop['list']
         else:
             raise MwQueryError("query has no list")
@@ -118,7 +118,7 @@ class MwWiki:
 
         results.extend(query_result[request.action][result_name])
 
-        if 'query-continue' in query_result.keys():
+        if 'query-continue' in query_result:
             props = request.prop
             # adding information to continue
             continue_args = query_result['query-continue'][result_name]
