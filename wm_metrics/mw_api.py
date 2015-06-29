@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""mw_api.py is a simple client to MediaWiki API."""
+
 import re
 import urllib
 import json
@@ -10,6 +12,7 @@ MAX_URL_SIZE = 1024
 
 
 def urlEncodeNonAscii(b):
+    """Encode Non ASCII characters."""
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
 
 
@@ -35,12 +38,20 @@ class MwWiki:
         self.url = url_api
 
     def __encode_param(self, param):
+        """Encode param into unicode if not already unicode."""
         if not isinstance(param, unicode):
             return unicode(param)
         else:
             return param
 
     def send_to_api(self, request, debug=False):
+        """Send a request to mediawiki API.
+
+        Args:
+            request (MwApi): Request to send.
+            debug (bool): if true, then just only return the string of the
+                API request, otherwise return the result.
+        """
         # add action to url
         url_req = "%s?action=%s" % (self.url, request.action)
         # add each property
@@ -57,10 +68,8 @@ class MwWiki:
             return url_req
 
     def process_prop_query(self, request, titles):
-        """
-        Quick and dirty prop query support
-        """
-        if request.action != 'query' or not ('prop' in request.prop.keys()):
+        """Quick and dirty prop query support."""
+        if request.action != 'query' or not 'prop' in request.prop.keys():
             raise MwQueryError('Not a prop query')
         if 'titles' in request.prop.keys():
             raise MwQueryError(
@@ -84,6 +93,7 @@ class MwWiki:
         return results
 
     def process_prop_query_results(self, url_req, results):
+        """Process the result of a prop query."""
         try:
             uri = httplib2.iri2uri(unicode(url_req))
             req_result = json.loads(urllib.urlopen(uri).read())
@@ -131,6 +141,13 @@ class MwApi:
     """Access to API"""
 
     def __init__(self, action, properties=None, format="json"):
+        """Constructor.
+
+        Args:
+            action (str): type of action such as 'query'.
+            properties (dict): dictionnary with the properties of the query.
+            format (string): format of the query result, default 'json'.
+        """
         if properties is None:
             self.prop = dict()
         else:
@@ -141,11 +158,15 @@ class MwApi:
 
 class MwApiQuery(MwApi):
 
-    """
-    Query actions to the API
-    """
+    """Query actions to the API."""
 
     def __init__(self, properties=None, format="json"):
+        """Constructor.
+
+        Args:
+            properties (dict): dictionnary with the properties of the query.
+            format (string): format of the query result, default 'json'.
+        """
         if properties is None:
             self.prop = dict()
         else:
