@@ -63,8 +63,8 @@ class CommonsCatMetrics(object):
 
     def get_nb_files_alltime(self):
         """ Returns nb of files in category."""
-        query = wmflabs_queries.count_files_in_category_alltime(self.catsql)
-        self.cursor.execute(query)
+        query = wmflabs_queries.count_files_in_category_alltime()
+        self.cursor.execute(query, self.catsql)
         return long(self.cursor.fetchone()[0])
 
     def get_pixel_count(self):
