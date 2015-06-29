@@ -1,11 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""Traffic statistics API to grok."""
 
 import json
 import urllib
 
 
-class Traffic:
+class Traffic(object):
 
     """Wikipedia article statistics."""
 
