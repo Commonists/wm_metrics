@@ -2,7 +2,6 @@
 
 """mw_api.py is a simple client to MediaWiki API."""
 
-import re
 import urllib
 import json
 import httplib2
@@ -22,7 +21,7 @@ class MwQueryError(Exception):
         return repr(self.value)
 
 
-class MwWiki:
+class MwWiki(object):
 
     """Wiki API"""
 
@@ -65,7 +64,7 @@ class MwWiki:
 
     def process_prop_query(self, request, titles):
         """Quick and dirty prop query support."""
-        if request.action != 'query' or not 'prop' in request.prop:
+        if request.action != 'query' or 'prop' not in request.prop:
             raise MwQueryError('Not a prop query')
         if 'titles' in request.prop:
             raise MwQueryError(
@@ -132,7 +131,7 @@ class MwWiki:
             return results
 
 
-class MwApi:
+class MwApi(object):
 
     """Access to API"""
 
