@@ -1,3 +1,5 @@
+"""Indicator model."""
+
 
 class Indicator(object):
 
