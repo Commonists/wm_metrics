@@ -73,6 +73,14 @@ class DumpMediaCollection(dict):
         return text % (start_date.date().isoformat(), end_date.date().isoformat(),
                        len(final_revisions), len(usernames), len(pages_edited))
 
+    def simple_all_time_report(self):
+        """Return an activity text report since the beginning to now.
+
+        This report on the number of edits, editors and files
+        touched between two given dates.
+        """
+        return self.simple_diff_report(datetime.datetime.min, datetime.datetime.max)
+
     def get_valued_images(self):
         """Return a list of valued images in the collection."""
         return [page_id for (page_id, page) in self.items()
