@@ -3,11 +3,12 @@
 """Analysing a Commons collection to retrieve fancy statistics."""
 
 import xml.dom.minidom
+import sys
 import re
 import datetime
 from collections import Counter
 
-from wm_metrics.categorisation_statistics import make_categorisation_report
+from categorisation_statistics import make_categorisation_report
 
 
 class DumpMediaCollection(dict):
@@ -213,7 +214,13 @@ def get_categories_from_text(edit):
 
 
 def main():
-    pass
+    if len(sys.argv) < 2:
+        print "Please provide a dump file"
+        sys.exit()
+    collection = DumpMediaCollection()
+    collection.init_from_xml_dump(sys.argv[1])
+    print collection.categorisation_report()
+    print collection.simple_all_time_report()
 
 if __name__ == "__main__":
     main()
