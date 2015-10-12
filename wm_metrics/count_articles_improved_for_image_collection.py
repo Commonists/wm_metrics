@@ -2,8 +2,8 @@
 
 """Analysing a Glamorous report to identify articles improved."""
 
-import sys
 import xml.dom.minidom
+import urllib
 
 
 def handle_node_attribute(node, tag_name, attribute_name):
@@ -37,13 +37,39 @@ def analyse_glamorous_xml(xml_text):
     print len(set(fused))
 
 
+def get_data_from_glamorous(category_name):
+    url = make_glamorous_url(category_name)
+    return urllib.urlopen(url).read()
+
+
+def make_glamorous_url(category):
+    url = 'https://tools.wmflabs.org/glamtools/glamorous.php?doit=1'
+    url += '&category=%s' % category
+    url += '&use_globalusage=1&ns0=1&show_details=1'
+    url += '&projects[wikipedia]=1&projects[wikimedia]=1&projects[wikisource]=1&projects[wikibooks]=1&projects[wikiquote]=1&projects[wiktionary]=1&projects[wikinews]=1&projects[wikivoyage]=1&projects[wikispecies]=1&projects[mediawiki]=1&projects[wikidata]=1&projects[wikiversity]=1'
+    url += '&format=xml'
+    return url
+
+
+def analyse_category(category_name):
+    data = get_data_from_glamorous(category_name)
+    analyse_glamorous_xml(data)
+
+
 def main():
-    if len(sys.argv) < 2:
-        print "Please provide a Glamourous file"
-        sys.exit()
-    xml_document = open(sys.argv[1], 'r')
-    xml_text = xml_document.read()
-    analyse_glamorous_xml(xml_text)
+    from argparse import ArgumentParser
+
+    description = "Export a Wiki category into a cohort"
+    parser = ArgumentParser(description=description)
+
+    parser.add_argument(type=str,
+                        dest="category",
+                        metavar="CATEGORY",
+                        help="The Commons category to analyse ")
+
+    args = parser.parse_args()
+    category_name = args.category.replace(' ', '_')
+    analyse_category(category_name)
 
 
 if __name__ == "__main__":
