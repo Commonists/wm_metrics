@@ -8,9 +8,7 @@ images of category C.
 """
 
 import mw_util
-import json
 import MySQLdb
-import operator
 import sys
 from _mysql_exceptions import OperationalError
 
@@ -20,7 +18,6 @@ import mwclient
 NAMESPACE = {'image': 6, 'category': 14}
 
 
-reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
@@ -31,8 +28,6 @@ class DatabaseException(Exception):
 class CategoryInduced:
 
     def __init__(self, category):
-        url_api = 'https://commons.wikimedia.org/w/api.php'
-        self.commons = mw_api.MwWiki(url_api=url_api)
         self.category = category.replace(" ", "_").decode('utf-8')
         # mwclient
         self.site = mwclient.Site('commons.wikimedia.org')
@@ -43,11 +38,11 @@ class CategoryInduced:
         self.init_database_connection()
         # TODO: prendre que des images
         self.query = """SELECT page.page_title
-                        FROM page
-                        JOIN categorylinks ON page.page_id = categorylinks.cl_from
-                        WHERE categorylinks.cl_to = %s AND categorylinks.cl_type = "file"
-                        ORDER BY categorylinks.cl_timestamp ASC
-                        LIMIT 1;"""
+FROM page
+JOIN categorylinks ON page.page_id = categorylinks.cl_from
+WHERE categorylinks.cl_to = %s AND categorylinks.cl_type = "file"
+ORDER BY categorylinks.cl_timestamp ASC
+LIMIT 1;"""
 
     def init_database_connection(self):
         """Initialise the connection to the database."""
@@ -90,23 +85,24 @@ class CategoryInduced:
         self.categories = self.list_category()
         first_images = [self.first_image(x) for x in self.categories]
         first_images.sort()
-        self.images = [x.decode('utf-8')[5:].replace(" ", "_") for x in self.list_images()]
+        self.images = [x.decode('utf-8')[5:].replace(" ", "_")
+                       for x in self.list_images()]
         self.images_count = len(self.images)
         self.result = [first_images[x][0] for x in range(len(first_images))
-                       if (len(first_images[x][1]) > 0
-                           and first_images[x][1][0] in self.images)]
+                       if (len(first_images[x][1]) > 0 and
+                           first_images[x][1][0] in self.images)]
         self.result.sort()
         self.results_count = len(self.result)
         self.categories_traversed_count = len(first_images)
 
     def print_report(self):
-        print "--------------------first images--------------------"
-        print "%s categories to check" % self.categories_traversed_count
-        print "----------------------images------------------------"
-        print "%s images" % self.images_count
-        print "----------------------result------------------------"
-        print "%s new categories created" % self.results_count
-        print self.result
+        print("--------------------first images--------------------")
+        print("%s categories to check" % self.categories_traversed_count)
+        print("----------------------images------------------------")
+        print("%s images" % self.images_count)
+        print("----------------------result------------------------")
+        print("%s new categories created" % self.results_count)
+        print(self.result)
 
 
 def main():
