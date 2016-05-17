@@ -7,7 +7,7 @@ except ImportError:
     from distutils.core import setup
 
 packages = ['wm_metrics']
-requires = ['argparse', 'httplib2']
+requires = ['argparse', 'httplib2', 'mwclient']
 scripts  = []
 
 setup(
