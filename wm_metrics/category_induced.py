@@ -9,16 +9,12 @@ images of category C.
 
 import mw_util
 import MySQLdb
-import sys
 from _mysql_exceptions import OperationalError
 
 import mwclient
 
 
 NAMESPACE = {'image': 6, 'category': 14}
-
-
-sys.setdefaultencoding("utf-8")
 
 
 class DatabaseException(Exception):
