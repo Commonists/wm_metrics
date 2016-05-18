@@ -1,4 +1,4 @@
 httplib2
 argparse
 MySQL-python
-mwclient
+mwclient==0.8.1
