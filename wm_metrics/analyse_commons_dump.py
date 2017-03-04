@@ -222,5 +222,6 @@ def main():
     print collection.categorisation_report()
     print collection.simple_all_time_report()
 
+
 if __name__ == "__main__":
     main()

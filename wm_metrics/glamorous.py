@@ -81,5 +81,6 @@ def main():
     glamorous = GlamorousParser(args.category)
     glamorous.statistics()
 
+
 if __name__ == "__main__":
     main()
