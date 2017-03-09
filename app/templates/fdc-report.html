@@ -2,8 +2,8 @@
 {% block title %}Easy FDC reporting{% endblock %}
 {% block css %}
     {{ super() }}
-    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.min.css" />
-    <link rel="stylesheet" href="//tools.wmflabs.org/static/res/jquery-ui/1.11.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="//tools-static.wmflabs.org/cdnjs/ajax/libs/chosen/1.1.0/chosen.min.css" />
+    <link rel="stylesheet" href="//tools-static.wmflabs.org/cdnjs/ajax/libs/jqueryui/1.11.1/jquery-ui.min.css" />
 {% endblock %}
 {% block content %}
     <h1 style="margin-top:1em;">Easy FDC report generation</h1>
@@ -52,7 +52,7 @@
 
 {% block javascript %}
 {{ super() }}
-    <script src="//tools.wmflabs.org/static/res/chosen/1.1.0/chosen.jquery.min.js"></script>
+    <script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
     <script src="{{url_for('static', filename='commons-search.js')}}"></script>
     <script type="text/javascript">$('.use-chosen').chosen({search_contains: true});</script>
 {% endblock %}
