@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"httplib2" = "*"
+argparse = "*"
+mwclient = "==0.8.1"
+MySQL-python = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "2.7"
