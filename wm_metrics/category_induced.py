@@ -7,12 +7,12 @@ Induced category of a category C is a category created to describe
 images of category C.
 """
 
+import os
+
 import mw_util
+import mwclient
 import MySQLdb
 from _mysql_exceptions import OperationalError
-
-import mwclient
-
 
 NAMESPACE = {'image': 6, 'category': 14}
 
@@ -43,10 +43,10 @@ LIMIT 1;"""
     def init_database_connection(self):
         """Initialise the connection to the database."""
         try:
-            host = "commonswiki.labsdb"
+            host = "commonswiki.analytics.db.svc.wikimedia.cloud"
             self.db = MySQLdb.connect(host=host,
                                       db="commonswiki_p",
-                                      read_default_file="~/replica.my.cnf",
+                                      read_default_file=os.path.expanduser("~/replica.my.cnf"),
                                       charset='utf8')
             self.cursor = self.db.cursor()
         except OperationalError:
